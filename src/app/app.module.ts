@@ -4,15 +4,16 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { SillyDatatableModule } from 'silly-datatable';
 
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
     SillyDatatableModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

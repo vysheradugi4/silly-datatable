@@ -1,2 +1,15 @@
-<ngx-thead></ngx-thead>
-<ngx-tbody></ngx-tbody>
+<table [ngClass]="settings?.tableClass" border="1">
+
+    <tr>
+        <th *ngFor="let column of columns" [ngClass]="column.headerClass">
+            {{ column.title }}
+        </th>
+    </tr>
+    
+    <tr *ngFor="let row of source; let i = index">
+        <td *ngFor="let column of columns" [ngClass]="column.cellClass">
+            {{ row[column.id] }}
+        </td>
+    </tr>
+
+</table>

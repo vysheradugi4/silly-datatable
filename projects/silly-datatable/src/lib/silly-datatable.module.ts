@@ -1,12 +1,18 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
 import { SillyDatatableComponent } from './silly-datatable.component';
-import { TheadComponent } from './thead/thead.component';
-import { TbodyComponent } from './tbody/tbody.component';
+
 
 @NgModule({
-  declarations: [SillyDatatableComponent, TheadComponent, TbodyComponent],
-  imports: [
+  declarations: [
+    SillyDatatableComponent,
   ],
-  exports: [SillyDatatableComponent]
+  imports: [
+    CommonModule,
+  ],
+  exports: [
+    SillyDatatableComponent,
+  ],
 })
 export class SillyDatatableModule { }
