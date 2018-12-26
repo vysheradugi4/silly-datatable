@@ -1,13 +1,20 @@
 {
   "name": "silly-datatable-app",
-  "version": "0.0.0",
+  "version": "0.0.2",
+  "description": "Angular 6+ light datatable with server side sorting, paging, filtering etc.",
+  "license": "SEE LICENSE IN LICENSE",
+  "repository": {
+    "type" : "git",
+    "url" : "https://gitlab.com/vysheradugi4/silly-datatable"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "npm-pack": "ng build --project=silly-datatable && cd dist/silly-datatable && npm pack && cd ../.. && COPY \/Y \"README.md\" \"dist\/silly-datatable\/README.md\" && COPY \/Y \"LICENSE\" \"dist\/silly-datatable\/LICENSE\""
   },
   "private": true,
   "dependencies": {
