@@ -1,5 +1,7 @@
 <ngx-silly-datatable
     [settings]="settings"
     [columns]="columns"
-    [source]="source">
+    [source]="source"
+    (sort)="sorting($event)"
+    (rowClicked)="selected($event)">
 </ngx-silly-datatable>

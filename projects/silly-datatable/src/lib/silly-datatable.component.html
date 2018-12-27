@@ -1,15 +1,36 @@
-<table [ngClass]="settings?.tableClass" border="1">
 
-    <tr>
+<table [ngClass]="settings?.tableClass">
+
+    <tr [ngClass]="settings?.headerRowClass">
         <th *ngFor="let column of columns" [ngClass]="column.headerClass">
-            {{ column.title }}
+            <ng-container *ngIf="column.sortable; else withoutSort">
+                <a
+                    [ngClass]="settings?.sortHeaderClass"
+                    (click)="sortEnable(column.id)">
+                    {{ column.title }}
+                </a>
+            </ng-container>
+
+            <ng-template #withoutSort>
+                {{ column.title }}
+            </ng-template>
         </th>
     </tr>
     
-    <tr *ngFor="let row of source; let i = index">
+    <tr
+        *ngFor="let row of source"
+        [ngClass]="settings?.rowClass"
+        (click)="clicked(row)">
+
         <td *ngFor="let column of columns" [ngClass]="column.cellClass">
-            {{ row[column.id] }}
+            <ng-container *ngIf="column.prepareCellFunction; else getValue">
+                {{ column.prepareCellFunction(row[column.id]) }}
+            </ng-container>
+
+            <ng-template #getValue>
+                {{ row[column.id] }}
+            </ng-template>
         </td>
     </tr>
-
 </table>
+
