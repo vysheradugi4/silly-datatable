@@ -2,7 +2,7 @@ import { Component, Input, ChangeDetectionStrategy, Output, EventEmitter } from 
 
 import { TableSettings } from './shared/models/table-settings.model';
 import { Column } from './shared/models/column.model';
-import { Sort } from 'projects/silly-datatable/src/lib/shared/models/sort.model';
+import { Sort } from './shared/models/sort.model';
 
 
 @Component({
