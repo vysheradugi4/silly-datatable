@@ -7,25 +7,25 @@ export class Column {
   /**
    * Name of column. Text for header and sorting header of table.
    */
-  public title: string;
+  public title?: string;
 
   /**
    * Custom class for header of column.
    */
-  public headerClass: string;
+  public headerClass?: string;
 
   /**
    * Custom class for cells of current column.
    */
-  public cellClass: string;
+  public cellClass?: string;
 
   /**
    * Resolver for sorting current column.
    */
-  public sortable: boolean;
+  public sortable?: boolean;
 
   /**
    * Customization function for prepare data before showed.
    */
-  public prepareCellFunction: Function;
+  public prepareCellFunction?: Function;
 }
