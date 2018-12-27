@@ -1,7 +1,17 @@
 {
   "name": "silly-datatable",
-  "version": "0.0.4",
-  "description": "Angular 6+ light datatable with server side sorting, paging, filtering etc.",
+  "version": "1.0.0",
+  "description": "Angular 6+ light datatable with easy styling functional, server side sorting, paging, filtering, etc.",
+  "keywords": [
+      "table",
+      "datatable",
+      "sorting",
+      "filtering",
+      "server side",
+      "customizing",
+      "dataset",
+      "paging"
+  ],
   "license": "The MIT License (MIT)",
   "repository": {
     "type" : "git",
