@@ -19,6 +19,7 @@ export class AppComponent implements OnInit {
 
     this.settings = {
       tableClass: 'table',
+      sortHeaderClass: 'sort',
     } as TableSettings;
 
     this.columns = [
@@ -33,7 +34,7 @@ export class AppComponent implements OnInit {
       {
         id: 'name',
         title: 'Name',
-        headerClass: 'id',
+        headerClass: 'name',
         cellClass: 'cell',
         sortable: true,
         prepareCellFunction: value => value.toUpperCase(),
