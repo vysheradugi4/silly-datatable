@@ -1,6 +1,19 @@
 # SillyDatatableApp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.2.
+For angular 6+ versions apps. Easy styling datatable, only for server side actions.
+
+## Installation
+
+1. Run `npm install silly-datatable --save` for installation Silly Datatable library in your project.
+
+2. Add in import section in your module `SillyDatatableModule`. Don't forget import this module: 
+`import { SillyDatatableModule } from 'silly-datatable';`
+
+## Template part
+
+## Sorting arrows solution
+
+For add up and down arrows in header of sortable column, can use this solution:
 
 ## Development server
 
