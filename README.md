@@ -6,7 +6,7 @@ For angular 6+ versions apps. Easy styling datatable, only for server side actio
 
 1. Run   
      
-> npm install silly-datatable --save   
+`npm install silly-datatable --save`   
     
 for installation Silly Datatable library in your project.
 
@@ -22,30 +22,31 @@ Don't forget import this module:
 
 ## Sorting arrows solution
 
-For add up and down arrows in header of sortable column, can use this css solution:
-`
-.asc:after {
-        content: "";
-        margin-left: 0.25rem;
-        display: inline-block;
-        width: 0;
-        height: 0;
-        border-left: 6px solid transparent;
-        border-right: 6px solid transparent;
-        border-bottom: 6px solid black;
-      }
+For add up and down arrows in header of sortable column, can use this css solution:  
+  
+`.asc:after {   
+        content: "";    
+        margin-left: 0.25rem;    
+        display: inline-block;   
+        width: 0;    
+        height: 0;   
+        border-left: 6px solid transparent;   
+        border-right: 6px solid transparent;  
+        border-bottom: 6px solid black;   
+      }  
+   
+.desc:after {   
+  content: "";   
+  margin-left: 0.25rem;   
+  display: inline-block;   
+  width: 0;   
+  height: 0;   
+  border-left: 6px solid transparent;   
+  border-right: 6px solid transparent;   
+  border-top: 6px solid black;  
+}`   
+    
 
-.desc:after {
-  content: "";
-  margin-left: 0.25rem;
-  display: inline-block;
-  width: 0;
-  height: 0;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  border-top: 6px solid black;
-}
-`
 
 ## Development server
 
