@@ -5,7 +5,7 @@ For angular 6+ versions apps. Easy styling datatable, only for server side actio
 ## Installation
 
 1. Run 
-> npm install silly-datatable --save  
+`npm install silly-datatable --save`   
 for installation Silly Datatable library in your project.
 
 2. Add in import section in your module `SillyDatatableModule`. Don't forget import this module: 
