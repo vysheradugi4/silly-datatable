@@ -15,7 +15,7 @@
   "license": "The MIT License (MIT)",
   "repository": {
     "type" : "git",
-    "url" : "https://gitlab.com/vysheradugi4/silly-datatable"
+    "url" : "https://github.com/vysheradugi4/silly-datatable"
   },
   "peerDependencies": {
     "@angular/common": "^7.0.0",
