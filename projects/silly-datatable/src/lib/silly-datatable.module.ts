@@ -6,6 +6,7 @@ import { ComponentsModule } from './shared/components/components.module';
 import { SillyDatatableSearchComponent } from './shared/components/silly-datatable-search/silly-datatable-search.component';
 import { SillyDatatablePagingComponent } from './shared/components/silly-datatable-paging/silly-datatable-paging.component';
 import { SettingsService } from './shared/services/settings.service';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -15,6 +16,8 @@ import { SettingsService } from './shared/services/settings.service';
   imports: [
     CommonModule,
     ComponentsModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   exports: [
     SillyDatatableComponent,

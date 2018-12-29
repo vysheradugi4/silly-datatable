@@ -1,4 +1,4 @@
-import { TableSettings } from 'projects/silly-datatable/src/public_api';
+import { TableSettings } from './../models/table-settings.model';
 
 
 export class SettingsService {

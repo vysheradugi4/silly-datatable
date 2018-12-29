@@ -1,1 +1,4 @@
-<input type="text" [ngClass]="settingsService?.config?.searchInputClass">
+<input
+    [formControl]="search"
+    type="text"
+    [ngClass]="settingsService?.config?.searchInputClass">

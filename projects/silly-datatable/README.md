@@ -7,15 +7,12 @@ designed for use server side actions.
 ## Installation
 
 Run for installation Silly Datatable library in your project.
-
 `npm install silly-datatable --save`   
     
 Add in import section in your module   
-
 `SillyDatatableModule`     
    
 Don't forget import this module:     
-
 `import { SillyDatatableModule } from 'silly-datatable';`
     
     
@@ -46,15 +43,12 @@ Run `ng e2e` to execute the end-to-end tests via
 ## Component template part
 
 For use Silly Datatable insert in your template component tag:   
-
 `<ngx-silly-datatable></ngx-silly-datatable>`
    
 for add search field:
-
 `<ngx-silly-datatable-search></ngx-silly-datatable-search>`
 
 for add paging:   
-
 `<ngx-silly-datatable-paging></ngx-silly-datatable-paging>`
 
 
@@ -87,7 +81,6 @@ All properties are optional.
 
 
 Example of settings:
-
 ```
 this.settings = {
         tableClass: 'table',
@@ -95,12 +88,10 @@ this.settings = {
         rowClass: 'data-row',
         sortHeaderClass: 'sort',
         searchInputClass: 'search-field',
-        searchPlaceholder: 'search...',
 } as TableSettings;
 ```
    
 Don't forget import TableSettings:
-
 `import { TableSettings } from 'silly-datatable';`
 
 __Columns settings__
@@ -125,7 +116,6 @@ following properties:
 All properties are optional except `id`.
 
 For example:
-
 ```
 this.columns = [
       {
@@ -156,17 +146,14 @@ this.columns = [
 ```
 
 Don't forget import Column:
-
 `import { Column } from 'silly-datatable';`
 
 __Data source__
 
 For place data in a table use
-
 `<ngx-silly-datatable [source]="source"></ngx-silly-datatable>`
 
 Example of table data source:
-
 ```
 this.source = [
       { id: 1, name: 'test1', description: 'some description' },
@@ -185,21 +172,6 @@ __Row clicked event__
 
 `<ngx-silly-datatable (rowClicked)="selected($event)"></ngx-silly-datatable>`
 
-## Silly datatable component attributes
-
-__Input class__
-
-Please look at table settings.
-
-__Disable input__
-
-Disable input for example when loading process in progress.
-
-`<ngx-silly-datatable-paging [disable]="disable"></ngx-silly-datatable-paging>`
-
-__Custom placehoder__
-
-Please look at table settings.
 
    
 ## CSS sorting arrows solution

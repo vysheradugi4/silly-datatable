@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { filter, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
@@ -14,6 +14,11 @@ import { SettingsService } from './../../services/settings.service';
 export class SillyDatatableSearchComponent implements OnInit {
 
   public search: FormControl;
+
+  /**
+   * Disable control for example when loading process.
+   */
+  @Input() public disable = false;
 
   @Output() public searchRequest: EventEmitter<string> = new EventEmitter();
 
@@ -39,6 +44,7 @@ export class SillyDatatableSearchComponent implements OnInit {
       takeUntil(this._unsubscribe)
     )
       .subscribe((searchString: string) => {
+        console.log('zzzzzzzzzzzzzz', searchString);
         this.searchRequest.emit(searchString);
       });
   }
