@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { TableSettings, Column } from 'projects/silly-datatable/src/public_api';
-import { Sort } from 'silly-datatable/lib/shared/models/sort.model';
+import { TableSettings, Column, Sort } from 'projects/silly-datatable/src/public_api';
+
 
 @Component({
   selector: 'app-root',
@@ -19,7 +19,10 @@ export class AppComponent implements OnInit {
 
     this.settings = {
       tableClass: 'table',
+      headerRowClass: 'header-row',
+      rowClass: 'data-row',
       sortHeaderClass: 'sort',
+      searchInputClass: 'search-field',
     } as TableSettings;
 
     this.columns = [
@@ -50,11 +53,11 @@ export class AppComponent implements OnInit {
     ];
 
     this.source = [
-      { id: 1, name: 'test1', description: 'something else' },
-      { id: 2, name: 'test2', description: 'something else' },
-      { id: 3, name: 'test3', description: 'something else' },
-      { id: 4, name: 'test4', description: 'something else' },
-      { id: 5, name: 'test5', description: 'something else' },
+      { id: 1, name: 'test1', description: 'some description' },
+      { id: 2, name: 'test2', description: 'some description' },
+      { id: 3, name: 'test3', description: 'some description' },
+      { id: 4, name: 'test4', description: 'some description' },
+      { id: 5, name: 'test5', description: 'some description' },
     ];
   }
 

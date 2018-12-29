@@ -3,6 +3,7 @@ import { Component, Input, ChangeDetectionStrategy, Output, EventEmitter } from 
 import { TableSettings } from './shared/models/table-settings.model';
 import { Column } from './shared/models/column.model';
 import { Sort } from './shared/models/sort.model';
+import { SettingsService } from './shared/services/settings.service';
 
 
 @Component({
@@ -18,14 +19,22 @@ export class SillyDatatableComponent {
    */
   public currentSort: Sort;
 
-  @Input() public settings: TableSettings;
   @Input() public columns: Array<Column>;
   @Input() public source: Array<any>;
+
+  /**
+   * Stored table settings in service.
+   */
+  @Input() set settings(value: TableSettings) {
+    this.settingsService.config = value;
+  }
 
   @Output() public sort: EventEmitter<Sort> = new EventEmitter<Sort>();
   @Output() public rowClicked: EventEmitter<Sort> = new EventEmitter<Sort>();
 
-  constructor() { }
+  constructor(
+    public settingsService: SettingsService
+  ) { }
 
 
   /**
@@ -37,7 +46,9 @@ export class SillyDatatableComponent {
       return;
     }
 
-    // Check direction.
+    /**
+     * Change direction
+     */
     let order = 'asc';
     if (this.currentSort && this.currentSort.columnName === columnName && this.currentSort.order === 'asc') {
       order = 'desc';

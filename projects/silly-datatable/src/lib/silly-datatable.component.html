@@ -1,11 +1,11 @@
 
-<table [ngClass]="settings?.tableClass">
+<table [ngClass]="settingsService?.config?.tableClass">
 
-    <tr [ngClass]="settings?.headerRowClass">
+    <tr [ngClass]="settingsService?.config?.headerRowClass">
         <th *ngFor="let column of columns" [ngClass]="column.headerClass">
             <ng-container *ngIf="column.sortable; else withoutSort">
                 <a
-                    [ngClass]="settings?.sortHeaderClass"
+                    [ngClass]="settingsService?.config?.sortHeaderClass"
                     [class.asc]="currentSort?.columnName === column.id && currentSort?.order === 'asc'"
                     [class.desc]="currentSort?.columnName === column.id && currentSort?.order === 'desc'"
                     (click)="sortEnable(column.id)">
@@ -21,7 +21,7 @@
     
     <tr
         *ngFor="let row of source"
-        [ngClass]="settings?.rowClass"
+        [ngClass]="settingsService?.config?.rowClass"
         (click)="clicked(row)">
 
         <td *ngFor="let column of columns" [ngClass]="column.cellClass">

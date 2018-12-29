@@ -19,4 +19,9 @@ export class TableSettings {
    * Class for sortable header link. Will be added to <a> tag.
    */
   public sortHeaderClass?: string;
+
+  /**
+   * Class will be added to search `<input>` tag in search component.
+   */
+  public searchInputClass?: string;
 }
