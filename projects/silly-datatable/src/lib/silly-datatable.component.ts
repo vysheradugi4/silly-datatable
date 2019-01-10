@@ -1,9 +1,12 @@
-import { Component, Input, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import { takeUntil } from 'rxjs/operators';
 
 import { TableSettings } from './shared/models/table-settings.model';
 import { Column } from './shared/models/column.model';
 import { Sort } from './shared/models/sort.model';
 import { SettingsService } from './shared/services/settings.service';
+import { SearchService } from './shared/services/search.service';
+import { Subject } from 'rxjs';
 
 
 @Component({
@@ -12,7 +15,7 @@ import { SettingsService } from './shared/services/settings.service';
   styles: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SillyDatatableComponent {
+export class SillyDatatableComponent implements OnInit, OnDestroy {
 
   /**
    * Current state of sorting. Contains column id string and order (asc, desc).
@@ -31,10 +34,27 @@ export class SillyDatatableComponent {
 
   @Output() public sort: EventEmitter<Sort> = new EventEmitter<Sort>();
   @Output() public rowClicked: EventEmitter<Sort> = new EventEmitter<Sort>();
+  @Output() public searchRequest: EventEmitter<string> = new EventEmitter();
+
+  private _unsubscribe: Subject<boolean> = new Subject<boolean>();
 
   constructor(
-    public settingsService: SettingsService
+    public settingsService: SettingsService,
+    private _searchService: SearchService
   ) { }
+
+
+  ngOnInit() {
+    /**
+     * Search request hanlder.
+     */
+    this._searchService.request$.pipe(
+      takeUntil(this._unsubscribe)
+    )
+      .subscribe((searchRequest: string) => {
+        this.searchRequest.emit(searchRequest);
+      });
+  }
 
 
   /**
@@ -73,5 +93,11 @@ export class SillyDatatableComponent {
     }
 
     this.rowClicked.next(row);
+  }
+
+
+  ngOnDestroy() {
+    this._unsubscribe.next(true);
+    this._unsubscribe.unsubscribe();
   }
 }

@@ -7,6 +7,7 @@ import { SillyDatatableSearchComponent } from './shared/components/silly-datatab
 import { SillyDatatablePagingComponent } from './shared/components/silly-datatable-paging/silly-datatable-paging.component';
 import { SettingsService } from './shared/services/settings.service';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { SearchService } from './shared/services/search.service';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
   ],
   providers: [
     SettingsService,
+    SearchService,
   ],
 })
 export class SillyDatatableModule { }

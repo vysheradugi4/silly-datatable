@@ -22,7 +22,6 @@ export class AppComponent implements OnInit {
       headerRowClass: 'header-row',
       rowClass: 'data-row',
       sortHeaderClass: 'sort',
-      searchInputClass: 'search-field',
     } as TableSettings;
 
     this.columns = [
@@ -63,11 +62,16 @@ export class AppComponent implements OnInit {
 
 
   public sorting(details: Sort) {
-    console.log(details);
+    console.log('Sorting details = ', details);
   }
 
 
   public selected(row: any) {
-    console.log(row);
+    console.log('Clicked row = ', row);
+  }
+
+
+  public searchRequest(str: string) {
+    console.log('Search Request = ', str);
   }
 }

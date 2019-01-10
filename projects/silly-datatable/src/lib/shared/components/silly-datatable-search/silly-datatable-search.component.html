@@ -1,4 +1,9 @@
+<ng-container *ngTemplateOutlet="prefix"></ng-container>
+
 <input
     [formControl]="search"
     type="text"
-    [ngClass]="settingsService?.config?.searchInputClass">
+    [ngClass]="searchInputClass"
+    [placeholder]="placeholder">
+
+<ng-container *ngTemplateOutlet="suffix"></ng-container>

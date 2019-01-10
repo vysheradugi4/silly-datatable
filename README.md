@@ -1,4 +1,4 @@
-# Silly Datatable - Angular 6+ light datatable
+# Silly Datatable – Angular 6+ light datatable
 
 For angular 6+ versions apps. Easy styling datatable, all functionality is   
 designed for use server side actions.
@@ -63,6 +63,7 @@ for add paging:
 For setup styles and data representation of Silly Datatable use following   
 attributes.  
    
+   
 __Main settings:__   
    
 `<ngx-silly-datatable [settings]="settings"></ngx-silly-datatable>`
@@ -70,19 +71,22 @@ __Main settings:__
 Object `settings` is a instance of class `TableSettings`. It has the following   
 properties:
 
-* `tableClass` - Class will be added to `<table>` tag. Class for all table.   
+* `tableClass` – Class will be added to `<table>` tag. Class for all table.   
    
-* `headerRowClass` - Class for first row of table for header. Will be added in   
+* `headerRowClass` – Class for first row of table for header. Will be added in   
 first `<tr>` tag.
    
-* `rowClass` - Class for each row in table except first (header) row. Will be   
+* `rowClass` – Class for each row in table except first (header) row. Will be   
 added to each `<tr>` tag except first.
    
-* `sortHeaderClass` - Class for sortable header link. Will be added to `<a>` tag.
-
-* `searchInputClass` - Class will be added to search `<input>` tag in search   
-component.
+* `sortHeaderClass` – Class for sortable header link. Will be added to `<a>` tag.
    
+    
+__Outputs Events__
+   
+* `searchRequest` – Triggered when user used search input.
+
+
 All properties are optional. 
 
 
@@ -110,17 +114,17 @@ __Columns settings__
 Object `columns` is a array instances of class `Column`. Column object has the  
 following properties:
 
-* `id` - Column id for link with source (required).
+* `id` – Column id for link with source (required).
 
-* `title` - Name of column. Text for header and sorting header of table.
+* `title` – Name of column. Text for header and sorting header of table.
 
-* `headerClass` - Custom class for header of column.
+* `headerClass` – Custom class for header of column.
 
-* `cellClass` - Custom class for cells of current column.
+* `cellClass` – Custom class for cells of current column.
 
-* `sortable` - Resolver for sorting current column.
+* `sortable` – Resolver for sorting current column.
 
-* `prepareCellFunction` - Customization function for prepare data before showed.
+* `prepareCellFunction` – Customization function for prepare data before showed.
 
 All properties are optional except `id`.
 
@@ -201,6 +205,27 @@ __Custom placehoder__
 
 Please look at table settings.
 
+
+## Silly datatable search component
+
+Tag for insert search field in template:
+   
+`<ngx-silly-datatable-search></ngx-silly-datatable-search>`
+
+* `searchInputClass` – Class will be added to search `<input>` tag in search   
+component.
+   
+* `prefix` – Html prefix before input form field (use for label for example)
+(TemplateRef<any>).
+   
+* `suffix` – Html suffix after input form field (use for error for example)
+(TemplateRef<any>).
+   
+* `disabled` – Set input form field disable dynamically (boolean).
+   
+* `placeholder` – Define input form field placeholder.
+
+   
    
 ## CSS sorting arrows solution
 

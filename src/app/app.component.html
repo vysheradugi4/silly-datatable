@@ -1,11 +1,28 @@
-<ngx-silly-datatable-search></ngx-silly-datatable-search>
+<ng-template #prefix>
+    <label for="search">Search field</label>
+    <br>
+</ng-template>
+
+<ngx-silly-datatable-search
+    placeholder="Search..."
+    inputId="search"
+    inputClass="search-field"
+    [prefix]="prefix"
+    [suffix]="suffix"
+    [disabled]="loading"></ngx-silly-datatable-search>
+
+<ng-template #suffix>
+    <br>
+    <span>required</span>
+</ng-template>
 
 <ngx-silly-datatable
     [settings]="settings"
     [columns]="columns"
     [source]="source"
     (sort)="sorting($event)"
-    (rowClicked)="selected($event)">
+    (rowClicked)="selected($event)"
+    (searchRequest)="searchRequest($event)">
 </ngx-silly-datatable>
 
 <ngx-silly-datatable-paging></ngx-silly-datatable-paging>
