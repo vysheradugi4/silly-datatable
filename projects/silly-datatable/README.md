@@ -1,4 +1,4 @@
-# Silly Datatable - Angular 6+ light datatable
+# Silly Datatable – Angular 6+ light datatable
 
 For angular 6+ versions apps. Easy styling datatable, all functionality is   
 designed for use server side actions.
@@ -7,12 +7,15 @@ designed for use server side actions.
 ## Installation
 
 Run for installation Silly Datatable library in your project.
+
 `npm install silly-datatable --save`   
     
 Add in import section in your module   
+
 `SillyDatatableModule`     
    
 Don't forget import this module:     
+
 `import { SillyDatatableModule } from 'silly-datatable';`
     
     
@@ -43,12 +46,15 @@ Run `ng e2e` to execute the end-to-end tests via
 ## Component template part
 
 For use Silly Datatable insert in your template component tag:   
+
 `<ngx-silly-datatable></ngx-silly-datatable>`
    
 for add search field:
+
 `<ngx-silly-datatable-search></ngx-silly-datatable-search>`
 
 for add paging:   
+
 `<ngx-silly-datatable-paging></ngx-silly-datatable-paging>`
 
 
@@ -57,6 +63,7 @@ for add paging:
 For setup styles and data representation of Silly Datatable use following   
 attributes.  
    
+   
 __Main settings:__   
    
 `<ngx-silly-datatable [settings]="settings"></ngx-silly-datatable>`
@@ -64,34 +71,38 @@ __Main settings:__
 Object `settings` is a instance of class `TableSettings`. It has the following   
 properties:
 
-* `tableClass` - Class will be added to `<table>` tag. Class for all table.   
+* `tableClass` – Class will be added to `<table>` tag. Class for all table.   
    
-* `headerRowClass` - Class for first row of table for header. Will be added in   
+* `headerRowClass` – Class for first row of table for header. Will be added in   
 first `<tr>` tag.
    
-* `rowClass` - Class for each row in table except first (header) row. Will be   
+* `rowClass` – Class for each row in table except first (header) row. Will be   
 added to each `<tr>` tag except first.
    
-* `sortHeaderClass` - Class for sortable header link. Will be added to `<a>` tag.
-
-* `searchInputClass` - Class will be added to search `<input>` tag in search   
-component.
+* `sortHeaderClass` – Class for sortable header link. Will be added to `<a>` tag.
    
+    
+__Outputs Events__
+   
+* `searchRequest` – Triggered when user used search input.
+
+
 All properties are optional. 
 
 
 Example of settings:
+
 ```
 this.settings = {
         tableClass: 'table',
         headerRowClass: 'header-row',
         rowClass: 'data-row',
         sortHeaderClass: 'sort',
-        searchInputClass: 'search-field',
 } as TableSettings;
 ```
    
 Don't forget import TableSettings:
+
 `import { TableSettings } from 'silly-datatable';`
 
 __Columns settings__
@@ -101,21 +112,22 @@ __Columns settings__
 Object `columns` is a array instances of class `Column`. Column object has the  
 following properties:
 
-* `id` - Column id for link with source (required).
+* `id` – Column id for link with source (required).
 
-* `title` - Name of column. Text for header and sorting header of table.
+* `title` – Name of column. Text for header and sorting header of table.
 
-* `headerClass` - Custom class for header of column.
+* `headerClass` – Custom class for header of column.
 
-* `cellClass` - Custom class for cells of current column.
+* `cellClass` – Custom class for cells of current column.
 
-* `sortable` - Resolver for sorting current column.
+* `sortable` – Resolver for sorting current column.
 
-* `prepareCellFunction` - Customization function for prepare data before showed.
+* `prepareCellFunction` – Customization function for prepare data before showed.
 
 All properties are optional except `id`.
 
 For example:
+
 ```
 this.columns = [
       {
@@ -146,14 +158,17 @@ this.columns = [
 ```
 
 Don't forget import Column:
+
 `import { Column } from 'silly-datatable';`
 
 __Data source__
 
 For place data in a table use
+
 `<ngx-silly-datatable [source]="source"></ngx-silly-datatable>`
 
 Example of table data source:
+
 ```
 this.source = [
       { id: 1, name: 'test1', description: 'some description' },
@@ -172,7 +187,66 @@ __Row clicked event__
 
 `<ngx-silly-datatable (rowClicked)="selected($event)"></ngx-silly-datatable>`
 
+## Silly datatable component attributes
 
+__Input class__
+
+Please look at table settings.
+
+__Disable input__
+
+Disable input for example when loading process in progress.
+
+`<ngx-silly-datatable-paging [disable]="disable"></ngx-silly-datatable-paging>`
+
+__Custom placehoder__
+
+Please look at table settings.
+
+
+## Silly datatable search component
+
+Tag for insert search field in template:
+   
+`<ngx-silly-datatable-search></ngx-silly-datatable-search>`
+
+* `searchInputClass` – Class will be added to search `<input>` tag in search   
+component.
+   
+* `prefix` – Html prefix before input form field (use for label for example)
+(TemplateRef<any>).
+   
+* `suffix` – Html suffix after input form field (use for error for example)
+(TemplateRef<any>).
+   
+* `disabled` – Set input form field disable dynamically (boolean).
+   
+* `placeholder` – Define input form field placeholder.
+   
+   
+For example:
+   
+```
+<ng-template #prefix>
+    <label for="search">Search field</label>
+    <br>
+</ng-template>
+
+<ngx-silly-datatable-search
+    placeholder="Search..."
+    inputId="search"
+    inputClass="search-field"
+    [prefix]="prefix"
+    [suffix]="suffix"
+    [disabled]="loading">
+</ngx-silly-datatable-search>
+
+<ng-template #suffix>
+    <br>
+    <span>required</span>
+</ng-template>
+```
+   
    
 ## CSS sorting arrows solution
 

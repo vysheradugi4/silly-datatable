@@ -14,7 +14,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "npm-pack": "cd ../.. && COPY \/Y \"README.md\" \"projects\/silly-datatable\/README.md\" && COPY \/Y \"LICENSE\" \"projects\/silly-datatable\/LICENSE\" && ng build --project=silly-datatable && cd dist/silly-datatable && npm pack"
+    "npm-pack": "COPY \/Y \"README.md\" \"projects\/silly-datatable\/README.md\" && COPY \/Y \"LICENSE\" \"projects\/silly-datatable\/LICENSE\" && ng build --project=silly-datatable && cd dist/silly-datatable && npm pack"
   },
   "private": true,
   "dependencies": {

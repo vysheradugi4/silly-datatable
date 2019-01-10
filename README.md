@@ -98,8 +98,6 @@ this.settings = {
         headerRowClass: 'header-row',
         rowClass: 'data-row',
         sortHeaderClass: 'sort',
-        searchInputClass: 'search-field',
-        searchPlaceholder: 'search...',
 } as TableSettings;
 ```
    
@@ -224,7 +222,30 @@ component.
 * `disabled` – Set input form field disable dynamically (boolean).
    
 * `placeholder` – Define input form field placeholder.
+   
+   
+For example:
+   
+```
+<ng-template #prefix>
+    <label for="search">Search field</label>
+    <br>
+</ng-template>
 
+<ngx-silly-datatable-search
+    placeholder="Search..."
+    inputId="search"
+    inputClass="search-field"
+    [prefix]="prefix"
+    [suffix]="suffix"
+    [disabled]="loading">
+</ngx-silly-datatable-search>
+
+<ng-template #suffix>
+    <br>
+    <span>required</span>
+</ng-template>
+```
    
    
 ## CSS sorting arrows solution
