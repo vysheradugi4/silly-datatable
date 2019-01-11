@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
       containerClass: 'container-class',
       arrowButtonClass: 'arrow-button-class',
       numberButtonClass: 'number-button-class',
-    } as PaginationSettigns;
+    } as PaginationSettings;
 
 
     this.settings = {
