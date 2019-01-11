@@ -1,4 +1,5 @@
-{{ currentPage }}
+Page: {{ currentPage }} of {{ numberOfPages }}
+
 <div [ngClass]="containerClass">
     
     <button
@@ -17,7 +18,7 @@
 
     <button
         *ngFor="let page of pageArray"
-        [ngClass]="numberButtonClass"
+        [ngClass]="numberButtonClass + currentPage === (page - 1) ? ' active' : ''"
         (click)="pageRequest(page - 1)">
         {{ page }}
     </button>
