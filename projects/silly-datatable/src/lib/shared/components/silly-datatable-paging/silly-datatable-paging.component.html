@@ -1,3 +1,39 @@
-<p>
-  silly-datatable-paging works!
-</p>
+{{ currentPage }}
+<div [ngClass]="containerClass">
+    
+    <button
+        *ngIf="currentPage > 0"
+        [ngClass]="arrowButtonClass"
+        (click)="pageRequest(0)">
+        <<
+    </button>
+
+    <button
+        *ngIf="currentPage > 0"
+        [ngClass]="arrowButtonClass"
+        (click)="pageRequest(currentPage - 1)">
+        <
+    </button>
+
+    <button
+        *ngFor="let page of pageArray"
+        [ngClass]="numberButtonClass"
+        (click)="pageRequest(page - 1)">
+        {{ page }}
+    </button>
+
+    <button
+        *ngIf="(currentPage + 1) < numberOfPages"
+        [ngClass]="arrowButtonClass"
+        (click)="pageRequest(currentPage + 1)">
+        >
+    </button>
+
+    <button
+        *ngIf="(currentPage + 1) < numberOfPages"
+        [ngClass]="arrowButtonClass"
+        (click)="pageRequest(numberOfPages - 1)">
+        >>
+    </button>
+
+</div>

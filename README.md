@@ -248,6 +248,39 @@ For example:
 ```
    
    
+## Silly datatable paging component
+
+Tag for insert paging component in template:
+   
+<ngx-silly-datatable-paging></ngx-silly-datatable-paging>
+   
+   
+__Pagination details:__   
+   
+<ngx-silly-datatable-paging [pagination]="pagination"></ngx-silly-datatable-paging>
+   
+   
+* `pagination` – Init and updated pagination details. Instance of Pagination class.
+   
+* `containerClass` – Css class for pagination div container.
+   
+* `arrowButtonClass` – Css class for buttons with arrows (start, end, next, prev).
+   
+* `numberButtonClass` – Css class for buttons with number of page.
+   
+   
+Don't forget import Pagination for init new instance:
+   
+`import { Pagination } from 'silly-datatable';`
+   
+   
+__Page changed event__
+   
+<ngx-silly-datatable-paging (changePage)="changePageHandler($event)"></ngx-silly-datatable-paging>
+    
+$event contains Pagination instance with data for get new page.
+   
+   
 ## CSS sorting arrows solution
 
 For add up and down arrows in header of sortable column, can use this css   

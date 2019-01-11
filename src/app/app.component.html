@@ -25,4 +25,7 @@
     (searchRequest)="searchRequest($event)">
 </ngx-silly-datatable>
 
-<ngx-silly-datatable-paging></ngx-silly-datatable-paging>
+<ngx-silly-datatable-paging
+    [pagination]="pagination"
+    (changePage)="changePage($event)">
+</ngx-silly-datatable-paging>
