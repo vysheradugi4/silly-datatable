@@ -1,4 +1,4 @@
-export class PaginationSettigns {
+export class PaginationSettings {
 
   /**
    * Css class for customize information string "Page 1 of 10".

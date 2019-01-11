@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { TableSettings, Column, Sort, Pagination, PaginationSettigns } from 'projects/silly-datatable/src/public_api';
+import { TableSettings, Column, Sort, Pagination, PaginationSettings } from 'projects/silly-datatable/src/public_api';
 
 
 @Component({
@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
 
   public settings: TableSettings;
   public pagination: Pagination;
-  public paginationSettings: PaginationSettigns;
+  public paginationSettings: PaginationSettings;
   public columns: Array<Column>;
   public source: Array<any>;
   constructor() { }

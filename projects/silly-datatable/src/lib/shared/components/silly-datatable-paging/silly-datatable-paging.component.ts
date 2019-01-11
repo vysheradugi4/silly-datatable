@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { Pagination } from './../../models/pagination.model';
-import { PaginationSettigns } from './../../models/pagination-settings.model';
+import { PaginationSettings } from './../../models/pagination-settings.model';
 
 @Component({
   selector: 'ngx-silly-datatable-paging',
@@ -24,7 +24,7 @@ export class SillyDatatablePagingComponent implements OnInit {
   /**
    * Settings for customization pagination component.
    */
-  @Input() public settings: PaginationSettigns;
+  @Input() public settings: PaginationSettings;
 
 
   /**

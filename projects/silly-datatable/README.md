@@ -255,23 +255,32 @@ Tag for insert paging component in template:
 <ngx-silly-datatable-paging></ngx-silly-datatable-paging>
    
    
-__Pagination details:__   
+__Pagination inputs:__   
    
 <ngx-silly-datatable-paging [pagination]="pagination"></ngx-silly-datatable-paging>
    
    
 * `pagination` – Init and updated pagination details. Instance of Pagination class.
    
+* `settings` – Setting for customization appearance of pagination component
+(Instance of PaginationSettings class).
+   
+   
+Don't forget import Pagination and PaginationSettings for init new instance:
+   
+`import { Pagination, PaginationSettings } from 'silly-datatable';`
+   
+   
+__Pagination settings:__   
+   
+   
+* `infoClass` – Css class for customize information string "Page 1 of 10".
+   
 * `containerClass` – Css class for pagination div container.
    
 * `arrowButtonClass` – Css class for buttons with arrows (start, end, next, prev).
    
 * `numberButtonClass` – Css class for buttons with number of page.
-   
-   
-Don't forget import Pagination for init new instance:
-   
-`import { Pagination } from 'silly-datatable';`
    
    
 __Page changed event__
