@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { Pagination } from './../../models/pagination.model';
+import { PaginationSettigns } from './../../models/pagination-settings.model';
 
 @Component({
   selector: 'ngx-silly-datatable-paging',
@@ -21,21 +22,9 @@ export class SillyDatatablePagingComponent implements OnInit {
 
 
   /**
-   * Css class for pagination div container.
+   * Settings for customization pagination component.
    */
-  @Input() public containerClass: string;
-
-
-  /**
-   * Css class for buttons with arrows (start, end, next, prev).
-   */
-  @Input() public arrowButtonClass: string;
-
-
-  /**
-   * Css class for buttons with number of page.
-   */
-  @Input() public numberButtonClass: string;
+  @Input() public settings: PaginationSettigns;
 
 
   /**

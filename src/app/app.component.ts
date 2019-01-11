@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { TableSettings, Column, Sort, Pagination } from 'projects/silly-datatable/src/public_api';
+import { TableSettings, Column, Sort, Pagination, PaginationSettigns } from 'projects/silly-datatable/src/public_api';
 
 
 @Component({
@@ -12,6 +12,7 @@ export class AppComponent implements OnInit {
 
   public settings: TableSettings;
   public pagination: Pagination;
+  public paginationSettings: PaginationSettigns;
   public columns: Array<Column>;
   public source: Array<any>;
   constructor() { }
@@ -23,6 +24,14 @@ export class AppComponent implements OnInit {
       pages: 10,
       itemsPerPage: 10,
     } as Pagination;
+
+
+    this.paginationSettings = {
+      infoClass: 'info-class',
+      containerClass: 'container-class',
+      arrowButtonClass: 'arrow-button-class',
+      numberButtonClass: 'number-button-class',
+    } as PaginationSettigns;
 
 
     this.settings = {
