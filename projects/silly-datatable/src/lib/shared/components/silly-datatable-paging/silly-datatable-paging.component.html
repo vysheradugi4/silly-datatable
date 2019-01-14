@@ -20,8 +20,9 @@
     <button
         *ngFor="let page of pageArray"
         [ngClass]="settings?.numberButtonClass"
-        class.active="currentPage === (page - 1)"
-        (click)="pageRequest(page - 1)">
+        [class.active]="currentPage === (page - 1)"
+        (click)="pageRequest(page - 1)"
+        [disabled]="currentPage === (page - 1)">
         {{ page }}
     </button>
 
