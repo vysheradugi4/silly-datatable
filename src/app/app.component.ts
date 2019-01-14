@@ -31,6 +31,10 @@ export class AppComponent implements OnInit {
       containerClass: 'container-class',
       arrowButtonClass: 'arrow-button-class',
       numberButtonClass: 'number-button-class',
+      start: '&laquo;',
+      prev: '&lsaquo;',
+      next: '&rsaquo;',
+      last: '&raquo;',
     } as PaginationSettings;
 
 

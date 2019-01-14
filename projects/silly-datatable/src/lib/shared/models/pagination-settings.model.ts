@@ -21,4 +21,28 @@ export class PaginationSettings {
    * Css class for buttons with number of page.
    */
   public numberButtonClass: string;
+
+
+  /**
+   * "To Start" button word or symbol.
+   */
+  public start: string;
+
+
+  /**
+   * "Prev" button word or symbol.
+   */
+  public prev: string;
+
+
+  /**
+   * "Next" button word or symbol.
+   */
+  public next: string;
+
+
+  /**
+   * "To Last" button word or symbol.
+   */
+  public last: string;
 }
