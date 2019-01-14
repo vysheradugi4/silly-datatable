@@ -6,16 +6,14 @@
     <button
         *ngIf="currentPage > 0"
         [ngClass]="settings?.arrowButtonClass"
-        (click)="pageRequest(0)">
-        <<
-    </button>
+        (click)="pageRequest(0)"
+        [innerHTML]="settings?.start || '<<'"></button>
 
     <button
         *ngIf="currentPage > 0"
         [ngClass]="settings?.arrowButtonClass"
-        (click)="pageRequest(currentPage - 1)">
-        <
-    </button>
+        (click)="pageRequest(currentPage - 1)"
+        [innerHTML]="settings?.prev || '<'"></button>
 
     <button
         *ngFor="let page of pageArray"
@@ -29,15 +27,12 @@
     <button
         *ngIf="(currentPage + 1) < numberOfPages"
         [ngClass]="settings?.arrowButtonClass"
-        (click)="pageRequest(currentPage + 1)">
-        >
-    </button>
+        (click)="pageRequest(currentPage + 1)"
+        [innerHTML]="settings?.next || '>'"></button>
 
     <button
         *ngIf="(currentPage + 1) < numberOfPages"
         [ngClass]="settings?.arrowButtonClass"
-        (click)="pageRequest(numberOfPages - 1)">
-        >>
-    </button>
-
+        (click)="pageRequest(numberOfPages - 1)"
+        [innerHTML]="settings?.last || '>>'"></button>
 </div>

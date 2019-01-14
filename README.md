@@ -282,6 +282,34 @@ __Pagination settings:__
    
 * `numberButtonClass` – Css class for buttons with number of page.
    
+* `start` – "To Start" button word or symbol ("<<" by default).
+   
+* `prev` – "Prev" button word or symbol ("<" by default).
+   
+* `next` – "Next" button word or symbol (">" by default).
+   
+* `last` – "To Last" button word or symbol (">>" by default).
+   
+   
+For example:
+   
+```
+this.paginationSettings = {
+  infoClass: 'info-class',
+  containerClass: 'container-class',
+  arrowButtonClass: 'arrow-button-class',
+  numberButtonClass: 'number-button-class',
+  start: '&laquo;',
+  prev: '&lsaquo;',
+  next: '&rsaquo;',
+  last: '&raquo;',
+} as PaginationSettings;
+```
+   
+__Pagination buttons__
+   
+Selected page button will be disabled, and added class `active`.
+  
    
 __Page changed event__
    

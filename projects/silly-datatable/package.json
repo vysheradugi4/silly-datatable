@@ -1,6 +1,6 @@
 {
   "name": "silly-datatable",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "Angular 6+ light datatable with easy styling functional, server side sorting, paging, filtering, etc.",
   "keywords": [
       "table",
