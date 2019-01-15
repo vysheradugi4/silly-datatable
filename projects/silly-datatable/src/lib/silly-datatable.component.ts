@@ -5,8 +5,9 @@ import { TableSettings } from './shared/models/table-settings.model';
 import { Column } from './shared/models/column.model';
 import { Sort } from './shared/models/sort.model';
 import { SettingsService } from './shared/services/settings.service';
-import { SearchService } from './shared/services/search.service';
 import { Subject } from 'rxjs';
+import { RequestService } from './shared/services/request.service';
+import { TableParams } from './shared/models/table-params.model';
 
 
 @Component({
@@ -25,6 +26,14 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
   @Input() public columns: Array<Column>;
   @Input() public source: Array<any>;
 
+
+  /**
+   * Table params contains current paging, search string, sort params.
+   */
+  @Input() public set tableParams(params: TableParams) {
+    this._requestService.tableParams = params;
+  }
+
   /**
    * Stored table settings in service.
    */
@@ -32,15 +41,14 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
     this.settingsService.config = value;
   }
 
-  @Output() public sort: EventEmitter<Sort> = new EventEmitter<Sort>();
+  @Output() public request: EventEmitter<TableParams> = new EventEmitter<TableParams>();
   @Output() public rowClicked: EventEmitter<Sort> = new EventEmitter<Sort>();
-  @Output() public searchRequest: EventEmitter<string> = new EventEmitter();
 
   private _unsubscribe: Subject<boolean> = new Subject<boolean>();
 
   constructor(
     public settingsService: SettingsService,
-    private _searchService: SearchService
+    private _requestService: RequestService
   ) { }
 
 
@@ -48,11 +56,11 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
     /**
      * Search request hanlder.
      */
-    this._searchService.request$.pipe(
+    this._requestService.call$.pipe(
       takeUntil(this._unsubscribe)
     )
-      .subscribe((searchRequest: string) => {
-        this.searchRequest.emit(searchRequest);
+      .subscribe((tableParams: TableParams) => {
+        this.request.emit(tableParams);
       });
   }
 
@@ -79,7 +87,8 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
       order,
     } as Sort;
 
-    this.sort.next(this.currentSort);
+    this._requestService.tableParams.sort = this.currentSort;
+    this._requestService.next();
   }
 
 

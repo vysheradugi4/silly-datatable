@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { Pagination } from './../../models/pagination.model';
 import { PaginationSettings } from './../../models/pagination-settings.model';
+import { RequestService } from './../../services/request.service';
 
 @Component({
   selector: 'ngx-silly-datatable-paging',
@@ -13,35 +14,25 @@ export class SillyDatatablePagingComponent implements OnInit {
   public pageArray: number[];
 
   /**
-   * Pagination details, contains current page number, number of pages, number
-   * of items per page.
-   */
-  @Input() public set pagination(details: Pagination) {
-    // Page validation.
-    details.page = details.page > details.pages - 1 ? details.pages - 1 : details.page;
-
-    this._pagination = details;
-  }
-
-
-  /**
    * Settings for customization pagination component.
    */
   @Input() public settings: PaginationSettings;
 
 
-  /**
-   * New page data and pagination details request.
-   */
-  @Output() changePage: EventEmitter<Pagination> = new EventEmitter();
-
-
   private _pagination: Pagination;
 
-  constructor() { }
+  constructor(
+    private _requestService: RequestService
+  ) { }
 
 
   ngOnInit() {
+    /**
+   * Pagination details, contains current page number, number of pages, number
+   * of items per page.
+   */
+    this._pagination = this._requestService.tableParams.pagination;
+
     this.pageArray = Array.from({ length: this._pagination.pages }, (_, i) => ++i);
   }
 
@@ -49,7 +40,8 @@ export class SillyDatatablePagingComponent implements OnInit {
   public pageRequest(page: number): void {
     const pagination = Object.assign(this._pagination, { page });
 
-    this.changePage.emit(pagination);
+    this._requestService.tableParams.pagination = pagination;
+    this._requestService.next();
   }
 
 
@@ -99,9 +91,4 @@ export class SillyDatatablePagingComponent implements OnInit {
 
     return this.currentPage + 3;
   }
-
-  // tslint:disable-next-line:max-line-length
-  // ((numberOfPages > 5 && numberOfPages - currentPage < 3) ? (numberOfPages - 5) : (currentPage > 1 && currentPage < 3 ? currentPage - 2 : 0)):(currentPage < 2 ? 5 : currentPage + 3)
-
-
 }

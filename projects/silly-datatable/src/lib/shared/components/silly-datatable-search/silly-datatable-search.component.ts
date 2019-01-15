@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { filter, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
-import { SearchService } from './../../services/search.service';
+import { RequestService } from './../../services/request.service';
 
 
 @Component({
@@ -64,7 +64,7 @@ export class SillyDatatableSearchComponent implements OnInit {
   private _disabled = false;
 
   constructor(
-    private _searchService: SearchService
+    private _requestService: RequestService
   ) { }
 
   ngOnInit(): void {
@@ -83,7 +83,8 @@ export class SillyDatatableSearchComponent implements OnInit {
       takeUntil(this._unsubscribe)
     )
       .subscribe((searchString: string) => {
-        this._searchService.request = searchString;
+        this._requestService.tableParams.search = searchString;
+        this._requestService.next();
       });
   }
 }

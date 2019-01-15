@@ -20,13 +20,11 @@
     [settings]="settings"
     [columns]="columns"
     [source]="source"
-    (sort)="sorting($event)"
+    [tableParams]="tableParams"
     (rowClicked)="selected($event)"
-    (searchRequest)="searchRequest($event)">
+    (request)="request($event)">
 </ngx-silly-datatable>
 
 <ngx-silly-datatable-paging
-    [pagination]="pagination"
-    [settings]="paginationSettings"
-    (changePage)="changePage($event)">
+    [settings]="paginationSettings">
 </ngx-silly-datatable-paging>

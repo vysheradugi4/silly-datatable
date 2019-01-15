@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { TableSettings, Column, Sort, Pagination, PaginationSettings } from 'projects/silly-datatable/src/public_api';
+import { TableSettings, Column, PaginationSettings, TableParams, Pagination } from 'projects/silly-datatable/src/public_api';
 
 
 @Component({
@@ -11,7 +11,7 @@ import { TableSettings, Column, Sort, Pagination, PaginationSettings } from 'pro
 export class AppComponent implements OnInit {
 
   public settings: TableSettings;
-  public pagination: Pagination;
+  public tableParams: TableParams = new TableParams();
   public paginationSettings: PaginationSettings;
   public columns: Array<Column>;
   public source: Array<any>;
@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.pagination = {
+    this.tableParams.pagination = {
       page: 0,
       pages: 10,
       itemsPerPage: 10,
@@ -82,22 +82,12 @@ export class AppComponent implements OnInit {
   }
 
 
-  public sorting(details: Sort) {
-    console.log('Sorting details = ', details);
+  public request(tableParams: TableParams) {
+    console.log('Table params = ', tableParams);
   }
 
 
   public selected(row: any) {
     console.log('Clicked row = ', row);
-  }
-
-
-  public searchRequest(str: string) {
-    console.log('Search Request = ', str);
-  }
-
-
-  public changePage(details: Pagination) {
-    console.log('Page request = ', details);
   }
 }

@@ -81,12 +81,7 @@ added to each `<tr>` tag except first.
    
 * `sortHeaderClass` – Class for sortable header link. Will be added to `<a>` tag.
    
-    
-__Outputs Events__
    
-* `searchRequest` – Triggered when user used search input.
-
-
 All properties are optional. 
 
 
@@ -104,6 +99,56 @@ this.settings = {
 Don't forget import TableSettings:
 
 `import { TableSettings } from 'silly-datatable';`
+   
+   
+__Table params__
+   
+`<ngx-silly-datatable [tableParams]="tableParams"></ngx-silly-datatable>`
+   
+The tableParams object is is the instance of TableParams class. Contains current
+search string, sort params and pagination params.
+   
+Don't forget import class:
+   
+`import { TableParams } from 'silly-datatable';`
+   
+   
+TableParams contains:
+   
+* `search` – Current search string.
+   
+* `sort` – Instance of `Sort` class.
+   
+* `pagination` – Instance of `Pagination` class.
+
+
+__Sort__
+   
+Part of TableParams class. This class contains:
+   
+* `columnName` – The column name what will be used for sorting.
+   
+* `order` – Order sorting, Can be 'desc' or 'asc'.
+   
+Sort can be used with pagination and search.
+   
+   
+__Pagination__
+   
+The part of TableParams class. This class contains:
+   
+* `page` – Current page number.
+   
+* `pages` – Number of pages.
+   
+* `itemsPerPage` – Number of elements on the page.
+      
+        
+__Outputs Events__
+   
+* `request` – Triggered when user used search input, sort or pagination functional.
+Event contains tableParams (see above).
+
 
 __Columns settings__
    
@@ -178,11 +223,8 @@ this.source = [
       { id: 5, name: 'test5', description: 'some description' },
 ];
 ```
-
-__Sorting__
-
-`<ngx-silly-datatable (sort)="sorting($event)"></ngx-silly-datatable>`
-
+   
+   
 __Row clicked event__
 
 `<ngx-silly-datatable (rowClicked)="selected($event)"></ngx-silly-datatable>`
@@ -198,12 +240,9 @@ __Disable input__
 Disable input for example when loading process in progress.
 
 `<ngx-silly-datatable-paging [disable]="disable"></ngx-silly-datatable-paging>`
-
-__Custom placehoder__
-
-Please look at table settings.
-
-
+   
+   
+  
 ## Silly datatable search component
 
 Tag for insert search field in template:
@@ -257,18 +296,16 @@ Tag for insert paging component in template:
    
 __Pagination inputs:__   
    
-<ngx-silly-datatable-paging [pagination]="pagination"></ngx-silly-datatable-paging>
+<ngx-silly-datatable-paging [settings]="paginationSettings"></ngx-silly-datatable-paging>
    
-   
-* `pagination` – Init and updated pagination details. Instance of Pagination class.
    
 * `settings` – Setting for customization appearance of pagination component
 (Instance of PaginationSettings class).
    
    
-Don't forget import Pagination and PaginationSettings for init new instance:
+Don't forget import PaginationSettings for init new instance:
    
-`import { Pagination, PaginationSettings } from 'silly-datatable';`
+`import { PaginationSettings } from 'silly-datatable';`
    
    
 __Pagination settings:__   
@@ -309,14 +346,7 @@ this.paginationSettings = {
 __Pagination buttons__
    
 Selected page button will be disabled, and added class `active`.
-  
-   
-__Page changed event__
-   
-<ngx-silly-datatable-paging (changePage)="changePageHandler($event)"></ngx-silly-datatable-paging>
-    
-$event contains Pagination instance with data for get new page.
-   
+     
    
 ## CSS sorting arrows solution
 
