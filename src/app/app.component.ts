@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
 
     this.pagination = {
-      page: 3,
+      page: 0,
       pages: 10,
       itemsPerPage: 10,
     } as Pagination;

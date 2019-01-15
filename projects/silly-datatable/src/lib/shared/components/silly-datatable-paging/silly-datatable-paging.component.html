@@ -1,10 +1,11 @@
+currentPage = {{ currentPage }}
 <div [ngClass]="settings?.containerClass">
     <span [ngClass]="settings?.infoClass">
         Page {{ currentPage + 1 }} of {{ numberOfPages }}
     </span>
     
     <button
-        *ngIf="currentPage > 0"
+        *ngIf="currentPage > 0 && numberOfPages > 2"
         [ngClass]="settings?.arrowButtonClass"
         (click)="pageRequest(0)"
         [innerHTML]="settings?.start || '<<'"></button>
@@ -16,7 +17,7 @@
         [innerHTML]="settings?.prev || '<'"></button>
 
     <button
-        *ngFor="let page of pageArray"
+        *ngFor="let page of pageArray | slice:start:end"
         [ngClass]="settings?.numberButtonClass"
         [class.active]="currentPage === (page - 1)"
         (click)="pageRequest(page - 1)"
@@ -31,7 +32,7 @@
         [innerHTML]="settings?.next || '>'"></button>
 
     <button
-        *ngIf="(currentPage + 1) < numberOfPages"
+        *ngIf="(currentPage + 1) < numberOfPages && numberOfPages > 2"
         [ngClass]="settings?.arrowButtonClass"
         (click)="pageRequest(numberOfPages - 1)"
         [innerHTML]="settings?.last || '>>'"></button>
