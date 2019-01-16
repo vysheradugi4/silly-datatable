@@ -84,6 +84,8 @@ export class SillyDatatableSearchComponent implements OnInit {
     )
       .subscribe((searchString: string) => {
         this._requestService.tableParams.search = searchString;
+        this._requestService.tableParams.pagination.page = 0;
+        delete this._requestService.tableParams.pagination.pages;
         this._requestService.next();
       });
   }
