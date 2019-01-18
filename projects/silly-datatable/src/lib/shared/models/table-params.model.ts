@@ -3,7 +3,8 @@ import { Sort } from './sort.model';
 
 
 export class TableParams {
-  public search: String;
-  public sort: Sort;
+  public search?: string;
+  public sort?: Sort;
   public pagination: Pagination;
+  public filters?: any;
 }
