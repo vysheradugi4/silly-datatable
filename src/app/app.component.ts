@@ -1,6 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 
-import { TableSettings, Column, PaginationSettings, TableParams, Pagination } from 'projects/silly-datatable/src/public_api';
+import {
+  TableSettings,
+  Column,
+  PaginationSettings,
+  TableParams,
+  Pagination,
+  FilterFormField
+} from 'projects/silly-datatable/src/public_api';
 
 
 @Component({
@@ -15,6 +22,8 @@ export class AppComponent implements OnInit {
   public paginationSettings: PaginationSettings;
   public columns: Array<Column>;
   public source: Array<any>;
+  public filterSettings: Array<FilterFormField>;
+
   constructor() { }
 
   ngOnInit(): void {
@@ -78,6 +87,28 @@ export class AppComponent implements OnInit {
       { id: 3, name: 'test3', description: 'some description' },
       { id: 4, name: 'test4', description: 'some description' },
       { id: 5, name: 'test5', description: 'some description' },
+    ];
+
+
+    this.filterSettings = [
+      {
+        id: 'name',
+        type: 'textbox',
+        name: 'name',
+        placeholder: 'Enter name...',
+        value: 'faster',
+      },
+      {
+        id: 'type',
+        type: 'dropbox',
+        name: 'type',
+        value: [
+          { key: 1, value: 'Test value 1' },
+          { key: 2, value: 'Test value 2' },
+          { key: 3, value: 'Test value 3' },
+        ],
+        placeholder: 'Select type ...',
+      },
     ];
   }
 

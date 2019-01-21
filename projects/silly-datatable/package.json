@@ -1,7 +1,7 @@
 {
   "name": "silly-datatable",
-  "version": "1.2.3",
-  "description": "Angular 6+ light datatable with easy styling functional, server side sorting, paging, filtering, etc.",
+  "version": "1.3.0",
+  "description": "Angular 6+ light datatable with easy styling functional, server side sorting, pagination, filtering, etc.",
   "keywords": [
       "table",
       "datatable",
@@ -10,7 +10,8 @@
       "server side",
       "customizing",
       "dataset",
-      "paging"
+      "paging",
+      "pagination"
   ],
   "homepage": "https://github.com/vysheradugi4/silly-datatable#readme",
   "license": "The MIT License (MIT)",

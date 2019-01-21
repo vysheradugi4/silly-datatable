@@ -1,0 +1,16 @@
+<div>
+    <form [formGroup]="filterForm">
+
+        <div *ngFor="let filterFieldSettings of settings">
+            <ngx-filter-field
+                [filterFieldSettings]="filterFieldSettings"
+                [formControlName]="filterFieldSettings.name">
+            </ngx-filter-field>
+        </div>
+
+        <button [disabled]="!values" (click)="applyFilters()">
+            Apply Filters
+        </button>
+
+    </form>
+</div>

@@ -16,6 +16,8 @@
     <span>required</span>
 </ng-template>
 
+<hr>
+
 <ngx-silly-datatable
     [settings]="settings"
     [columns]="columns"
@@ -25,6 +27,12 @@
     (request)="request($event)">
 </ngx-silly-datatable>
 
-<ngx-silly-datatable-paging
-    [settings]="paginationSettings">
+<hr>
+
+<ngx-silly-datatable-paging [settings]="paginationSettings">
 </ngx-silly-datatable-paging>
+
+<hr>
+
+<ngx-silly-datatable-filter [settings]="filterSettings">
+</ngx-silly-datatable-filter>
