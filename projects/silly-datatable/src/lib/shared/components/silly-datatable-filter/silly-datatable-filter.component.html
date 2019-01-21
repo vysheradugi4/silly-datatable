@@ -1,15 +1,21 @@
-<div>
+<div [ngClass]="settings?.formContainerClass">
     <form [formGroup]="filterForm">
 
-        <div *ngFor="let filterFieldSettings of settings">
-            <ngx-filter-field
-                [filterFieldSettings]="filterFieldSettings"
-                [formControlName]="filterFieldSettings.name">
+        <div *ngFor="let formField of formFields">
+            <ngx-filter-field [filterFieldSettings]="formField"
+                [formControlName]="formField.name">
             </ngx-filter-field>
         </div>
 
-        <button [disabled]="!values" (click)="applyFilters()">
-            Apply Filters
+        <button (click)="onCancel()"
+            [ngClass]="settings?.cancelButtonClass">
+            {{ settings?.cancelButtonTitle || 'Cancel' }}
+        </button>
+
+        <button [disabled]="!values"
+            [ngClass]="settings?.submitButtonClass"
+            (click)="applyFilters()">
+            {{ settings?.submitButtonTitle || 'Apply Filters' }}
         </button>
 
     </form>

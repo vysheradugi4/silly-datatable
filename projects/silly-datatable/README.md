@@ -287,16 +287,16 @@ For example:
 ```
    
    
-## Silly datatable paging component
+## Silly datatable pagination component
 
 Tag for insert paging component in template:
    
-<ngx-silly-datatable-paging></ngx-silly-datatable-paging>
+`<ngx-silly-datatable-paging></ngx-silly-datatable-paging>`
    
    
 __Pagination inputs:__   
    
-<ngx-silly-datatable-paging [settings]="paginationSettings"></ngx-silly-datatable-paging>
+`<ngx-silly-datatable-paging [settings]="paginationSettings"></ngx-silly-datatable-paging>`
    
    
 * `settings` – Setting for customization appearance of pagination component
@@ -348,6 +348,85 @@ __Pagination buttons__
 Selected page button will be disabled, and added class `active`.
      
    
+## Silly datatable filter component
+   
+Filter allows to create few form controls for set filtered data request.
+   
+Tag for insert paging component in template:
+   
+`<ngx-silly-datatable-filter></ngx-silly-datatable-filter>`
+   
+   
+__Filter inputs:__   
+   
+```
+<ngx-silly-datatable-filter
+  [formFields]="filterFormFields"
+  [settings]="filterSettings">
+</ngx-silly-datatable-filter>
+```
+
+* `settings` – Setting for setup filter appearance (FilterSettings).
+   
+* `formFields` - Settings for create filter form fields (FilterFormField[]).
+   
+   
+Don't forget import PaginationSettings for init new instance:
+   
+`import { FilterSettings, FilterFormField } from 'silly-datatable';`
+   
+   
+__Filter settings:__   
+   
+* `formContainerClass` – Div container class of filter.
+    
+* `cancelButtonTitle` – Cancel button text ("Cancel" by default).
+   
+* `cancelButtonClass` – Cancel button class.
+   
+* `submitButtonTitle` – Submit button text("Apply filters" by default).
+   
+* `submitButtonClass` – Submit button class.
+      
+For example: 
+```
+this.filterSettings = {
+  formContainerClass: 'filter-container',
+  cancelButtonClass: 'cancel-button-class',
+  cancelButtonTitle: 'Close',
+  submitButtonClass: 'submit-button-class',
+  submitButtonTitle: 'Submit',
+} as FilterSettings;
+```
+   
+   
+__Filter form fields:__   
+   
+For example:
+```
+this.filterFormFields = [
+  {
+    id: 'name',
+    type: 'textbox',
+    name: 'name',
+    placeholder: 'Enter name...',
+    value: 'faster',
+  } as FilterFormField,
+  {
+    id: 'type',
+    type: 'dropbox',
+    name: 'type',
+    value: [
+      { key: 1, value: 'Test value 1' },
+      { key: 2, value: 'Test value 2' },
+      { key: 3, value: 'Test value 3' },
+    ],
+    placeholder: 'Select type ...',
+  } as FilterFormField,
+];
+```
+
+
 ## CSS sorting arrows solution
 
 For add up and down arrows in header of sortable column, can use this css   
@@ -355,25 +434,25 @@ solution:
     
 ```
 .asc:after {
-        content: "";
-        margin-left: 0.25rem;
-        display: inline-block;
-        width: 0;
-        height: 0;
-        border-left: 6px solid transparent;
-        border-right: 6px solid transparent;
-        border-bottom: 6px solid black;
-      }
+  content: "";
+  margin-left: 0.25rem;
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid black;
+}
 
 .desc:after {
-        content: "";
-        margin-left: 0.25rem;
-        display: inline-block;
-        width: 0;
-        height: 0;
-        border-left: 6px solid transparent;
-        border-right: 6px solid transparent;
-        border-top: 6px solid black;
+  content: "";
+  margin-left: 0.25rem;
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid black;
 }
 ```   
     

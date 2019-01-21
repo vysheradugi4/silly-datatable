@@ -1,7 +1,9 @@
-import { Component, OnInit, Input, forwardRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, forwardRef, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
+import { Subject } from 'rxjs';
 
 import { FilterFormField } from './../../models/filter-form-field.model';
+import { takeUntil } from 'rxjs/operators';
 
 
 @Component({
@@ -17,7 +19,7 @@ import { FilterFormField } from './../../models/filter-form-field.model';
     },
   ],
 })
-export class FilterFieldComponent implements OnInit, ControlValueAccessor {
+export class FilterFieldComponent implements OnInit, ControlValueAccessor, OnDestroy {
 
   public disabled: boolean;
   public touched: Function;
@@ -25,6 +27,8 @@ export class FilterFieldComponent implements OnInit, ControlValueAccessor {
   public formControl: FormControl;
 
   @Input() public filterFieldSettings: FilterFormField;
+
+  private _unsubscribe: Subject<boolean> = new Subject<boolean>();
 
   constructor() { }
 
@@ -34,7 +38,9 @@ export class FilterFieldComponent implements OnInit, ControlValueAccessor {
 
     this.formControl = new FormControl();
 
-    this.formControl.valueChanges
+    this.formControl.valueChanges.pipe(
+      takeUntil(this._unsubscribe)
+    )
       .subscribe((value) => {
         this.change(value);
       });
@@ -63,5 +69,11 @@ export class FilterFieldComponent implements OnInit, ControlValueAccessor {
     }
 
     this.formControl.enable();
+  }
+
+
+  ngOnDestroy() {
+    this._unsubscribe.next(true);
+    this._unsubscribe.unsubscribe();
   }
 }

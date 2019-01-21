@@ -6,7 +6,8 @@ import {
   PaginationSettings,
   TableParams,
   Pagination,
-  FilterFormField
+  FilterFormField,
+  FilterSettings
 } from 'projects/silly-datatable/src/public_api';
 
 
@@ -22,7 +23,8 @@ export class AppComponent implements OnInit {
   public paginationSettings: PaginationSettings;
   public columns: Array<Column>;
   public source: Array<any>;
-  public filterSettings: Array<FilterFormField>;
+  public filterFormFields: Array<FilterFormField>;
+  public filterSettings: FilterSettings;
 
   constructor() { }
 
@@ -90,14 +92,14 @@ export class AppComponent implements OnInit {
     ];
 
 
-    this.filterSettings = [
+    this.filterFormFields = [
       {
         id: 'name',
         type: 'textbox',
         name: 'name',
         placeholder: 'Enter name...',
         value: 'faster',
-      },
+      } as FilterFormField,
       {
         id: 'type',
         type: 'dropbox',
@@ -108,8 +110,17 @@ export class AppComponent implements OnInit {
           { key: 3, value: 'Test value 3' },
         ],
         placeholder: 'Select type ...',
-      },
+      } as FilterFormField,
     ];
+
+
+    this.filterSettings = {
+      formContainerClass: 'filter-container',
+      cancelButtonClass: 'cancel-button-class',
+      cancelButtonTitle: 'Close',
+      submitButtonClass: 'submit-button-class',
+      submitButtonTitle: 'Submit',
+    } as FilterSettings;
   }
 
 

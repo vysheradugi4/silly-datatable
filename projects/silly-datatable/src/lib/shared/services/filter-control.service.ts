@@ -6,7 +6,11 @@ import { FilterFormField } from './../models/filter-form-field.model';
 export class FilterControlService {
   constructor() { }
 
-  toFormGroup(filters: Array<FilterFormField>) {
+  toFormGroup(filters: Array<FilterFormField>): FormGroup {
+    if (!filters.length) {
+      return;
+    }
+
     const group: any = {};
 
     filters.forEach(filter => {

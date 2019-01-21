@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -6,6 +6,7 @@ import { Subject } from 'rxjs';
 import { RequestService } from './../../services/request.service';
 import { FilterFormField } from './../../models/filter-form-field.model';
 import { FilterControlService } from './../../services/filter-control.service';
+import { FilterSettings } from './../../models/filter-settings.model';
 
 
 @Component({
@@ -18,9 +19,13 @@ export class SillyDatatableFilterComponent implements OnInit, OnDestroy {
   public values: any;
   public filterForm: FormGroup;
 
-  @Input() public settings: Array<FilterFormField>;
+  @Input() public settings: FilterSettings;
+
+  @Input() public formFields: Array<FilterFormField>;
 
   private _unsubscribe: Subject<boolean> = new Subject<boolean>();
+
+  @Output() public cancel: EventEmitter<null> = new EventEmitter();
 
   constructor(
     private _requestService: RequestService,
@@ -29,13 +34,12 @@ export class SillyDatatableFilterComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    this.filterForm = this._filterControlService.toFormGroup(this.settings);
+    this.filterForm = this._filterControlService.toFormGroup(this.formFields);
 
     this.filterForm.valueChanges.pipe(
       takeUntil(this._unsubscribe)
     )
       .subscribe((values) => {
-        console.log('zzzzzzzz', values);
         this.values = values;
       });
   }
@@ -49,6 +53,14 @@ export class SillyDatatableFilterComponent implements OnInit, OnDestroy {
     this._requestService.tableParams.pagination.page = 0;
     delete this._requestService.tableParams.pagination.pages;
     this._requestService.next();
+  }
+
+
+  /**
+   * Cancel button click handler.
+   */
+  public onCancel(): void {
+    this.cancel.emit();
   }
 
 
