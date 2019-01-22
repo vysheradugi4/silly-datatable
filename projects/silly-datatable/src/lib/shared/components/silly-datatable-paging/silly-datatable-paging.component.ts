@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 
 import { Pagination } from './../../models/pagination.model';
 import { PaginationSettings } from './../../models/pagination-settings.model';
@@ -8,6 +8,7 @@ import { RequestService } from './../../services/request.service';
   selector: 'ngx-silly-datatable-paging',
   templateUrl: './silly-datatable-paging.component.html',
   styles: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SillyDatatablePagingComponent implements OnInit {
 

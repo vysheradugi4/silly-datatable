@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, TemplateRef } from '@angular/core';
+import { Component, OnInit, Input, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { filter, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
@@ -10,6 +10,7 @@ import { RequestService } from './../../services/request.service';
   selector: 'ngx-silly-datatable-search',
   templateUrl: './silly-datatable-search.component.html',
   styles: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SillyDatatableSearchComponent implements OnInit {
 

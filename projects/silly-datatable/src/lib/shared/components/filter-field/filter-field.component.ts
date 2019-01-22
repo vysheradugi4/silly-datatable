@@ -26,6 +26,11 @@ export class FilterFieldComponent implements OnInit, ControlValueAccessor, OnDes
   public change: Function;
   public formControl: FormControl;
 
+  /**
+   * Context for custom input.
+   */
+  public context: any;
+
   @Input() public filterFieldSettings: FilterFormField;
 
   private _unsubscribe: Subject<boolean> = new Subject<boolean>();
@@ -44,6 +49,21 @@ export class FilterFieldComponent implements OnInit, ControlValueAccessor, OnDes
       .subscribe((value) => {
         this.change(value);
       });
+
+
+    /**
+     * Setup context.
+     */
+    if (this.filterFieldSettings.customInput) {
+      // Copy all fields except customInput ref.
+      const {customInput, ...settings} = this.filterFieldSettings;
+
+      this.context = {
+        filterFieldSettings: settings,
+        formControl: this.formControl,
+        touched: this.touched,
+      };
+    }
   }
 
 

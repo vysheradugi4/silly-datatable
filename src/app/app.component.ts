@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 
 import {
   TableSettings,
@@ -25,6 +25,8 @@ export class AppComponent implements OnInit {
   public source: Array<any>;
   public filterFormFields: Array<FilterFormField>;
   public filterSettings: FilterSettings;
+
+  @ViewChild('customInput') public customInput: TemplateRef<any>;
 
   constructor() { }
 
@@ -94,22 +96,38 @@ export class AppComponent implements OnInit {
 
     this.filterFormFields = [
       {
+        id: 'dateRange',
+        type: 'custom',
+        name: 'dateRange',
+        placeholder: 'custom control',
+        controlContainerClass: 'control-container',
+        labelContainerClass: 'label-container',
+        formControlLabel: 'Textbox',
+        customInput: this.customInput,
+      } as FilterFormField,
+      {
         id: 'name',
         type: 'textbox',
         name: 'name',
         placeholder: 'Enter name...',
         value: 'faster',
+        controlContainerClass: 'control-container',
+        labelContainerClass: 'label-container',
+        formControlLabel: 'Textbox',
       } as FilterFormField,
       {
         id: 'type',
         type: 'dropbox',
         name: 'type',
+        placeholder: 'Select type ...',
         value: [
           { key: 1, value: 'Test value 1' },
           { key: 2, value: 'Test value 2' },
           { key: 3, value: 'Test value 3' },
         ],
-        placeholder: 'Select type ...',
+        controlContainerClass: 'control-container',
+        labelContainerClass: 'label-container',
+        formControlLabel: 'Dropbox',
       } as FilterFormField,
     ];
 

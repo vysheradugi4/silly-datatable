@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -13,6 +13,7 @@ import { FilterSettings } from './../../models/filter-settings.model';
   selector: 'ngx-silly-datatable-filter',
   templateUrl: './silly-datatable-filter.component.html',
   styles: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SillyDatatableFilterComponent implements OnInit, OnDestroy {
 

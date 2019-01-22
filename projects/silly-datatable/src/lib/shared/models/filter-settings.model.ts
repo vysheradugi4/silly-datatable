@@ -4,4 +4,7 @@ export class FilterSettings {
   public cancelButtonTitle: string;
   public submitButtonClass: string;
   public submitButtonTitle: string;
+  public buttonsContainerClass: string;
+  public formElementsContainerClass: string;
+  public formControlLabel: string;
 }

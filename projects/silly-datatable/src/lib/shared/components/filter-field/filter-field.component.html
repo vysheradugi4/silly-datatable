@@ -1,3 +1,7 @@
+<label *ngIf="filterFieldSettings?.formControlLabel"
+    [ngClass]="filterFieldSettings.labelContainerClass"
+    [for]="filterFieldSettings.id">{{ filterFieldSettings?.formControlLabel }}</label>
+
 <div [ngClass]="filterFieldSettings.controlContainerClass">
 
     <ng-container [ngSwitch]="filterFieldSettings.type">
@@ -7,7 +11,7 @@
             [id]="filterFieldSettings.id"
             type="text"
             [ngClass]="filterFieldSettings.controlClass"
-            [placeholder]="filterFieldSettings.placeholder"
+            [placeholder]="filterFieldSettings.placeholder || ''"
             (blur)="touched()">
 
         <select *ngSwitchCase="'dropbox'"
@@ -27,11 +31,13 @@
                 [ngValue]="opt">
                 {{opt.value}}
             </option>
-
         </select>
 
+        <ng-container *ngSwitchCase="'custom'">
+            <ng-container *ngTemplateOutlet="filterFieldSettings.customInput; context: context">
+            </ng-container>
+        </ng-container>
+
         <span *ngSwitchDefault>Type of filter not found.</span>
-
     </ng-container>
-
 </div>

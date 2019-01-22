@@ -3,8 +3,7 @@
     <br>
 </ng-template>
 
-<ngx-silly-datatable-search
-    placeholder="Search..."
+<ngx-silly-datatable-search placeholder="Search..."
     inputId="search"
     inputClass="search-field"
     [prefix]="prefix"
@@ -18,8 +17,7 @@
 
 <hr>
 
-<ngx-silly-datatable
-    [settings]="settings"
+<ngx-silly-datatable [settings]="settings"
     [columns]="columns"
     [source]="source"
     [tableParams]="tableParams"
@@ -34,5 +32,18 @@
 
 <hr>
 
-<ngx-silly-datatable-filter [formFields]="filterFormFields" [settings]="filterSettings">
+<ngx-silly-datatable-filter [formFields]="filterFormFields"
+    [settings]="filterSettings">
 </ngx-silly-datatable-filter>
+
+<ng-template #customInput
+    let-filterFieldSettings="filterFieldSettings"
+    let-formControl="formControl"
+    let-touched="touched">
+    <input [formControl]="formControl"
+        [id]="filterFieldSettings.id"
+        type="text"
+        [ngClass]="filterFieldSettings.controlClass"
+        [placeholder]="filterFieldSettings.placeholder"
+        (blur)="touched()">
+</ng-template>

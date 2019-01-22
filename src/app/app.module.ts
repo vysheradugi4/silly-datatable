@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { SillyDatatableModule } from 'silly-datatable';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -12,6 +13,7 @@ import { SillyDatatableModule } from 'silly-datatable';
   imports: [
     BrowserModule,
     SillyDatatableModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
