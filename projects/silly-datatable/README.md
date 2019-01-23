@@ -168,6 +168,11 @@ following properties:
 * `sortable` – Resolver for sorting current column.
 
 * `prepareCellFunction` – Customization function for prepare data before showed.
+    
+* `componentCell` – Custom component to display in the cell. Can be used for place buttons,
+links, form fields and etc. in cell. Property `row` in this custom component will
+be contains current source of row. Make sure that your component added to entryComponents
+section in your module.
 
 All properties are optional except `id`.
 
@@ -198,6 +203,14 @@ this.columns = [
         cellClass: 'cell',
         sortable: false,
 
+      } as Column,
+      {
+        id: 'action',
+        title: 'Action',
+        headerClass: 'action',
+        cellClass: 'cell',
+        sortable: false,
+        componentCell: EditButtonComponent,
       } as Column,
 ];
 ```
@@ -360,9 +373,8 @@ Tag for insert paging component in template:
 __Filter inputs:__   
    
 ```
-<ngx-silly-datatable-filter
-  [formFields]="filterFormFields"
-  [settings]="filterSettings">
+<ngx-silly-datatable-filter [formFields]="filterFormFields"
+    [settings]="filterSettings">
 </ngx-silly-datatable-filter>
 ```
 
@@ -376,6 +388,8 @@ Don't forget import PaginationSettings for init new instance:
 `import { FilterSettings, FilterFormField } from 'silly-datatable';`
    
    
+  public formControlLabel: string;
+}
 __Filter settings:__   
    
 * `formContainerClass` – Div container class of filter.
@@ -387,7 +401,14 @@ __Filter settings:__
 * `submitButtonTitle` – Submit button text("Apply filters" by default).
    
 * `submitButtonClass` – Submit button class.
-      
+   
+* `buttonsContainerClass` – Class of the div container that contains buttons
+'Cancel' and 'Apply filters'.
+   
+* `formElementsContainerClass` – Class of the div container that contains the 
+container with buttons and all form fields.
+   
+         
 For example: 
 ```
 this.filterSettings = {
@@ -396,37 +417,96 @@ this.filterSettings = {
   cancelButtonTitle: 'Close',
   submitButtonClass: 'submit-button-class',
   submitButtonTitle: 'Submit',
+  buttonsContainerClass: 'buttons-container',
+  formElementsContainerClass: 'form-container',
 } as FilterSettings;
 ```
    
    
 __Filter form fields:__   
    
+* `id` – Form field id.
+   
+* `name` – Form control name.
+   
+* `type` – Type of input. Available Values: 'textbox', 'dropbox', 'custom'.
+   
+* `value` – Initial value of form field (optional).
+   
+* `placeholder` – Placeholder of  form field (optional).
+   
+* `controlClass` – Form field class (optional).
+   
+* `formGroupClass` – Combine label and form field (optional).
+   
+* `controlContainerClass` – Div container of form field class (optional).
+   
+* `labelContainerClass` – Label container class (optional).
+   
+* `formControlLabel` – Title in label (optional).
+   
+* `customInput` – Custom input template (TemplateRef<any>). This is optional field.
+
+* `disabled` – Disable form field.
+   
+   
 For example:
 ```
 this.filterFormFields = [
+  {
+    id: 'dateRange',
+    type: 'custom',
+    name: 'dateRange',
+    placeholder: 'custom control',
+    controlContainerClass: 'control-container',
+    labelContainerClass: 'label-container',
+    formControlLabel: 'Textbox',
+    customInput: this.customInput,
+  } as FilterFormField,
   {
     id: 'name',
     type: 'textbox',
     name: 'name',
     placeholder: 'Enter name...',
     value: 'faster',
+    controlContainerClass: 'control-container',
+    labelContainerClass: 'label-container',
+    formControlLabel: 'Textbox',
   } as FilterFormField,
   {
     id: 'type',
     type: 'dropbox',
     name: 'type',
+    placeholder: 'Select type ...',
     value: [
       { key: 1, value: 'Test value 1' },
       { key: 2, value: 'Test value 2' },
       { key: 3, value: 'Test value 3' },
     ],
-    placeholder: 'Select type ...',
+    controlContainerClass: 'control-container',
+    labelContainerClass: 'label-container',
+    formControlLabel: 'Dropbox',
   } as FilterFormField,
 ];
 ```
-
-
+   
+   
+Example of filter custom form control:
+```
+<ng-template #customInput
+    let-filterFieldSettings="filterFieldSettings"
+    let-formControl="formControl"
+    let-touched="touched">
+    <input [formControl]="formControl"
+        [id]="filterFieldSettings.id"
+        type="text"
+        [ngClass]="filterFieldSettings.controlClass"
+        [placeholder]="filterFieldSettings.placeholder"
+        (blur)="touched()">
+</ng-template>
+```
+   
+   
 ## CSS sorting arrows solution
 
 For add up and down arrows in header of sortable column, can use this css   
@@ -455,5 +535,7 @@ solution:
   border-top: 6px solid black;
 }
 ```   
-    
-
+   
+   
+## License
+[MIT](LICENSE) license.

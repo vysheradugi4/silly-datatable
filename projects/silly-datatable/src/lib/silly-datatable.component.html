@@ -1,11 +1,10 @@
-
 <table [ngClass]="settingsService?.config?.tableClass">
 
     <tr [ngClass]="settingsService?.config?.headerRowClass">
-        <th *ngFor="let column of columns" [ngClass]="column.headerClass">
+        <th *ngFor="let column of columns"
+            [ngClass]="column.headerClass">
             <ng-container *ngIf="column.sortable; else withoutSort">
-                <a
-                    [ngClass]="settingsService?.config?.sortHeaderClass"
+                <a [ngClass]="settingsService?.config?.sortHeaderClass"
                     [class.asc]="currentSort?.columnName === column.id && currentSort?.order === 'asc'"
                     [class.desc]="currentSort?.columnName === column.id && currentSort?.order === 'desc'"
                     (click)="sortEnable(column.id)">
@@ -18,21 +17,30 @@
             </ng-template>
         </th>
     </tr>
-    
-    <tr
-        *ngFor="let row of source"
+
+    <tr *ngFor="let row of source"
         [ngClass]="settingsService?.config?.rowClass"
         (click)="clicked(row)">
 
-        <td *ngFor="let column of columns" [ngClass]="column.cellClass">
-            <ng-container *ngIf="column.prepareCellFunction; else getValue">
-                {{ column.prepareCellFunction(row[column.id]) }}
+        <td *ngFor="let column of columns"
+            [ngClass]="column.cellClass">
+
+            <ng-container [ngSwitch]="true">
+                <ng-container *ngSwitchCase="!!column.prepareCellFunction">
+                    {{ column.prepareCellFunction(row[column.id]) }}
+                </ng-container>
+
+                <ng-container *ngSwitchCase="!!column.componentCell">
+                    <ngx-component-cell [row]="row"
+                        [component]="column.componentCell">
+                    </ngx-component-cell>
+                </ng-container>
+
+                <ng-container *ngSwitchDefault>
+                    {{ row[column.id] }}
+                </ng-container>
             </ng-container>
 
-            <ng-template #getValue>
-                {{ row[column.id] }}
-            </ng-template>
         </td>
     </tr>
 </table>
-

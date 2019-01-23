@@ -7,6 +7,7 @@ import { SillyDatatablePagingComponent } from './silly-datatable-paging/silly-da
 import { DirectivesModule } from './../directives/directives.module';
 import { SillyDatatableFilterComponent } from './silly-datatable-filter/silly-datatable-filter.component';
 import { FilterFieldComponent } from './filter-field/filter-field.component';
+import { ComponentCellComponent } from './component-cell/component-cell.component';
 
 
 @NgModule({
@@ -20,11 +21,13 @@ import { FilterFieldComponent } from './filter-field/filter-field.component';
     SillyDatatablePagingComponent,
     SillyDatatableFilterComponent,
     FilterFieldComponent,
+    ComponentCellComponent,
   ],
   exports: [
     SillyDatatableSearchComponent,
     SillyDatatablePagingComponent,
     SillyDatatableFilterComponent,
+    ComponentCellComponent,
   ],
 })
 export class ComponentsModule {

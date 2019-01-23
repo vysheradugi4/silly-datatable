@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 
+import { EditButtonComponent } from './shared/components/edit-button/edit-button.component';
+
+
 import {
   TableSettings,
   Column,
@@ -82,6 +85,14 @@ export class AppComponent implements OnInit {
         cellClass: 'cell',
         sortable: false,
 
+      } as Column,
+      {
+        id: 'action',
+        title: 'Action',
+        headerClass: 'action',
+        cellClass: 'cell',
+        sortable: false,
+        componentCell: EditButtonComponent,
       } as Column,
     ];
 

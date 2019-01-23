@@ -1,4 +1,12 @@
-import { Component, Input, ChangeDetectionStrategy, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  Input,
+  ChangeDetectionStrategy,
+  Output,
+  EventEmitter,
+  OnInit,
+  OnDestroy
+} from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
 
 import { TableSettings } from './shared/models/table-settings.model';
@@ -17,11 +25,11 @@ import { TableParams } from './shared/models/table-params.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SillyDatatableComponent implements OnInit, OnDestroy {
-
   /**
    * Current state of sorting. Contains column id string and order (asc, desc).
    */
   public currentSort: Sort;
+
 
   @Input() public columns: Array<Column>;
   @Input() public source: Array<any>;
@@ -34,12 +42,14 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
     this._requestService.tableParams = params;
   }
 
+
   /**
    * Stored table settings in service.
    */
   @Input() set settings(value: TableSettings) {
     this.settingsService.config = value;
   }
+
 
   @Output() public request: EventEmitter<TableParams> = new EventEmitter<TableParams>();
   @Output() public rowClicked: EventEmitter<Sort> = new EventEmitter<Sort>();

@@ -2,8 +2,22 @@ import { TemplateRef } from '@angular/core';
 
 
 export class FilterFormField {
+
+  /**
+   * Form field id.
+   */
   public id: string;
+
+
+  /**
+   * Form control name.
+   */
   public name: string;
+
+
+  /**
+   * Type of input. Available Values: 'textbox', 'dropbox', 'custom'.
+   */
   public type: string;
 
 
