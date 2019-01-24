@@ -18,29 +18,45 @@
         </th>
     </tr>
 
-    <tr *ngFor="let row of source"
-        [ngClass]="settingsService?.config?.rowClass"
-        (click)="clicked(row)">
+    <ng-container *ngIf="source?.length; else withoutSource">
+        <tr *ngFor="let row of source"
+            [ngClass]="settingsService?.config?.rowClass"
+            (click)="clicked(row)"
+            (dblclick)="doubleClicked(row)">
 
-        <td *ngFor="let column of columns"
-            [ngClass]="column.cellClass">
+            <td *ngFor="let column of columns"
+                [ngClass]="column.cellClass">
 
-            <ng-container [ngSwitch]="true">
-                <ng-container *ngSwitchCase="!!column.prepareCellFunction">
-                    {{ column.prepareCellFunction(row[column.id]) }}
+                <ng-container [ngSwitch]="true">
+                    <ng-container *ngSwitchCase="!!column.prepareCellFunction">
+                        {{ column.prepareCellFunction(row[column.id]) }}
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="!!column.componentCell">
+                        <ngx-component-cell [row]="row"
+                            [component]="column.componentCell">
+                        </ngx-component-cell>
+                    </ng-container>
+
+                    <ng-container *ngSwitchDefault>
+                        {{ row[column.id] }}
+                    </ng-container>
                 </ng-container>
 
-                <ng-container *ngSwitchCase="!!column.componentCell">
-                    <ngx-component-cell [row]="row"
-                        [component]="column.componentCell">
-                    </ngx-component-cell>
-                </ng-container>
+            </td>
+        </tr>
+    </ng-container>
 
-                <ng-container *ngSwitchDefault>
-                    {{ row[column.id] }}
-                </ng-container>
-            </ng-container>
+    <ng-template #withoutSource>
+        <tr>
+            <td colspan="columns.length">
+                {{ settingsService?.config?.dataNotFoundPhrase || 'Data not found' }}
+            </td>
+        </tr>
+    </ng-template>
 
-        </td>
-    </tr>
 </table>
+
+<div *ngIf="!source?.length">
+
+</div>

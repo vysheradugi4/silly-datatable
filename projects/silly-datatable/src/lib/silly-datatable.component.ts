@@ -52,9 +52,11 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
 
 
   @Output() public request: EventEmitter<TableParams> = new EventEmitter<TableParams>();
-  @Output() public rowClicked: EventEmitter<Sort> = new EventEmitter<Sort>();
+  @Output() public rowClicked: EventEmitter<any> = new EventEmitter<any>();
+  @Output() public rowDoubleClicked: EventEmitter<any> = new EventEmitter<any>();
 
   private _unsubscribe: Subject<boolean> = new Subject<boolean>();
+  private _singleClick = true;
 
   constructor(
     public settingsService: SettingsService,
@@ -111,7 +113,26 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.rowClicked.next(row);
+    this._singleClick = true;
+
+    setTimeout(() => {
+      if (this._singleClick) {
+        this.rowClicked.next(row);
+      }
+    }, 300);
+  }
+
+  /**
+   * Handler for double click on the row.
+   * @param row Clicked row.
+   */
+  public doubleClicked(row: any): void {
+    if (!row) {
+      return;
+    }
+
+    this._singleClick = false;
+    this.rowDoubleClicked.next(row);
   }
 
 

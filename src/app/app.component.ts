@@ -161,4 +161,9 @@ export class AppComponent implements OnInit {
   public selected(row: any) {
     console.log('Clicked row = ', row);
   }
+
+
+  public dblClickSelected(row: any) {
+    console.log('Double clicked row = ', row);
+  }
 }

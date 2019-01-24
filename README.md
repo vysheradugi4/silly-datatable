@@ -81,6 +81,9 @@ added to each `<tr>` tag except first.
    
 * `sortHeaderClass` – Class for sortable header link. Will be added to `<a>` tag.
    
+* `dataNotFoundPhrase` – Text under heading when data is not found ('Data not
+found' by default).
+      
    
 All properties are optional. 
 
@@ -241,7 +244,15 @@ this.source = [
 __Row clicked event__
 
 `<ngx-silly-datatable (rowClicked)="selected($event)"></ngx-silly-datatable>`
-
+   
+or for handle double click:
+   
+```
+<ngx-silly-datatable (rowDoubleClicked)="dblClickSelected($event)">
+</ngx-silly-datatable>
+``` 
+   
+   
 ## Silly datatable component attributes
 
 __Input class__
