@@ -54,7 +54,7 @@
 
     <ng-template #withoutSource>
         <tr>
-            <td [colspan]="columns.length">
+            <td [attr.colspan]="columns.length">
                 {{ settingsService?.config?.dataNotFoundPhrase || 'Data not found' }}
             </td>
         </tr>
