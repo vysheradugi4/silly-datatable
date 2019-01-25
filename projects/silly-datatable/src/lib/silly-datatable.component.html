@@ -40,7 +40,7 @@
                 </td>
 
                 <ng-template #componentCell>
-                    <td>
+                    <td [ngClass]="column.cellClass">
                         <ngx-component-cell [row]="row"
                             [component]="column.componentCell"
                             (componentCellEvent)="onComponentCellEvent($event)">
@@ -54,7 +54,7 @@
 
     <ng-template #withoutSource>
         <tr>
-            <td colspan="columns.length">
+            <td [colspan]="columns.length">
                 {{ settingsService?.config?.dataNotFoundPhrase || 'Data not found' }}
             </td>
         </tr>
