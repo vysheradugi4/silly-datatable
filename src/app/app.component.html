@@ -23,7 +23,8 @@
     [tableParams]="tableParams"
     (rowClicked)="selected($event)"
     (rowDoubleClicked)="dblClickSelected($event)"
-    (request)="request($event)">
+    (request)="request($event)"
+    (componentCellEvent)="eventInCellComponent($event)">
 </ngx-silly-datatable>
 
 <hr>

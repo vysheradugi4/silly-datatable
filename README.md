@@ -175,8 +175,10 @@ following properties:
 * `componentCell` – Custom component to display in the cell. Can be used for place buttons,
 links, form fields and etc. in cell. Property `row` in this custom component will
 be contains current source of row. Make sure that your component added to entryComponents
-section in your module.
-
+section in your module. For data exchagange with componentCell use services or
+defined event emitter `componentCellEvent`. Details below.
+   
+   
 All properties are optional except `id`.
 
 For example:
@@ -251,6 +253,23 @@ or for handle double click:
 <ngx-silly-datatable (rowDoubleClicked)="dblClickSelected($event)">
 </ngx-silly-datatable>
 ``` 
+   
+   
+__Event in cell component__
+   
+```
+<ngx-silly-datatable [settings]="settings"
+    (componentCellEvent)="eventInCellComponent($event)">
+</ngx-silly-datatable>
+```
+   
+For data exchange with cell component without additional services use
+componentCellEvent. For use event emitter in your
+component define public variable:
+   
+`public componentCellEvent: EventEmitter<any> = new EventEmitter<any>();`
+   
+For send data use call `this.componentCellEvent.next(this.someData)`;
    
    
 ## Silly datatable component attributes

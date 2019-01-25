@@ -54,6 +54,7 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
   @Output() public request: EventEmitter<TableParams> = new EventEmitter<TableParams>();
   @Output() public rowClicked: EventEmitter<any> = new EventEmitter<any>();
   @Output() public rowDoubleClicked: EventEmitter<any> = new EventEmitter<any>();
+  @Output() public componentCellEvent: EventEmitter<any> = new EventEmitter<any>();
 
   private _unsubscribe: Subject<boolean> = new Subject<boolean>();
   private _singleClick = true;
@@ -133,6 +134,15 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
 
     this._singleClick = false;
     this.rowDoubleClicked.next(row);
+  }
+
+
+  /**
+   * Output event with data from component cell.
+   * @param event Data
+   */
+  public onComponentCellEvent(event): void {
+    this.componentCellEvent.next(event);
   }
 
 

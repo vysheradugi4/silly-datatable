@@ -166,4 +166,10 @@ export class AppComponent implements OnInit {
   public dblClickSelected(row: any) {
     console.log('Double clicked row = ', row);
   }
+
+
+  public eventInCellComponent(event) {
+    console.log('event and data from cell component = ', event);
+  }
+
 }

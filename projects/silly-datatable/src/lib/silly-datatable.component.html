@@ -20,30 +20,35 @@
 
     <ng-container *ngIf="source?.length; else withoutSource">
         <tr *ngFor="let row of source"
-            [ngClass]="settingsService?.config?.rowClass"
-            (click)="clicked(row)"
-            (dblclick)="doubleClicked(row)">
+            [ngClass]="settingsService?.config?.rowClass">
 
-            <td *ngFor="let column of columns"
-                [ngClass]="column.cellClass">
+            <ng-container *ngFor="let column of columns">
+                <td *ngIf="!column.componentCell; else componentCell"
+                    [ngClass]="column.cellClass"
+                    (click)="clicked(row)"
+                    (dblclick)="doubleClicked(row)">
 
-                <ng-container [ngSwitch]="true">
-                    <ng-container *ngSwitchCase="!!column.prepareCellFunction">
-                        {{ column.prepareCellFunction(row[column.id]) }}
+                    <ng-container [ngSwitch]="true">
+                        <ng-container *ngSwitchCase="!!column.prepareCellFunction">
+                            {{ column.prepareCellFunction(row[column.id]) }}
+                        </ng-container>
+
+                        <ng-container *ngSwitchDefault>
+                            {{ row[column.id] }}
+                        </ng-container>
                     </ng-container>
+                </td>
 
-                    <ng-container *ngSwitchCase="!!column.componentCell">
+                <ng-template #componentCell>
+                    <td>
                         <ngx-component-cell [row]="row"
-                            [component]="column.componentCell">
+                            [component]="column.componentCell"
+                            (componentCellEvent)="onComponentCellEvent($event)">
                         </ngx-component-cell>
-                    </ng-container>
+                    </td>
+                </ng-template>
+            </ng-container>
 
-                    <ng-container *ngSwitchDefault>
-                        {{ row[column.id] }}
-                    </ng-container>
-                </ng-container>
-
-            </td>
         </tr>
     </ng-container>
 

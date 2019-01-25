@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-edit-button',
@@ -9,13 +9,14 @@ export class EditButtonComponent implements OnInit {
 
   public row: any;
 
+  public componentCellEvent: EventEmitter<any> = new EventEmitter<any>();
+
   constructor() { }
 
   ngOnInit() {
   }
 
   click() {
-    console.log(this.row);
+    this.componentCellEvent.next('Some data');
   }
-
 }
