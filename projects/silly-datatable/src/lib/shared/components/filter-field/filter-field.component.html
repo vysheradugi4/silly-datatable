@@ -29,7 +29,7 @@
 
             <option *ngFor="let opt of filterFieldSettings.value"
                 [ngValue]="opt">
-                {{opt.value}}
+                {{opt[filterFieldSettings.valueKeyName]}}
             </option>
         </select>
 

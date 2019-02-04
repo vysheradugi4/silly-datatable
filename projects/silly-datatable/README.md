@@ -463,6 +463,8 @@ __Filter form fields:__
    
 * `value` – Initial value of form field (optional).
    
+* `valueKeyName` – Used in dropbox input, for define value key name for show data in select.
+   
 * `placeholder` – Placeholder of  form field (optional).
    
 * `controlClass` – Form field class (optional).
@@ -508,6 +510,7 @@ this.filterFormFields = [
     type: 'dropbox',
     name: 'type',
     placeholder: 'Select type ...',
+    valueKeyName: 'value',
     value: [
       { key: 1, value: 'Test value 1' },
       { key: 2, value: 'Test value 2' },

@@ -28,6 +28,12 @@ export class FilterFormField {
 
 
   /**
+   * Used in dropbox input, define value key name for show data in select.
+   */
+  public valueKeyName?: string;
+
+
+  /**
    * Placeholder of  form field.
    */
   public placeholder?: string;

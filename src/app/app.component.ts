@@ -131,6 +131,7 @@ export class AppComponent implements OnInit {
         type: 'dropbox',
         name: 'type',
         placeholder: 'Select type ...',
+        valueKeyName: 'value',
         value: [
           { key: 1, value: 'Test value 1' },
           { key: 2, value: 'Test value 2' },
