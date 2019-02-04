@@ -41,7 +41,6 @@ export class AppComponent implements OnInit {
       itemsPerPage: 10,
     } as Pagination;
 
-
     this.paginationSettings = {
       infoClass: 'info-class',
       containerClass: 'container-class',
@@ -52,7 +51,6 @@ export class AppComponent implements OnInit {
       next: '&rsaquo;',
       last: '&raquo;',
     } as PaginationSettings;
-
 
     this.settings = {
       tableClass: 'table',
@@ -171,6 +169,11 @@ export class AppComponent implements OnInit {
 
   public eventInCellComponent(event) {
     console.log('event and data from cell component = ', event);
+  }
+
+
+  public filterValueChanges(filterData) {
+    console.log('filter values changed = ', filterData);
   }
 
 }

@@ -35,7 +35,8 @@
 <hr>
 
 <ngx-silly-datatable-filter [formFields]="filterFormFields"
-    [settings]="filterSettings">
+    [settings]="filterSettings"
+    (valueChanges)="filterValueChanges($event)">
 </ngx-silly-datatable-filter>
 
 <ng-template #customInput

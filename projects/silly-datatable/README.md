@@ -540,6 +540,17 @@ Example of filter custom form control:
 ```
    
    
+__Filter outputs:__   
+   
+```
+<ngx-silly-datatable-filter (valueChanges)="filterValueChanges($event)">
+</ngx-silly-datatable-filter>
+```
+   
+Event emitter for detect filter value changes.
+   
+   
+   
 ## CSS sorting arrows solution
 
 For add up and down arrows in header of sortable column, can use this css   

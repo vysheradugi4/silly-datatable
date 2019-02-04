@@ -28,6 +28,11 @@ export class SillyDatatableFilterComponent implements OnInit, OnDestroy {
 
   @Output() public cancel: EventEmitter<null> = new EventEmitter();
 
+  /**
+   * Emits when form value changed.
+   */
+  @Output() public valueChanges: EventEmitter<any> = new EventEmitter<any>();
+
   constructor(
     private _requestService: RequestService,
     private _filterControlService: FilterControlService
@@ -40,8 +45,9 @@ export class SillyDatatableFilterComponent implements OnInit, OnDestroy {
     this.filterForm.valueChanges.pipe(
       takeUntil(this._unsubscribe)
     )
-      .subscribe((values) => {
-        this.values = values;
+      .subscribe(() => {
+        this.values = this.filterForm.getRawValue();
+        this.valueChanges.emit(this.values);
       });
   }
 
