@@ -71,6 +71,16 @@ export class SillyDatatableFilterComponent implements OnInit, OnDestroy {
   }
 
 
+  /**
+   * Show changed field to angular.
+   * @param index Index
+   * @param item Changed parameter for detect.
+   */
+  public trackByFn(index: number, item: FilterFormField): string | any[] {
+    return item.value;
+  }
+
+
   ngOnDestroy() {
     this._unsubscribe.next(true);
     this._unsubscribe.unsubscribe();

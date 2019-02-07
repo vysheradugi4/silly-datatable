@@ -3,7 +3,7 @@
 
         <div [ngClass]="settings?.formElementsContainerClass">
 
-            <ng-container *ngFor="let formField of formFields">
+            <ng-container *ngFor="let formField of formFields; trackBy: trackByFn">
                 <ngx-filter-field [filterFieldSettings]="formField"
                     [ngClass]="formField.formGroupClass"
                     [formControlName]="formField.name">

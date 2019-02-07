@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, forwardRef, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 
 import { FilterFormField } from './../../models/filter-form-field.model';
@@ -56,7 +56,7 @@ export class FilterFieldComponent implements OnInit, ControlValueAccessor, OnDes
      */
     if (this.filterFieldSettings.customInput) {
       // Copy all fields except customInput ref.
-      const {customInput, ...settings} = this.filterFieldSettings;
+      const { customInput, ...settings } = this.filterFieldSettings;
 
       this.context = {
         filterFieldSettings: settings,
@@ -68,7 +68,9 @@ export class FilterFieldComponent implements OnInit, ControlValueAccessor, OnDes
 
 
   writeValue(value: string | Array<any>): void {
-    this.formControl.setValue(value || '');
+    if (this.filterFieldSettings.type !== 'dropbox') {
+      this.formControl.setValue(value || '');
+    }
   }
 
 
@@ -89,6 +91,20 @@ export class FilterFieldComponent implements OnInit, ControlValueAccessor, OnDes
     }
 
     this.formControl.enable();
+  }
+
+
+
+  /**
+   * Compare values in select.
+   * @param item1 Select's value object.
+   * @param item2 Select's value object.
+   * @returns True if same.
+   */
+  public compareFn(item1, item2): boolean {
+    return item1 && item2 ?
+      item1[this.filterFieldSettings.valueKeyName] === item2[this.filterFieldSettings.valueKeyName] :
+      item1 === item2;
   }
 
 

@@ -18,12 +18,12 @@
             [formControl]="formControl"
             [id]="filterFieldSettings.id"
             [ngClass]="filterFieldSettings.controlClass"
-            (blur)="touched()">
+            (blur)="touched()"
+            [compareWith]="compareFn">
 
-            <option *ngIf="filterFieldSettings.placeholder"
-                value=""
-                disabled
-                selected>
+            <option 
+                [ngValue]="null"
+                disabled>
                 {{filterFieldSettings.placeholder}}
             </option>
 

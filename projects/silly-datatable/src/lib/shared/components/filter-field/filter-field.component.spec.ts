@@ -8,7 +8,7 @@ describe('FilterFieldComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FilterFieldComponent ]
+      declarations: [ FilterFieldComponent ],
     })
     .compileComponents();
   }));
