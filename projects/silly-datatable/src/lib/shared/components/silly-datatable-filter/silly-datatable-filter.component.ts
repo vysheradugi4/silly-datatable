@@ -77,7 +77,7 @@ export class SillyDatatableFilterComponent implements OnInit, OnDestroy {
    * @param item Changed parameter for detect.
    */
   public trackByFn(index: number, item: FilterFormField): string | any[] {
-    return item.value;
+    return item.value + '-' + item.source;
   }
 
 

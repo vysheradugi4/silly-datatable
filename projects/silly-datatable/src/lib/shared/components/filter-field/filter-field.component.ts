@@ -24,14 +24,21 @@ export class FilterFieldComponent implements OnInit, ControlValueAccessor, OnDes
   public disabled: boolean;
   public touched: Function;
   public change: Function;
-  public formControl: FormControl;
+  public formControl: FormControl = new FormControl();
+  public filterFieldSettings: FilterFormField;
 
   /**
    * Context for custom input.
    */
   public context: any;
 
-  @Input() public filterFieldSettings: FilterFormField;
+  @Input() public set filterField(settings: FilterFormField) {
+    this.filterFieldSettings = settings;
+
+    if (this.formControl) {
+      this.formControl.setValue(this.filterFieldSettings.value);
+    }
+  }
 
   private _unsubscribe: Subject<boolean> = new Subject<boolean>();
 
@@ -40,8 +47,6 @@ export class FilterFieldComponent implements OnInit, ControlValueAccessor, OnDes
   ngOnInit() {
     this.touched = () => { };
     this.change = (value: string | Array<any>) => value;
-
-    this.formControl = new FormControl();
 
     this.formControl.valueChanges.pipe(
       takeUntil(this._unsubscribe)
@@ -67,10 +72,8 @@ export class FilterFieldComponent implements OnInit, ControlValueAccessor, OnDes
   }
 
 
-  writeValue(value: string | Array<any>): void {
-    if (this.filterFieldSettings.type !== 'dropbox') {
-      this.formControl.setValue(value || '');
-    }
+  writeValue(value: any): void {
+    this.formControl.setValue(value || null);
   }
 
 
@@ -94,7 +97,6 @@ export class FilterFieldComponent implements OnInit, ControlValueAccessor, OnDes
   }
 
 
-
   /**
    * Compare values in select.
    * @param item1 Select's value object.
@@ -102,6 +104,10 @@ export class FilterFieldComponent implements OnInit, ControlValueAccessor, OnDes
    * @returns True if same.
    */
   public compareFn(item1, item2): boolean {
+    if (!this.filterFieldSettings) {
+      return false;
+    }
+
     return item1 && item2 ?
       item1[this.filterFieldSettings.valueKeyName] === item2[this.filterFieldSettings.valueKeyName] :
       item1 === item2;

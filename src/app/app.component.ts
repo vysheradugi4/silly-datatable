@@ -36,6 +36,11 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
 
+    setTimeout(() => {
+      this.detailsDropboxFilter.value = Object.assign(this.detailsDropboxFilter, {value: null});
+      this.filterFormFields = this.filterFormFields.slice();
+    }, 10000);
+
     this.tableParams.pagination = {
       page: 0,
       pages: 10,
@@ -109,6 +114,7 @@ export class AppComponent implements OnInit {
       type: 'dropbox',
       name: 'details',
       placeholder: 'Select details ...',
+      value: null,
       valueKeyName: 'value',
       controlContainerClass: 'control-container',
       labelContainerClass: 'label-container',
@@ -141,9 +147,10 @@ export class AppComponent implements OnInit {
           id: 'type',
           type: 'dropbox',
           name: 'type',
+          value: null,
           placeholder: 'Select type ...',
           valueKeyName: 'value',
-          value: [
+          source: [
             { key: 1, value: 'Test value 1' },
             { key: 2, value: 'Test value 2' },
             { key: 3, value: 'Test value 3' },
@@ -190,7 +197,7 @@ export class AppComponent implements OnInit {
   public filterValueChanges(filterData) {
 
     if (filterData.type && !filterData.details) {
-      this.detailsDropboxFilter.value = [
+      this.detailsDropboxFilter.source = [
         { key: 1, value: 'Test value 1' },
         { key: 2, value: 'Test value 2' },
         { key: 3, value: 'Test value 3' },

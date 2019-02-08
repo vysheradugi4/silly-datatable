@@ -22,9 +22,15 @@ export class FilterFormField {
 
 
   /**
-   * Initial value of form field.
+   * Initial value of form control.
    */
-  public value?: string | Array<any>;
+  public value?: any;
+
+
+  /**
+   * Accessory array of values for form control. (Can be used in selects etc.)
+   */
+  public source?: Array<any>;
 
 
   /**

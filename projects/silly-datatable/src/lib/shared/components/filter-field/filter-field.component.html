@@ -27,7 +27,7 @@
                 {{filterFieldSettings.placeholder}}
             </option>
 
-            <option *ngFor="let opt of filterFieldSettings.value"
+            <option *ngFor="let opt of filterFieldSettings.source"
                 [ngValue]="opt">
                 {{opt[filterFieldSettings.valueKeyName]}}
             </option>

@@ -410,7 +410,8 @@ __Filter inputs:__
 
 * `settings` – Setting for setup filter appearance (FilterSettings).
    
-* `formFields` - Settings for create filter form fields (FilterFormField[]).
+* `formFields` - Settings for create filter form fields (FilterFormField[]). This
+parameter is required.
    
    
 Don't forget import PaginationSettings for init new instance:
