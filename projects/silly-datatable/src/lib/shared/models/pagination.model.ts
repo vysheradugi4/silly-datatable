@@ -9,7 +9,7 @@ export class Pagination {
   /**
    * Number of pages.
    */
-  public pages: number;
+  public pages?: number;
 
 
   /**

@@ -1,9 +1,10 @@
 import { Component, OnInit, Input, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { Subject, combineLatest, Observable } from 'rxjs';
 import { filter, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
 import { RequestService } from './../../services/request.service';
+import { TableParams } from './../../models/table-params.model';
 
 
 @Component({
@@ -32,6 +33,12 @@ export class SillyDatatableSearchComponent implements OnInit {
       this.search.enable();
     }
   }
+
+
+  /**
+   * For link with current table.
+   */
+  @Input() public tableId = 'sole';
 
 
   /**
@@ -77,17 +84,30 @@ export class SillyDatatableSearchComponent implements OnInit {
     /**
      * Handle input value changes.
      */
-    this.search.valueChanges.pipe(
+    const search$: Observable<string> = this.search.valueChanges.pipe(
       filter(str => !!str),
       debounceTime(250),
       distinctUntilChanged(),
       takeUntil(this._unsubscribe)
+    );
+
+    /**
+     * Change table params.
+     */
+    combineLatest(search$, this._requestService.call(this.tableId)).pipe(
+      takeUntil(this._unsubscribe)
     )
-      .subscribe((searchString: string) => {
-        this._requestService.tableParams.search = searchString;
-        this._requestService.tableParams.pagination.page = 0;
-        delete this._requestService.tableParams.pagination.pages;
-        this._requestService.next();
+      .subscribe(([search, tableParams]) => {
+
+        tableParams.search = search;
+
+        /**
+         * For save original 'itemsPerPage' value.
+         */
+        tableParams.pagination.page = 0;
+        tableParams.pagination.pages = null;
+
+        this._requestService.next(this.tableId, tableParams);
       });
   }
 }

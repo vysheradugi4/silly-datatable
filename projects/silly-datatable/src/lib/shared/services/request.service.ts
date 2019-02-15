@@ -1,23 +1,38 @@
-import { Subject } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 
 import { TableParams } from './../models/table-params.model';
 
 
 export class RequestService {
 
-  public tableParams: TableParams;
-
-  private _call$: Subject<TableParams> = new Subject<TableParams>();
+  private _requests = {};
 
   constructor() { }
 
-
-  public get call$() {
-    return this._call$.asObservable();
+  public get requests() {
+    return this._requests;
   }
 
 
-  public next(): void {
-    this._call$.next(this.tableParams);
+  /**
+   * Registered new request object for current table, returns subscribe of changes.
+   * @param tableId Table id.
+   */
+  public call(tableId: string): Observable<TableParams> {
+    if (!this._requests[tableId]) {
+      this._requests[tableId] = new ReplaySubject<TableParams>(1);
+    }
+
+    return this._requests[tableId].asObservable();
+  }
+
+
+  /**
+   * Next value with changes for current table.
+   * @param tableId Table id.
+   * @param tableParams Changes.
+   */
+  public next(tableId: string, tableParams: TableParams): void {
+    this._requests[tableId].next(tableParams);
   }
 }

@@ -1,8 +1,12 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { Pagination } from './../../models/pagination.model';
 import { PaginationSettings } from './../../models/pagination-settings.model';
 import { RequestService } from './../../services/request.service';
+import { TableParams } from './../../models/table-params.model';
+
 
 @Component({
   selector: 'ngx-silly-datatable-paging',
@@ -10,17 +14,21 @@ import { RequestService } from './../../services/request.service';
   styles: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SillyDatatablePagingComponent implements OnInit {
+export class SillyDatatablePagingComponent implements OnInit, OnDestroy {
 
-  public pageArray: number[];
+  public pageArray: Array<number> = [];
 
   /**
    * Settings for customization pagination component.
    */
   @Input() public settings: PaginationSettings;
 
+  @Input() public tableId = 'sole';
 
-  private _pagination: Pagination;
+
+  private _pagination: Pagination = new Pagination;
+  private _unsubscribe: Subject<boolean> = new Subject<boolean>();
+  private _tableParams: TableParams;
 
   constructor(
     private _requestService: RequestService
@@ -28,31 +36,36 @@ export class SillyDatatablePagingComponent implements OnInit {
 
 
   ngOnInit() {
+
     /**
    * Pagination details, contains current page number, number of pages, number
    * of items per page.
    */
-    this._pagination = this._requestService.tableParams.pagination;
-
-    this.pageArray = Array.from({ length: this._pagination.pages }, (_, i) => ++i);
+    this._requestService.call(this.tableId).pipe(
+      takeUntil(this._unsubscribe)
+    )
+      .subscribe((tableParams: TableParams) => {
+        this._tableParams = tableParams;
+        this._pagination = tableParams.pagination;
+        this.pageArray = Array.from({ length: this._pagination.pages }, (_, i) => ++i);
+      });
   }
 
 
   public pageRequest(page: number): void {
-    const pagination = Object.assign(this._pagination, { page });
+    this._tableParams.pagination = Object.assign(this._pagination, { page });
 
-    this._requestService.tableParams.pagination = pagination;
-    this._requestService.next();
+    this._requestService.next(this.tableId, this._tableParams);
   }
 
 
   public get currentPage(): number {
-    return this._pagination.page;
+    return this._pagination.page || null;
   }
 
 
   public get numberOfPages(): number {
-    return this._pagination.pages;
+    return this._pagination.pages || null;
   }
 
 
@@ -91,5 +104,11 @@ export class SillyDatatablePagingComponent implements OnInit {
     }
 
     return this.currentPage + 3;
+  }
+
+
+  ngOnDestroy() {
+    this._unsubscribe.next(true);
+    this._unsubscribe.unsubscribe();
   }
 }

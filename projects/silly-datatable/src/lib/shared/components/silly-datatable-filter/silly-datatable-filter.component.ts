@@ -1,12 +1,13 @@
 import { Component, OnInit, Input, OnDestroy, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, take } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 import { RequestService } from './../../services/request.service';
 import { FilterFormField } from './../../models/filter-form-field.model';
 import { FilterControlService } from './../../services/filter-control.service';
 import { FilterSettings } from './../../models/filter-settings.model';
+import { TableParams } from './../../models/table-params.model';
 
 
 @Component({
@@ -19,6 +20,11 @@ export class SillyDatatableFilterComponent implements OnInit, OnDestroy {
 
   public values: any;
   public filterForm: FormGroup;
+
+  /**
+   * For link filter with table.
+   */
+  @Input() public tableId = 'sole';
 
   @Input() public settings: FilterSettings;
 
@@ -56,10 +62,17 @@ export class SillyDatatableFilterComponent implements OnInit, OnDestroy {
    * Send request for get filtered source.
    */
   public applyFilters(): void {
-    this._requestService.tableParams.filters = this.values;
-    this._requestService.tableParams.pagination.page = 0;
-    delete this._requestService.tableParams.pagination.pages;
-    this._requestService.next();
+
+    this._requestService.call(this.tableId).pipe(
+      take(1),
+      takeUntil(this._unsubscribe)
+    )
+      .subscribe((tableParams: TableParams) => {
+        tableParams.filters = this.values;
+        tableParams.pagination.page = 0;
+        tableParams.pagination.pages = null;
+        this._requestService.next(this.tableId, tableParams);
+      });
   }
 
 

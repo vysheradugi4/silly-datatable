@@ -7,7 +7,7 @@ import {
   OnInit,
   OnDestroy
 } from '@angular/core';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, take } from 'rxjs/operators';
 
 import { TableSettings } from './shared/models/table-settings.model';
 import { Column } from './shared/models/column.model';
@@ -25,11 +25,17 @@ import { TableParams } from './shared/models/table-params.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SillyDatatableComponent implements OnInit, OnDestroy {
+
   /**
    * Current state of sorting. Contains column id string and order (asc, desc).
    */
   public currentSort: Sort;
 
+
+  /**
+   * Id string for link current datatable component with filter, search etc.
+   */
+  @Input() public id = 'sole';
 
   @Input() public columns: Array<Column>;
   @Input() public source: Array<any>;
@@ -39,7 +45,11 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
    * Table params contains current paging, search string, sort params.
    */
   @Input() public set tableParams(params: TableParams) {
-    this._requestService.tableParams = params;
+    this._tableParams = params;
+
+    if (this._requestService.requests[this.id]) {
+      this._requestService.next(this.id, this._tableParams);
+    }
   }
 
 
@@ -58,6 +68,7 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
 
   private _unsubscribe: Subject<boolean> = new Subject<boolean>();
   private _singleClick = true;
+  private _tableParams: TableParams;
 
   constructor(
     public settingsService: SettingsService,
@@ -69,12 +80,17 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
     /**
      * Search request hanlder.
      */
-    this._requestService.call$.pipe(
+    this._requestService.call(this.id).pipe(
       takeUntil(this._unsubscribe)
     )
       .subscribe((tableParams: TableParams) => {
         this.request.emit(tableParams);
       });
+
+    /**
+     * For first init.
+     */
+    this._requestService.next(this.id, this._tableParams);
   }
 
 
@@ -100,8 +116,17 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
       order,
     } as Sort;
 
-    this._requestService.tableParams.sort = this.currentSort;
-    this._requestService.next();
+    /**
+     * Get latest table params.
+     */
+    this._requestService.call(this.id).pipe(
+      take(1),
+      takeUntil(this._unsubscribe)
+    )
+      .subscribe((lastTableParams: TableParams) => {
+        lastTableParams.sort = this.currentSort;
+        this._requestService.next(this.id, lastTableParams);
+      });
   }
 
 

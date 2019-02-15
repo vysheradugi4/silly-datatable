@@ -70,7 +70,9 @@ __Main settings:__
 
 Object `settings` is a instance of class `TableSettings`. It has the following   
 properties:
-
+   
+* `id` – Id string for link current datatable component with filter, search etc.
+   
 * `tableClass` – Class will be added to `<table>` tag. Class for all table.   
    
 * `headerRowClass` – Class for first row of table for header. Will be added in   
@@ -291,7 +293,9 @@ Disable input for example when loading process in progress.
 Tag for insert search field in template:
    
 `<ngx-silly-datatable-search></ngx-silly-datatable-search>`
-
+   
+* `tableId` – For link with table.
+   
 * `searchInputClass` – Class will be added to search `<input>` tag in search   
 component.
    
@@ -353,6 +357,7 @@ Don't forget import PaginationSettings for init new instance:
    
 __Pagination settings:__   
    
+* `tableId` – For link with table.
    
 * `infoClass` – Css class for customize information string "Page 1 of 10".
    
@@ -407,7 +412,9 @@ __Filter inputs:__
     [settings]="filterSettings">
 </ngx-silly-datatable-filter>
 ```
-
+   
+* `tableId` – For link with table.
+   
 * `settings` – Setting for setup filter appearance (FilterSettings).
    
 * `formFields` - Settings for create filter form fields (FilterFormField[]). This
