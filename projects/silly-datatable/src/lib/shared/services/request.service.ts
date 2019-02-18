@@ -5,6 +5,7 @@ import { TableParams } from './../models/table-params.model';
 
 export class RequestService {
 
+  public tableParams = {};
   private _requests = {};
 
   constructor() { }
@@ -32,7 +33,7 @@ export class RequestService {
    * @param tableId Table id.
    * @param tableParams Changes.
    */
-  public next(tableId: string, tableParams: TableParams): void {
-    this._requests[tableId].next(tableParams);
+  public next(tableId: string): void {
+    this._requests[tableId].next(this.tableParams[tableId]);
   }
 }

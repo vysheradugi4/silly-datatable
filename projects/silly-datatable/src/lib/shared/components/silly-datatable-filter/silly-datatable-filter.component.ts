@@ -62,17 +62,10 @@ export class SillyDatatableFilterComponent implements OnInit, OnDestroy {
    * Send request for get filtered source.
    */
   public applyFilters(): void {
-
-    this._requestService.call(this.tableId).pipe(
-      take(1),
-      takeUntil(this._unsubscribe)
-    )
-      .subscribe((tableParams: TableParams) => {
-        tableParams.filters = this.values;
-        tableParams.pagination.page = 0;
-        tableParams.pagination.pages = null;
-        this._requestService.next(this.tableId, tableParams);
-      });
+    this._requestService.tableParams[this.tableId].filters = this.values;
+    this._requestService.tableParams[this.tableId].pagination.page = 0;
+    this._requestService.tableParams[this.tableId].pagination.pages = null;
+    this._requestService.next(this.tableId);
   }
 
 

@@ -309,6 +309,10 @@ component.
    
 * `placeholder` – Define input form field placeholder.
    
+* `dataFromExternalControl` – For use search string other form control.
+   
+* `usedExternalControl` – The default search control will not be shown. Use 
+`dataFromExternalControl` parameter for send search string in request.
    
 For example:
    

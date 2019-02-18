@@ -45,11 +45,7 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
    * Table params contains current paging, search string, sort params.
    */
   @Input() public set tableParams(params: TableParams) {
-    this._tableParams = params;
-
-    if (this._requestService.requests[this.id]) {
-      this._requestService.next(this.id, this._tableParams);
-    }
+    this._requestService.tableParams[this.id] = params;
   }
 
 
@@ -68,7 +64,7 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
 
   private _unsubscribe: Subject<boolean> = new Subject<boolean>();
   private _singleClick = true;
-  private _tableParams: TableParams;
+  private _tableParams: TableParams = new TableParams();
 
   constructor(
     public settingsService: SettingsService,
@@ -77,6 +73,7 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
+
     /**
      * Search request hanlder.
      */
@@ -86,11 +83,6 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
       .subscribe((tableParams: TableParams) => {
         this.request.emit(tableParams);
       });
-
-    /**
-     * For first init.
-     */
-    this._requestService.next(this.id, this._tableParams);
   }
 
 
@@ -116,17 +108,8 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
       order,
     } as Sort;
 
-    /**
-     * Get latest table params.
-     */
-    this._requestService.call(this.id).pipe(
-      take(1),
-      takeUntil(this._unsubscribe)
-    )
-      .subscribe((lastTableParams: TableParams) => {
-        lastTableParams.sort = this.currentSort;
-        this._requestService.next(this.id, lastTableParams);
-      });
+    this._requestService.tableParams[this.id].sort = this.currentSort;
+    this._requestService.next(this.id);
   }
 
 

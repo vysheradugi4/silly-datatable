@@ -1,10 +1,10 @@
+import { TableParams } from './../../models/table-params.model';
 import { Component, OnInit, Input, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Subject, combineLatest, Observable } from 'rxjs';
-import { filter, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { filter, debounceTime, distinctUntilChanged, takeUntil, switchMap, map, take } from 'rxjs/operators';
 
 import { RequestService } from './../../services/request.service';
-import { TableParams } from './../../models/table-params.model';
 
 
 @Component({
@@ -66,6 +66,20 @@ export class SillyDatatableSearchComponent implements OnInit {
 
 
   /**
+   * Set as true if need to use search string from external form control.
+   */
+  @Input() public usedExternalControl = false;
+
+
+  /**
+   * Search string from external form control.
+   */
+  @Input() public set dataFromExternalControl(search: string) {
+    this.requestNewSearch(search);
+  }
+
+
+  /**
    * For unsubscribe all subscriptions.
    */
   private _unsubscribe = new Subject<boolean>();
@@ -76,6 +90,13 @@ export class SillyDatatableSearchComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    /**
+     * Used external control for enter search string.
+     */
+    if (this.usedExternalControl) {
+      return;
+    }
+
     this.search = new FormControl({
       value: '',
       disabled: this._disabled,
@@ -84,30 +105,26 @@ export class SillyDatatableSearchComponent implements OnInit {
     /**
      * Handle input value changes.
      */
-    const search$: Observable<string> = this.search.valueChanges.pipe(
-      filter(str => !!str),
+    this.search.valueChanges.pipe(
       debounceTime(250),
       distinctUntilChanged(),
       takeUntil(this._unsubscribe)
-    );
+    )
+      .subscribe((search: string) => {
+        this.requestNewSearch(search);
+      });
+  }
+
+
+  private requestNewSearch(search: string): void {
+    this._requestService.tableParams[this.tableId].search = search;
 
     /**
-     * Change table params.
+     * For save original 'itemsPerPage' value.
      */
-    combineLatest(search$, this._requestService.call(this.tableId)).pipe(
-      takeUntil(this._unsubscribe)
-    )
-      .subscribe(([search, tableParams]) => {
+    this._requestService.tableParams[this.tableId].pagination.page = 0;
+    this._requestService.tableParams[this.tableId].pagination.pages = null;
 
-        tableParams.search = search;
-
-        /**
-         * For save original 'itemsPerPage' value.
-         */
-        tableParams.pagination.page = 0;
-        tableParams.pagination.pages = null;
-
-        this._requestService.next(this.tableId, tableParams);
-      });
+    this._requestService.next(this.tableId);
   }
 }

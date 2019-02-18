@@ -1,9 +1,10 @@
-<ng-container *ngTemplateOutlet="prefix"></ng-container>
+<ng-container *ngIf="!usedExternalControl">
+    <ng-container *ngTemplateOutlet="prefix"></ng-container>
 
-<input
-    [formControl]="search"
-    type="text"
-    [ngClass]="searchInputClass"
-    [placeholder]="placeholder">
+    <input [formControl]="search"
+        type="text"
+        [ngClass]="searchInputClass"
+        [placeholder]="placeholder">
 
-<ng-container *ngTemplateOutlet="suffix"></ng-container>
+    <ng-container *ngTemplateOutlet="suffix"></ng-container>
+</ng-container>

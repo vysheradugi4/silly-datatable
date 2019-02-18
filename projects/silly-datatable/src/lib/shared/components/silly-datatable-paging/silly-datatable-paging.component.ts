@@ -1,6 +1,5 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 import { Pagination } from './../../models/pagination.model';
 import { PaginationSettings } from './../../models/pagination-settings.model';
@@ -12,9 +11,8 @@ import { TableParams } from './../../models/table-params.model';
   selector: 'ngx-silly-datatable-paging',
   templateUrl: './silly-datatable-paging.component.html',
   styles: [],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SillyDatatablePagingComponent implements OnInit, OnDestroy {
+export class SillyDatatablePagingComponent implements OnDestroy {
 
   public pageArray: Array<number> = [];
 
@@ -25,47 +23,27 @@ export class SillyDatatablePagingComponent implements OnInit, OnDestroy {
 
   @Input() public tableId = 'sole';
 
-
-  private _pagination: Pagination = new Pagination;
   private _unsubscribe: Subject<boolean> = new Subject<boolean>();
-  private _tableParams: TableParams;
 
   constructor(
-    private _requestService: RequestService
+    public requestService: RequestService
   ) { }
 
 
-  ngOnInit() {
-
-    /**
-   * Pagination details, contains current page number, number of pages, number
-   * of items per page.
-   */
-    this._requestService.call(this.tableId).pipe(
-      takeUntil(this._unsubscribe)
-    )
-      .subscribe((tableParams: TableParams) => {
-        this._tableParams = tableParams;
-        this._pagination = tableParams.pagination;
-        this.pageArray = Array.from({ length: this._pagination.pages }, (_, i) => ++i);
-      });
-  }
-
-
   public pageRequest(page: number): void {
-    this._tableParams.pagination = Object.assign(this._pagination, { page });
+    this.requestService.tableParams[this.tableId].pagination.page = page;
 
-    this._requestService.next(this.tableId, this._tableParams);
+    this.requestService.next(this.tableId);
   }
 
 
   public get currentPage(): number {
-    return this._pagination.page || null;
+    return this.requestService.tableParams[this.tableId].pagination.page || null;
   }
 
 
   public get numberOfPages(): number {
-    return this._pagination.pages || null;
+    return this.requestService.tableParams[this.tableId].pagination.pages || null;
   }
 
 
