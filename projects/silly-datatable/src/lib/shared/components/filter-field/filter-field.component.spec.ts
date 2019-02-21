@@ -1,3 +1,4 @@
+import { ReactiveFormsModule } from '@angular/forms';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FilterFieldComponent } from './filter-field.component';
@@ -8,6 +9,9 @@ describe('FilterFieldComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        ReactiveFormsModule,
+      ],
       declarations: [ FilterFieldComponent ],
     })
     .compileComponents();

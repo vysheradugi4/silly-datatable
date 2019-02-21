@@ -28,6 +28,10 @@ export class ComponentCellComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if (!this.component) {
+      return;
+    }
+
     const factory = this._componentFactoryResolver.resolveComponentFactory(this.component);
     const componentRef: any = this._viewContainerRef.createComponent(factory);
     componentRef.instance.row = this.row;

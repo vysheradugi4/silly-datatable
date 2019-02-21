@@ -1,5 +1,6 @@
 <div [ngClass]="settings?.formContainerClass">
-    <form [formGroup]="filterForm">
+    <form *ngIf="filterForm"
+        [formGroup]="filterForm">
 
         <div [ngClass]="settings?.formElementsContainerClass">
 

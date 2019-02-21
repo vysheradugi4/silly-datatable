@@ -1,10 +1,10 @@
-<table [ngClass]="settingsService?.config?.tableClass">
+<table [ngClass]="settings?.tableClass">
 
-    <tr [ngClass]="settingsService?.config?.headerRowClass">
+    <tr [ngClass]="settings?.headerRowClass">
         <th *ngFor="let column of columns"
             [ngClass]="column.headerClass">
             <ng-container *ngIf="column.sortable; else withoutSort">
-                <a [ngClass]="settingsService?.config?.sortHeaderClass"
+                <a [ngClass]="settings?.sortHeaderClass"
                     [class.asc]="currentSort?.columnName === column.id && currentSort?.order === 'asc'"
                     [class.desc]="currentSort?.columnName === column.id && currentSort?.order === 'desc'"
                     (click)="sortEnable(column.id)">
@@ -20,7 +20,7 @@
 
     <ng-container *ngIf="source?.length; else withoutSource">
         <tr *ngFor="let row of source"
-            [ngClass]="settingsService?.config?.rowClass">
+            [ngClass]="settings?.rowClass">
 
             <ng-container *ngFor="let column of columns">
                 <td *ngIf="!column.componentCell; else componentCell"
@@ -55,7 +55,7 @@
     <ng-template #withoutSource>
         <tr>
             <td [attr.colspan]="columns?.length">
-                {{ settingsService?.config?.dataNotFoundPhrase || 'Data not found' }}
+                {{ settings?.dataNotFoundPhrase || 'Data not found' }}
             </td>
         </tr>
     </ng-template>

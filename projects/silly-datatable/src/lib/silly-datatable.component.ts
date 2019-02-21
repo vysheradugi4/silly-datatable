@@ -12,7 +12,6 @@ import { takeUntil, take } from 'rxjs/operators';
 import { TableSettings } from './shared/models/table-settings.model';
 import { Column } from './shared/models/column.model';
 import { Sort } from './shared/models/sort.model';
-import { SettingsService } from './shared/services/settings.service';
 import { Subject } from 'rxjs';
 import { RequestService } from './shared/services/request.service';
 import { TableParams } from './shared/models/table-params.model';
@@ -52,9 +51,7 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
   /**
    * Stored table settings in service.
    */
-  @Input() set settings(value: TableSettings) {
-    this.settingsService.config = value;
-  }
+  @Input() public settings: TableSettings;
 
 
   @Output() public request: EventEmitter<TableParams> = new EventEmitter<TableParams>();
@@ -67,7 +64,6 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
   private _tableParams: TableParams = new TableParams();
 
   constructor(
-    public settingsService: SettingsService,
     private _requestService: RequestService
   ) { }
 

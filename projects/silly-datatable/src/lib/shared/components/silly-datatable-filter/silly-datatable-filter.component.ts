@@ -48,6 +48,13 @@ export class SillyDatatableFilterComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.filterForm = this._filterControlService.toFormGroup(this.formFields);
 
+    /**
+     * Check filter has form controls.
+     */
+    if (!this.filterForm) {
+      return;
+    }
+
     this.filterForm.valueChanges.pipe(
       takeUntil(this._unsubscribe)
     )

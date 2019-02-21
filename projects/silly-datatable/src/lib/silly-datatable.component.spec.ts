@@ -1,7 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SillyDatatableComponent } from './silly-datatable.component';
-import { SettingsService } from './shared/services/settings.service';
+import { ComponentsModule } from './shared/components/components.module';
+import { RequestService } from './shared/services/request.service';
+
 
 describe('SillyDatatableComponent', () => {
   let component: SillyDatatableComponent;
@@ -9,9 +11,12 @@ describe('SillyDatatableComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        ComponentsModule,
+      ],
       declarations: [ SillyDatatableComponent ],
       providers: [
-        SettingsService,
+        RequestService,
       ],
     })
     .compileComponents();

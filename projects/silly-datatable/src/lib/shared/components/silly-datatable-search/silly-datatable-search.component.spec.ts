@@ -1,7 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { SillyDatatableSearchComponent } from './silly-datatable-search.component';
-import { SettingsService } from './../../services/settings.service';
+import { RequestService } from './../../../shared/services/request.service';
+
 
 describe('SillyDatatableSearchComponent', () => {
   let component: SillyDatatableSearchComponent;
@@ -9,9 +11,12 @@ describe('SillyDatatableSearchComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        ReactiveFormsModule,
+      ],
       declarations: [ SillyDatatableSearchComponent ],
       providers: [
-        SettingsService,
+        RequestService,
       ],
     })
     .compileComponents();

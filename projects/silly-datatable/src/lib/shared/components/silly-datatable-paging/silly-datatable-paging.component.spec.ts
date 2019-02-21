@@ -1,6 +1,9 @@
+import { RequestMockService } from './../../services/request-mock.service';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SillyDatatablePagingComponent } from './silly-datatable-paging.component';
+import { PipesModule } from './../../pipes/pipes.module';
+import { RequestService } from './../../../shared/services/request.service';
 
 describe('SillyDatatablePagingComponent', () => {
   let component: SillyDatatablePagingComponent;
@@ -8,9 +11,18 @@ describe('SillyDatatablePagingComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SillyDatatablePagingComponent ]
+      imports: [
+        PipesModule,
+      ],
+      declarations: [SillyDatatablePagingComponent],
+      providers: [
+        {
+          provide: RequestService,
+          useClass: RequestMockService,
+        },
+      ],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -25,7 +25,7 @@ export class FilterFieldComponent implements OnInit, ControlValueAccessor, OnDes
   public touched: Function;
   public change: Function;
   public formControl: FormControl = new FormControl();
-  public filterFieldSettings: FilterFormField;
+  public filterFieldSettings: FilterFormField = new FilterFormField;
 
   /**
    * Context for custom input.

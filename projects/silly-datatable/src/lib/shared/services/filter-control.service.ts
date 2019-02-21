@@ -4,11 +4,12 @@ import { FilterFormField } from './../models/filter-form-field.model';
 
 
 export class FilterControlService {
+
   constructor() { }
 
   toFormGroup(filters: Array<FilterFormField>): FormGroup {
     if (!filters || !filters.length) {
-      return;
+      return null;
     }
 
     const group: any = {};
