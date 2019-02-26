@@ -26,10 +26,10 @@ import { TableParams } from './shared/models/table-params.model';
 export class SillyDatatableComponent implements OnInit, OnDestroy {
 
   /**
-   * Current state of sorting. Contains column id string and order (asc, desc).
+   * Current state of sorting. Contains column id string and boolean isAsc for
+   * define sort direction.
    */
   public currentSort: Sort;
-
 
   /**
    * Id string for link current datatable component with filter, search etc.
@@ -37,22 +37,18 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
   @Input() public id = 'sole';
 
   @Input() public columns: Array<Column>;
-  @Input() public source: Array<any>;
-
 
   /**
    * Table params contains current paging, search string, sort params.
    */
   @Input() public set tableParams(params: TableParams) {
-    this._requestService.tableParams[this.id] = params;
+    this.requestService.tableParams[this.id] = params;
   }
-
 
   /**
    * Stored table settings in service.
    */
   @Input() public settings: TableSettings;
-
 
   @Output() public request: EventEmitter<TableParams> = new EventEmitter<TableParams>();
   @Output() public rowClicked: EventEmitter<any> = new EventEmitter<any>();
@@ -61,19 +57,25 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
 
   private _unsubscribe: Subject<boolean> = new Subject<boolean>();
   private _singleClick = true;
-  private _tableParams: TableParams = new TableParams();
 
   constructor(
-    private _requestService: RequestService
+    public requestService: RequestService
   ) { }
 
 
   ngOnInit() {
 
     /**
+     * Table params required.
+     */
+    if (!this.requestService.tableParams[this.id]) {
+      throw new Error('Table params required.');
+    }
+
+    /**
      * Search request hanlder.
      */
-    this._requestService.call(this.id).pipe(
+    this.requestService.call(this.id).pipe(
       takeUntil(this._unsubscribe)
     )
       .subscribe((tableParams: TableParams) => {
@@ -94,18 +96,19 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
     /**
      * Change direction
      */
-    let order = 'asc';
-    if (this.currentSort && this.currentSort.columnName === columnName && this.currentSort.order === 'asc') {
-      order = 'desc';
+    let isAsc = true;
+    if (this.currentSort && this.currentSort.columnName === columnName && this.currentSort.isAsc) {
+      isAsc = false;
     }
 
     this.currentSort = {
       columnName,
-      order,
+      isAsc,
     } as Sort;
 
-    this._requestService.tableParams[this.id].sort = this.currentSort;
-    this._requestService.next(this.id);
+    this.requestService.tableParams[this.id].sort = this.currentSort;
+    this.requestService.tableParams[this.id].source = [];
+    this.requestService.next(this.id);
   }
 
 

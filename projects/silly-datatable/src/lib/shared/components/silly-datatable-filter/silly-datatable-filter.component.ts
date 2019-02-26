@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnDestroy, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { takeUntil, take } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { takeUntil, take, filter, skip, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Subject, merge } from 'rxjs';
 
 import { RequestService } from './../../services/request.service';
 import { FilterFormField } from './../../models/filter-form-field.model';
@@ -55,7 +55,21 @@ export class SillyDatatableFilterComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.filterForm.valueChanges.pipe(
+    /**
+     * Handle input value changes. Skip first empty string.
+     */
+    const first$ = this.filterForm.valueChanges.pipe(
+      take(1),
+      filter((str: string) => str !== ''),
+      takeUntil(this._unsubscribe)
+    );
+
+    const other$ = this.filterForm.valueChanges.pipe(
+      skip(1),
+      takeUntil(this._unsubscribe)
+    );
+
+    merge(first$, other$).pipe(
       takeUntil(this._unsubscribe)
     )
       .subscribe(() => {
@@ -72,6 +86,7 @@ export class SillyDatatableFilterComponent implements OnInit, OnDestroy {
     this._requestService.tableParams[this.tableId].filters = this.values;
     this._requestService.tableParams[this.tableId].pagination.page = 0;
     this._requestService.tableParams[this.tableId].pagination.pages = null;
+    this._requestService.tableParams[this.tableId].source = [];
     this._requestService.next(this.tableId);
   }
 

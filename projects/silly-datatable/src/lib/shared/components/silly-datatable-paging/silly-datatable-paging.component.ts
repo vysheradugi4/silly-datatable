@@ -31,6 +31,8 @@ export class SillyDatatablePagingComponent implements OnDestroy {
 
 
   public pageRequest(page: number): void {
+    this.requestService.tableParams[this.tableId].source = [];
+    this.requestService.tableParams[this.tableId].pagination.pages = null;
     this.requestService.tableParams[this.tableId].pagination.page = page;
 
     this.requestService.next(this.tableId);

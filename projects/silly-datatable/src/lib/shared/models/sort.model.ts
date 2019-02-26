@@ -5,7 +5,7 @@ export class Sort {
   public columnName: string;
 
   /**
-   * Order sorting, Can be 'desc' or 'asc'.
+   * Sorts the records in ascending order by default.
    */
-  public order: string;
+  public isAsc: boolean;
 }

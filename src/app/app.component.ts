@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
 
     setTimeout(() => {
-      this.detailsDropboxFilter.value = Object.assign(this.detailsDropboxFilter, {value: null});
+      this.detailsDropboxFilter.value = Object.assign(this.detailsDropboxFilter, { value: null });
       this.filterFormFields = this.filterFormFields.slice();
     }, 10000);
 
@@ -108,6 +108,7 @@ export class AppComponent implements OnInit {
       { id: 5, name: 'test5', description: 'some description' },
     ];
 
+    this.tableParams.source = this.source;
 
     this.detailsDropboxFilter = {
       id: 'details',
@@ -119,49 +120,49 @@ export class AppComponent implements OnInit {
       controlContainerClass: 'control-container',
       labelContainerClass: 'label-container',
       formControlLabel: 'Dropbox',
-    } as FilterFormField,
+    } as FilterFormField;
 
 
-      this.filterFormFields = [
-        {
-          id: 'dateRange',
-          type: 'custom',
-          name: 'dateRange',
-          placeholder: 'custom control',
-          controlContainerClass: 'control-container',
-          labelContainerClass: 'label-container',
-          formControlLabel: 'Textbox',
-          customInput: this.customInput,
-        } as FilterFormField,
-        {
-          id: 'name',
-          type: 'textbox',
-          name: 'name',
-          placeholder: 'Enter name...',
-          value: 'faster',
-          controlContainerClass: 'control-container',
-          labelContainerClass: 'label-container',
-          formControlLabel: 'Textbox',
-        } as FilterFormField,
-        {
-          id: 'type',
-          type: 'dropbox',
-          name: 'type',
-          value: null,
-          placeholder: 'Select type ...',
-          valueKeyName: 'value',
-          source: [
-            { key: 1, value: 'Test value 1' },
-            { key: 2, value: 'Test value 2' },
-            { key: 3, value: 'Test value 3' },
-          ],
-          controlContainerClass: 'control-container',
-          labelContainerClass: 'label-container',
-          formControlLabel: 'Dropbox',
-        } as FilterFormField,
+    this.filterFormFields = [
+      {
+        id: 'dateRange',
+        type: 'custom',
+        name: 'dateRange',
+        placeholder: 'custom control',
+        controlContainerClass: 'control-container',
+        labelContainerClass: 'label-container',
+        formControlLabel: 'Textbox',
+        customInput: this.customInput,
+      } as FilterFormField,
+      {
+        id: 'name',
+        type: 'textbox',
+        name: 'name',
+        placeholder: 'Enter name...',
+        value: 'faster',
+        controlContainerClass: 'control-container',
+        labelContainerClass: 'label-container',
+        formControlLabel: 'Textbox',
+      } as FilterFormField,
+      {
+        id: 'type',
+        type: 'dropbox',
+        name: 'type',
+        value: null,
+        placeholder: 'Select type ...',
+        valueKeyName: 'value',
+        source: [
+          { key: 1, value: 'Test value 1' },
+          { key: 2, value: 'Test value 2' },
+          { key: 3, value: 'Test value 3' },
+        ],
+        controlContainerClass: 'control-container',
+        labelContainerClass: 'label-container',
+        formControlLabel: 'Dropbox',
+      } as FilterFormField,
 
-        this.detailsDropboxFilter,
-      ];
+      this.detailsDropboxFilter,
+    ];
 
 
     this.filterSettings = {

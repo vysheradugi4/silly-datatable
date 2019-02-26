@@ -7,4 +7,9 @@ export class TableParams {
   public sort?: Sort;
   public pagination: Pagination;
   public filters?: any;
+
+  /**
+   * The dataset for show in the table.
+   */
+  public source: Array<any>;
 }

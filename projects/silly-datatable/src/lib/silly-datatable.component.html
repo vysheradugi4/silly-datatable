@@ -5,8 +5,8 @@
             [ngClass]="column.headerClass">
             <ng-container *ngIf="column.sortable; else withoutSort">
                 <a [ngClass]="settings?.sortHeaderClass"
-                    [class.asc]="currentSort?.columnName === column.id && currentSort?.order === 'asc'"
-                    [class.desc]="currentSort?.columnName === column.id && currentSort?.order === 'desc'"
+                    [class.asc]="currentSort?.columnName === column.id && currentSort?.isAsc"
+                    [class.desc]="currentSort?.columnName === column.id && !currentSort?.isAsc"
                     (click)="sortEnable(column.id)">
                     {{ column.title }}
                 </a>
@@ -18,8 +18,8 @@
         </th>
     </tr>
 
-    <ng-container *ngIf="source?.length; else withoutSource">
-        <tr *ngFor="let row of source"
+    <ng-container *ngIf="requestService?.tableParams[this.id]?.source?.length; else withoutSource">
+        <tr *ngFor="let row of requestService?.tableParams[this.id]?.source"
             [ngClass]="settings?.rowClass">
 
             <ng-container *ngFor="let column of columns">
@@ -51,17 +51,12 @@
 
         </tr>
     </ng-container>
-
-    <ng-template #withoutSource>
-        <tr>
-            <td [attr.colspan]="columns?.length">
-                {{ settings?.dataNotFoundPhrase || 'Data not found' }}
-            </td>
-        </tr>
-    </ng-template>
-
 </table>
 
-<div *ngIf="!source?.length">
-
-</div>
+<ng-template #withoutSource>
+    <tr>
+        <td [attr.colspan]="columns?.length">
+            {{ settings?.dataNotFoundPhrase || 'Data not found' }}
+        </td>
+    </tr>
+</ng-template>

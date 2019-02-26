@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SillyDatatableComponent } from './silly-datatable.component';
 import { ComponentsModule } from './shared/components/components.module';
 import { RequestService } from './shared/services/request.service';
+import { TableParams } from './shared/models/table-params.model';
 
 
 describe('SillyDatatableComponent', () => {
@@ -25,10 +26,12 @@ describe('SillyDatatableComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SillyDatatableComponent);
     component = fixture.componentInstance;
+    (component as SillyDatatableComponent).tableParams = new TableParams();
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
 });

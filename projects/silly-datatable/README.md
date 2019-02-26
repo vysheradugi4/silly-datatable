@@ -111,7 +111,7 @@ __Table params__
 `<ngx-silly-datatable [tableParams]="tableParams"></ngx-silly-datatable>`
    
 The tableParams object is is the instance of TableParams class. Contains current
-search string, sort params and pagination params.
+search string, sort params, filters params, pagination params and source for table.
    
 Don't forget import class:
    
@@ -125,6 +125,23 @@ TableParams contains:
 * `sort` – Instance of `Sort` class.
    
 * `pagination` – Instance of `Pagination` class.
+   
+* `filters` - Object, contains keys of filter and entered value.
+   
+* `source` - Datasource for place data in table (array).
+   
+   
+Example of table source:
+
+```
+this.source = [
+      { id: 1, name: 'test1', description: 'some description' },
+      { id: 2, name: 'test2', description: 'some description' },
+      { id: 3, name: 'test3', description: 'some description' },
+      { id: 4, name: 'test4', description: 'some description' },
+      { id: 5, name: 'test5', description: 'some description' },
+];
+```
 
 
 __Sort__
@@ -133,7 +150,8 @@ Part of TableParams class. This class contains:
    
 * `columnName` – The column name what will be used for sorting.
    
-* `order` – Order sorting, Can be 'desc' or 'asc'.
+* `isAsc` – For define sort direction. Sorts the records in ascending order by
+default.
    
 Sort can be used with pagination and search.
    
@@ -225,26 +243,8 @@ this.columns = [
 Don't forget import Column:
 
 `import { Column } from 'silly-datatable';`
-
-__Data source__
-
-For place data in a table use
-
-`<ngx-silly-datatable [source]="source"></ngx-silly-datatable>`
-
-Example of table data source:
-
-```
-this.source = [
-      { id: 1, name: 'test1', description: 'some description' },
-      { id: 2, name: 'test2', description: 'some description' },
-      { id: 3, name: 'test3', description: 'some description' },
-      { id: 4, name: 'test4', description: 'some description' },
-      { id: 5, name: 'test5', description: 'some description' },
-];
-```
    
-   
+     
 __Row clicked event__
 
 `<ngx-silly-datatable (rowClicked)="selected($event)"></ngx-silly-datatable>`
