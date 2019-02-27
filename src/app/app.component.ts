@@ -176,6 +176,8 @@ export class AppComponent implements OnInit {
 
 
   public request(tableParams: TableParams) {
+    this.tableParams = Object.assign({}, tableParams);
+    this.tableParams.source = this.source.slice(0, 4);
     console.log('Request with table params = ', tableParams);
   }
 

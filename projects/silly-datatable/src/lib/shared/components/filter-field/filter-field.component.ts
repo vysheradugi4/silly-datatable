@@ -73,7 +73,7 @@ export class FilterFieldComponent implements OnInit, ControlValueAccessor, OnDes
 
 
   writeValue(value: any): void {
-    this.formControl.setValue(value || null);
+    this.formControl.setValue(value);
   }
 
 

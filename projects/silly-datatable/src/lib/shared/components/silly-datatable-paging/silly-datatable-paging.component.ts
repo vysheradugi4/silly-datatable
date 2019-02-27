@@ -1,10 +1,8 @@
 import { Component, Input, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 
-import { Pagination } from './../../models/pagination.model';
 import { PaginationSettings } from './../../models/pagination-settings.model';
 import { RequestService } from './../../services/request.service';
-import { TableParams } from './../../models/table-params.model';
 
 
 @Component({
@@ -31,8 +29,6 @@ export class SillyDatatablePagingComponent implements OnDestroy {
 
 
   public pageRequest(page: number): void {
-    this.requestService.tableParams[this.tableId].source = [];
-    this.requestService.tableParams[this.tableId].pagination.pages = null;
     this.requestService.tableParams[this.tableId].pagination.page = page;
 
     this.requestService.next(this.tableId);
@@ -40,12 +36,12 @@ export class SillyDatatablePagingComponent implements OnDestroy {
 
 
   public get currentPage(): number {
-    return this.requestService.tableParams[this.tableId].pagination.page || null;
+    return this.requestService.tableParams[this.tableId].pagination.page;
   }
 
 
   public get numberOfPages(): number {
-    return this.requestService.tableParams[this.tableId].pagination.pages || null;
+    return this.requestService.tableParams[this.tableId].pagination.pages;
   }
 
 

@@ -25,11 +25,11 @@ export class SillyDatatableSearchComponent implements OnInit {
 
     if (this.search) {
       if (status) {
-        this.search.disable();
+        this.search.disable({ emitEvent: false });
         return;
       }
 
-      this.search.enable();
+      this.search.enable({ emitEvent: false });
     }
   }
 
@@ -127,9 +127,7 @@ export class SillyDatatableSearchComponent implements OnInit {
 
 
   private requestNewSearch(search: string): void {
-    this._requestService.tableParams[this.tableId].source = [];
     this._requestService.tableParams[this.tableId].pagination.page = 0;
-    this._requestService.tableParams[this.tableId].pagination.pages = null;
     this._requestService.tableParams[this.tableId].search = search;
 
     this._requestService.next(this.tableId);

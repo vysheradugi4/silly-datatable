@@ -107,7 +107,6 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
     } as Sort;
 
     this.requestService.tableParams[this.id].sort = this.currentSort;
-    this.requestService.tableParams[this.id].source = [];
     this.requestService.next(this.id);
   }
 

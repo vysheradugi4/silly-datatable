@@ -1,5 +1,5 @@
 <div [ngClass]="settings?.containerClass">
-    <span *ngIf="currentPage && numberOfPages" [ngClass]="settings?.infoClass">
+    <span *ngIf="(currentPage || currentPage === 0) && numberOfPages" [ngClass]="settings?.infoClass">
         Page {{ currentPage + 1 }} of {{ numberOfPages }}
     </span>
     

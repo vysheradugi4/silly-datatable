@@ -85,8 +85,6 @@ export class SillyDatatableFilterComponent implements OnInit, OnDestroy {
   public applyFilters(): void {
     this._requestService.tableParams[this.tableId].filters = this.values;
     this._requestService.tableParams[this.tableId].pagination.page = 0;
-    this._requestService.tableParams[this.tableId].pagination.pages = null;
-    this._requestService.tableParams[this.tableId].source = [];
     this._requestService.next(this.tableId);
   }
 
