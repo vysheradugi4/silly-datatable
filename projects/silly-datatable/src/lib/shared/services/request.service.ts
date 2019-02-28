@@ -36,4 +36,15 @@ export class RequestService {
   public next(tableId: string): void {
     this._requests[tableId].next(this.tableParams[tableId]);
   }
+
+  public clearTableParams(tableId: string): void {
+    if (this._requests[tableId]) {
+      this._requests[tableId].complete();
+      delete this._requests[tableId];
+    }
+
+    if (this.tableParams[tableId]) {
+      delete this.tableParams[tableId];
+    }
+  }
 }

@@ -7,7 +7,7 @@ import {
   OnInit,
   OnDestroy
 } from '@angular/core';
-import { takeUntil, take } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 import { TableSettings } from './shared/models/table-settings.model';
 import { Column } from './shared/models/column.model';
@@ -155,5 +155,7 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this._unsubscribe.next(true);
     this._unsubscribe.unsubscribe();
+
+    this.requestService.clearTableParams(this.id);
   }
 }

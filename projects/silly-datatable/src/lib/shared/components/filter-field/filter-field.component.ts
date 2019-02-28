@@ -89,11 +89,11 @@ export class FilterFieldComponent implements OnInit, ControlValueAccessor, OnDes
 
   setDisabledState?(isDisabled: boolean): void {
     if (isDisabled) {
-      this.formControl.disable();
+      this.formControl.disable({ emitEvent: false });
       return;
     }
 
-    this.formControl.enable();
+    this.formControl.enable({ emitEvent: false });
   }
 
 
