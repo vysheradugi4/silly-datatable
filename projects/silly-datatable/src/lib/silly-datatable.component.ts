@@ -5,14 +5,17 @@ import {
   Output,
   EventEmitter,
   OnInit,
-  OnDestroy
+  OnDestroy,
+  ChangeDetectorRef
 } from '@angular/core';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+import forIn from 'lodash/forIn';
+import { OptionsService } from './shared/services/options.service';
 import { TableSettings } from './shared/models/table-settings.model';
 import { Column } from './shared/models/column.model';
 import { Sort } from './shared/models/sort.model';
-import { Subject } from 'rxjs';
 import { RequestService } from './shared/services/request.service';
 import { TableParams } from './shared/models/table-params.model';
 
@@ -36,7 +39,10 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
    */
   @Input() public id = 'sole';
 
-  @Input() public columns: Array<Column>;
+  @Input() public set columns(list: Array<Column>) {
+
+    this.optionsService.columns[this.id] = this.setColumnsDisplay(list);
+  }
 
   /**
    * Table params contains current paging, search string, sort params.
@@ -59,7 +65,9 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
   private _singleClick = true;
 
   constructor(
-    public requestService: RequestService
+    public requestService: RequestService,
+    public optionsService: OptionsService,
+    private _changeDetectorRef: ChangeDetectorRef
   ) { }
 
 
@@ -72,6 +80,7 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
       throw new Error('Table params required.');
     }
 
+
     /**
      * Search request hanlder.
      */
@@ -81,6 +90,25 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
       .subscribe((tableParams: TableParams) => {
         this.request.emit(tableParams);
       });
+
+
+    this.optionsService.columnsChanged$.pipe(
+      takeUntil(this._unsubscribe)
+    )
+      .subscribe(() => {
+        this._changeDetectorRef.detectChanges();
+      });
+
+
+    /**
+     * Store items per page option for current table (this.id - is id of table).
+     */
+    this.optionsService.itemsPerPageList[this.id] = this.settings && this.settings.itemsPerPage ? this.settings.itemsPerPage : [10];
+
+    const itemsPerPage = this.optionsService.getStateFromStorage(this.id, 'itemsPerPage');
+
+    (this.requestService.tableParams[this.id] as TableParams)
+      .pagination.itemsPerPage = itemsPerPage || this.optionsService.itemsPerPageList[this.id][0];
   }
 
 
@@ -152,10 +180,42 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
   }
 
 
+  public trackByFn(_, item) {
+    return item.show;
+  }
+
+
   ngOnDestroy() {
     this._unsubscribe.next(true);
     this._unsubscribe.unsubscribe();
 
     this.requestService.clearTableParams(this.id);
+    this.optionsService.clearColumns(this.id);
+    this.optionsService.clearItemsPerPageInfo(this.id);
+  }
+
+
+  /**
+   * Set columns visibility by the localstorage data (user's defined);
+   * @param columns List of columns
+   * @returns Changed list.
+   */
+  private setColumnsDisplay(columns: Array<Column>): Array<Column> {
+
+    /**
+     * Gets user's settings for columns.
+     */
+    const states = this.optionsService.getStateFromStorage(this.id, 'shownColumns');
+
+    if (states) {
+      forIn(states, (status: boolean, key: string) => {
+        const column = (columns as Column[])
+          .find((c, i, a) => c.id === key);
+
+        column.show = status;
+      });
+    }
+
+    return columns;
   }
 }

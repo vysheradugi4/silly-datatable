@@ -1,4 +1,5 @@
 export class Column {
+
   /**
    * Column id for link with source.
    */
@@ -27,6 +28,12 @@ export class Column {
    * Resolver for sorting current column.
    */
   public sortable?: boolean;
+
+
+  /**
+   * Show current column.
+   */
+  public show?: boolean;
 
 
   /**

@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FirstComponent } from './first.component';
+import { SillyDatatableModule } from 'projects/silly-datatable/src/public_api';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { EditButtonComponent } from 'src/app/shared/components/edit-button/edit-button.component';
 
 describe('FirstComponent', () => {
   let component: FirstComponent;
@@ -8,9 +12,21 @@ describe('FirstComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FirstComponent ]
+      imports: [
+        SillyDatatableModule,
+        ReactiveFormsModule,
+      ],
+      declarations: [
+        FirstComponent,
+        EditButtonComponent,
+      ],
     })
-    .compileComponents();
+      .overrideModule(BrowserDynamicTestingModule, {
+        set: {
+          entryComponents: [EditButtonComponent],
+        },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {

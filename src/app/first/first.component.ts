@@ -60,6 +60,7 @@ export class FirstComponent implements OnInit {
       headerRowClass: 'header-row',
       rowClass: 'data-row',
       sortHeaderClass: 'sort',
+      itemsPerPage: [1, 3, 5],
     } as TableSettings;
 
     this.columns = [
@@ -69,7 +70,6 @@ export class FirstComponent implements OnInit {
         headerClass: 'id',
         cellClass: 'cell',
         sortable: true,
-
       } as Column,
       {
         id: 'name',

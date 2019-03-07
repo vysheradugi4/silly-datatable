@@ -1,7 +1,7 @@
 <table [ngClass]="settings?.tableClass">
 
     <tr [ngClass]="settings?.headerRowClass">
-        <th *ngFor="let column of columns"
+        <th *ngFor="let column of optionsService?.columns[id] | filter:'show'; trackBy:trackByFn"
             [ngClass]="column.headerClass">
             <ng-container *ngIf="column.sortable; else withoutSort">
                 <a [ngClass]="settings?.sortHeaderClass"
@@ -22,7 +22,7 @@
         <tr *ngFor="let row of requestService?.tableParams[this.id]?.source"
             [ngClass]="settings?.rowClass">
 
-            <ng-container *ngFor="let column of columns">
+            <ng-container *ngFor="let column of optionsService?.columns[id] | filter:'show'; trackBy:trackByFn">
                 <td *ngIf="!column.componentCell; else componentCell"
                     [ngClass]="column.cellClass"
                     (click)="clicked(row)"
@@ -55,7 +55,7 @@
 
 <ng-template #withoutSource>
     <tr>
-        <td [attr.colspan]="columns?.length">
+        <td [attr.colspan]="optionsService?.columns[id]?.length">
             {{ settings?.dataNotFoundPhrase || 'Data not found' }}
         </td>
     </tr>

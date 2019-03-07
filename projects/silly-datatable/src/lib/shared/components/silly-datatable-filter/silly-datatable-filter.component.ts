@@ -1,13 +1,12 @@
 import { Component, OnInit, Input, OnDestroy, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { takeUntil, take, filter, skip, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { takeUntil, take, filter, skip } from 'rxjs/operators';
 import { Subject, merge } from 'rxjs';
 
 import { RequestService } from './../../services/request.service';
 import { FilterFormField } from './../../models/filter-form-field.model';
-import { FilterControlService } from './../../services/filter-control.service';
+import { FormsHelper } from './../../helpers/forms.helper';
 import { FilterSettings } from './../../models/filter-settings.model';
-import { TableParams } from './../../models/table-params.model';
 
 
 @Component({
@@ -40,13 +39,12 @@ export class SillyDatatableFilterComponent implements OnInit, OnDestroy {
   @Output() public valueChanges: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
-    private _requestService: RequestService,
-    private _filterControlService: FilterControlService
+    private _requestService: RequestService
   ) { }
 
 
   ngOnInit() {
-    this.filterForm = this._filterControlService.toFormGroup(this.formFields);
+    this.filterForm = FormsHelper.toFormGroup(this.formFields, 'name', 'value', 'disabled');
 
     /**
      * Check filter has form controls.

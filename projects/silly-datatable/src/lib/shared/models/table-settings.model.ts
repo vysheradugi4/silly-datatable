@@ -1,4 +1,5 @@
 export class TableSettings {
+
   /**
    * Class will be added to <table> tag. Class for all table.
    */
@@ -20,9 +21,13 @@ export class TableSettings {
    */
   public sortHeaderClass?: string;
 
-
   /**
    * Text under heading when data is not found ('Data not found' by default).
    */
   public dataNotFoundPhrase?: string;
+
+  /**
+   * List of possible counts of items per page.
+   */
+  public itemsPerPage?: Array<number>;
 }

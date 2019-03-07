@@ -7,8 +7,10 @@ import { ComponentsModule } from './shared/components/components.module';
 import { SillyDatatableSearchComponent } from './shared/components/silly-datatable-search/silly-datatable-search.component';
 import { SillyDatatablePagingComponent } from './shared/components/silly-datatable-paging/silly-datatable-paging.component';
 import { SillyDatatableFilterComponent } from './shared/components/silly-datatable-filter/silly-datatable-filter.component';
+import { SillyDatatableOptionsComponent } from './shared/components/silly-datatable-options/silly-datatable-options.component';
 import { RequestService } from './shared/services/request.service';
-import { FilterControlService } from './shared/services/filter-control.service';
+import { OptionsService } from './shared/services/options.service';
+import { PipesModule } from './shared/pipes/pipes.module';
 
 
 @NgModule({
@@ -20,16 +22,18 @@ import { FilterControlService } from './shared/services/filter-control.service';
     ComponentsModule,
     FormsModule,
     ReactiveFormsModule,
+    PipesModule,
   ],
   exports: [
     SillyDatatableComponent,
     SillyDatatableSearchComponent,
     SillyDatatablePagingComponent,
     SillyDatatableFilterComponent,
+    SillyDatatableOptionsComponent,
   ],
   providers: [
     RequestService,
-    FilterControlService,
+    OptionsService,
   ],
 })
 export class SillyDatatableModule { }

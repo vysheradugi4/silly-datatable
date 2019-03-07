@@ -15,3 +15,4 @@ export * from './lib/shared/models/filter-settings.model';
 export * from './lib/shared/components/silly-datatable-search/silly-datatable-search.component';
 export * from './lib/shared/components/silly-datatable-paging/silly-datatable-paging.component';
 export * from './lib/shared/components/silly-datatable-filter/silly-datatable-filter.component';
+export * from './lib/shared/components/silly-datatable-options/silly-datatable-options.component';

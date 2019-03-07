@@ -3,7 +3,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { SillyDatatableFilterComponent } from './silly-datatable-filter.component';
 import { RequestService } from './../../../shared/services/request.service';
-import { FilterControlService } from './../../services/filter-control.service';
 import { FilterFieldComponent } from './../filter-field/filter-field.component';
 
 
@@ -22,7 +21,6 @@ describe('SillyDatatableFilterComponent', () => {
       ],
       providers: [
         RequestService,
-        FilterControlService,
       ],
     })
       .compileComponents();

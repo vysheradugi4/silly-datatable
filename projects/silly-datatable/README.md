@@ -85,6 +85,9 @@ added to each `<tr>` tag except first.
    
 * `dataNotFoundPhrase` – Text under heading when data is not found ('Data not
 found' by default).
+   
+* `itemsPerPage` – List of possible counts of items per page (10 by default). This
+is array of number. For example: `[10, 30, 100]`.
       
    
 All properties are optional. 
@@ -189,7 +192,9 @@ following properties:
 * `cellClass` – Custom class for cells of current column.
 
 * `sortable` – Resolver for sorting current column.
-
+   
+* `show` – For control the display of the column (shown by default).
+   
 * `prepareCellFunction` – Customization function for prepare data before showed.
     
 * `componentCell` – Custom component to display in the cell. Can be used for place buttons,
@@ -560,7 +565,59 @@ __Filter outputs:__
 ```
    
 Event emitter for detect filter value changes.
+
+
+## Silly datatable options component
    
+Tag for insert options component in template:
+   
+`<ngx-silly-datatable-options></ngx-silly-datatable-options>`
+   
+   
+__Options inputs:__   
+   
+`<ngx-silly-datatable-options [settings]="optionsSettings"></ngx-silly-datatable-options>`
+   
+   
+* `settings` – Setting for customization appearance of options component
+(Instance of OptionsSettings class).
+   
+   
+Don't forget import OptionsSettings for init new instance:
+   
+`import { OptionsSettings } from 'silly-datatable';`
+   
+   
+__Options settings:__   
+      
+* `containerClass` – Css class for options div container.
+   
+* `checkboxSectionClass` – Css class for checkboxes section div container.
+   
+* `selectSectionClass` – Css class for select count of pages section div container.
+   
+* `checkboxContainerClass` – Css containter class for each checkbox with label.
+   
+* `checkboxClass` – Css class for checkbox
+   
+* `labelClass` – Css class for checkbox label
+   
+* `itemsPerPageTitle` – Title (label) text for select of count items per page.
+      
+   
+For example:
+   
+```
+this.optionsSettings = {
+  containerClass: 'containerClass',
+  checkboxSectionClass: 'checkboxSectionClass',
+  selectSectionClass: 'selectSectionClass',
+  checkboxContainerClass: 'checkboxContainerClass',
+  checkboxClass: 'checkboxClass',
+  labelClass: 'labelClass',
+  itemsPerPageTitle: 'itemsPerPageTitle',
+} as OptionsSettings;
+```
    
    
 ## CSS sorting arrows solution

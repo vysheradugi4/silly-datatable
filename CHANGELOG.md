@@ -1,5 +1,10 @@
 # Silly Datatable Change Log
 
+## 2.1.0 (2019-03-06)
+
+    Added new property in column object - show. For control the display of the
+    column. Added functional for manage of show columns and count items per page.
+
 ## 1.9.8 (2019-02-26)
 
     Changed in Sort object field for define sort direction. New field has name

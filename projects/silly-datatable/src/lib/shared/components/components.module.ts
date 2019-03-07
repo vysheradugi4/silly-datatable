@@ -9,6 +9,7 @@ import { SillyDatatableFilterComponent } from './silly-datatable-filter/silly-da
 import { FilterFieldComponent } from './filter-field/filter-field.component';
 import { ComponentCellComponent } from './component-cell/component-cell.component';
 import { PipesModule } from './../pipes/pipes.module';
+import { SillyDatatableOptionsComponent } from './silly-datatable-options/silly-datatable-options.component';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { PipesModule } from './../pipes/pipes.module';
     SillyDatatableSearchComponent,
     SillyDatatablePagingComponent,
     SillyDatatableFilterComponent,
+    SillyDatatableOptionsComponent,
     FilterFieldComponent,
     ComponentCellComponent,
   ],
@@ -29,6 +31,7 @@ import { PipesModule } from './../pipes/pipes.module';
     SillyDatatableSearchComponent,
     SillyDatatablePagingComponent,
     SillyDatatableFilterComponent,
+    SillyDatatableOptionsComponent,
     ComponentCellComponent,
   ],
 })
