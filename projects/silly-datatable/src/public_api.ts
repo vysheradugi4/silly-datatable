@@ -9,6 +9,7 @@ export * from './lib/shared/models/column.model';
 export * from './lib/shared/models/sort.model';
 export * from './lib/shared/models/pagination.model';
 export * from './lib/shared/models/pagination-settings.model';
+export * from './lib/shared/models/options-settings.model';
 export * from './lib/shared/models/table-params.model';
 export * from './lib/shared/models/filter-form-field.model';
 export * from './lib/shared/models/filter-settings.model';

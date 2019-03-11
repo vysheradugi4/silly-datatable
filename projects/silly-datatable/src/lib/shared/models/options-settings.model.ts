@@ -7,15 +7,9 @@ export class OptionsSettings {
 
 
   /**
-   * Css class for checkboxes section div container.
+   * Css class for columns checkboxes section div container.
    */
-  public checkboxSectionClass: string;
-
-
-  /**
-   * Css class for select count of pages section div container.
-   */
-  public selectSectionClass: string;
+  public columnsSectionClass: string;
 
 
   /**
@@ -31,13 +25,37 @@ export class OptionsSettings {
 
 
   /**
+   * Css containter class for each checkbox label.
+   */
+  public labelCheckboxContainerClass: string;
+
+
+  /**
    * Css class for checkbox label
    */
-  public labelClass: string;
+  public labelCheckboxClass: string;
+
+
+  /**
+   * Css class for select count of pages section div container.
+   */
+  public itemsPerPageSectionClass: string;
+
+
+  /**
+   * Css class for select label
+   */
+  public labelSelectClass: string;
 
 
   /**
    * Title (label) text for select of count items per page.
    */
   public itemsPerPageTitle: string;
+
+
+  /**
+   * Items per page select's css class.
+   */
+  public selectClass: string;
 }

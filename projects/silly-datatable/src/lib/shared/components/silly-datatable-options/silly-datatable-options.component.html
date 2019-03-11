@@ -1,6 +1,7 @@
 <div [ngClass]="settings?.containerClass">
-    <div [ngClass]="settings?.checkboxSectionClass">
-        <form [formGroup]="columns" novalidate>
+    <div [ngClass]="settings?.columnsSectionClass">
+        <form [formGroup]="columns"
+            novalidate>
             <div *ngFor="let column of optionsService?.columns[tableId]"
                 [ngClass]="settings?.checkboxContainerClass">
                 <input [ngClass]="settings?.checkboxClass"
@@ -9,15 +10,20 @@
                     [name]="column.id"
                     [formControlName]="column.id"
                     [value]="column.show">
-                <label [ngClass]="settings?.labelClass"
-                    [for]="column.id">{{ column.title }}</label>
+                <div [ngClass]="settings?.labelCheckboxContainerClass">
+                    <label [ngClass]="settings?.labelCheckboxClass"
+                        [for]="column.id">{{ column.title }}</label>
+
+                </div>
             </div>
         </form>
     </div>
 
-    <div [ngClass]="settings?.selectSectionClass">
-        <label for="itemsPerPage">{{ settings?.itemsPerPageTitle || 'Items per page'}}</label>
-        <select [formControl]="itemsPerPage"
+    <div [ngClass]="settings?.itemsPerPageSectionClass">
+        <label [ngClass]="settings?.labelSelectClass"
+            for="itemsPerPage">{{ settings?.itemsPerPageTitle || 'Items per page'}}</label>
+        <select [ngClass]="settings?.selectClass"
+            [formControl]="itemsPerPage"
             id="itemsPerPage">
             <option *ngFor="let number of optionsService?.itemsPerPageList[tableId]"
                 [ngValue]="number">{{ number }}</option>

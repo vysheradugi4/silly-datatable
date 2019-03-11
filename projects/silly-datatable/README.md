@@ -592,30 +592,39 @@ __Options settings:__
       
 * `containerClass` – Css class for options div container.
    
-* `checkboxSectionClass` – Css class for checkboxes section div container.
-   
-* `selectSectionClass` – Css class for select count of pages section div container.
+* `columnsSectionClass` – Css class for columns checkboxes section div container.
    
 * `checkboxContainerClass` – Css containter class for each checkbox with label.
    
 * `checkboxClass` – Css class for checkbox
    
-* `labelClass` – Css class for checkbox label
+* `labelCheckboxContainerClass` – Css containter class for each checkbox label.
+   
+* `labelCheckboxClass` – Css class for checkbox label
+   
+* `itemsPerPageSectionClass` – Css class for select count of pages section div container.
+   
+* `labelSelectClass` – Css class for select label
    
 * `itemsPerPageTitle` – Title (label) text for select of count items per page.
-      
    
+* `selectClass` – Items per page select's css class.
+      
+    
 For example:
    
 ```
 this.optionsSettings = {
   containerClass: 'containerClass',
-  checkboxSectionClass: 'checkboxSectionClass',
-  selectSectionClass: 'selectSectionClass',
+  columnsSectionClass: 'columnsSectionClass', 
   checkboxContainerClass: 'checkboxContainerClass',
-  checkboxClass: 'checkboxClass',
-  labelClass: 'labelClass',
-  itemsPerPageTitle: 'itemsPerPageTitle',
+  checkboxClass: 'checkboxClass', 
+  labelCheckboxContainerClass: 'labelCheckboxContainerClass',
+  labelCheckboxClass: 'labelCheckboxClass',
+  itemsPerPageSectionClass: 'itemsPerPageSectionClass',
+  labelSelectClass: 'labelSelectClass',
+  itemsPerPageTitle: 'Items Per Page',
+  selectClass: 'selectClass',
 } as OptionsSettings;
 ```
    

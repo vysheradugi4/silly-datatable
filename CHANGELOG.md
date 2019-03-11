@@ -1,5 +1,9 @@
 # Silly Datatable Change Log
 
+## 2.1.4 (2019-03-11)
+
+    Corrected parameters for class names in options component.
+
 ## 2.1.0 (2019-03-06)
 
     Added new property in column object - show. For control the display of the
