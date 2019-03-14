@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { PaginationSettings } from './../../models/pagination-settings.model';
@@ -10,7 +10,7 @@ import { RequestService } from './../../services/request.service';
   templateUrl: './silly-datatable-paging.component.html',
   styles: [],
 })
-export class SillyDatatablePagingComponent implements OnDestroy {
+export class SillyDatatablePagingComponent implements OnInit, OnDestroy {
 
   public pageArray: Array<number> = [];
 
@@ -19,13 +19,23 @@ export class SillyDatatablePagingComponent implements OnDestroy {
    */
   @Input() public settings: PaginationSettings;
 
-  @Input() public tableId = 'sole';
+  @Input() public tableId;
 
   private _unsubscribe: Subject<boolean> = new Subject<boolean>();
 
   constructor(
     public requestService: RequestService
   ) { }
+
+  ngOnInit() {
+
+    /**
+     * Table id required.
+     */
+    if (!this.tableId) {
+      throw new Error('Table id required.');
+    }
+  }
 
 
   public pageRequest(page: number): void {

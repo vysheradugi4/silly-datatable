@@ -6,7 +6,8 @@ import {
   EventEmitter,
   OnInit,
   OnDestroy,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  ElementRef
 } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -37,7 +38,7 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
   /**
    * Id string for link current datatable component with filter, search etc.
    */
-  @Input() public id = 'sole';
+  @Input() public id;
 
   @Input() public set columns(list: Array<Column>) {
 
@@ -67,11 +68,20 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
   constructor(
     public requestService: RequestService,
     public optionsService: OptionsService,
-    private _changeDetectorRef: ChangeDetectorRef
+    private _changeDetectorRef: ChangeDetectorRef,
+    private _elementRef: ElementRef
   ) { }
 
 
   ngOnInit() {
+
+    /**
+     * Table id required.
+     */
+    if (!this.id) {
+      throw new Error('Table id required.');
+    }
+
 
     /**
      * Table params required.
@@ -210,7 +220,7 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
     if (states) {
       forIn(states, (status: boolean, key: string) => {
         const column = (columns as Column[])
-          .find((c, i, a) => c.id === key);
+          .find(c => c.id === key);
 
         column.show = status;
       });

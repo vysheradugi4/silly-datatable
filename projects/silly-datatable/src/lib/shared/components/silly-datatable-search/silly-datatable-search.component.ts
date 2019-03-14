@@ -37,7 +37,7 @@ export class SillyDatatableSearchComponent implements OnInit {
   /**
    * For link with current table.
    */
-  @Input() public tableId = 'sole';
+  @Input() public tableId;
 
 
   /**
@@ -89,6 +89,15 @@ export class SillyDatatableSearchComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+    /**
+     * Table id required.
+     */
+    if (!this.tableId) {
+      throw new Error('Table id required.');
+    }
+
+
     /**
      * Used external control for enter search string.
      */

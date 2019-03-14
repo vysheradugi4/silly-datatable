@@ -23,7 +23,7 @@ export class SillyDatatableOptionsComponent implements OnInit, OnDestroy {
   /**
    * Id for link with table.
    */
-  @Input() public tableId = 'sole';
+  @Input() public tableId;
 
   @Input() public settings: OptionsSettings;
 
@@ -38,6 +38,22 @@ export class SillyDatatableOptionsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+
+    /**
+     * Table id required.
+     */
+    if (!this.tableId) {
+      throw new Error('Table id required.');
+    }
+
+
+    /**
+     * Exit without columns.
+     */
+    if (!this.optionsService.columns[this.tableId]) {
+      throw new Error('Columns of table not defined.');
+    }
+
 
     /**
      * Add show parameter in columns.
@@ -82,7 +98,6 @@ export class SillyDatatableOptionsComponent implements OnInit, OnDestroy {
 
           column.show = status;
         });
-
         this.optionsService.storeState(this.tableId, values, 'shownColumns');
         this.optionsService.columnsChanged();
       });

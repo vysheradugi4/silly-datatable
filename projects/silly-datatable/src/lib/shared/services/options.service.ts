@@ -35,9 +35,9 @@ export class OptionsService {
   }
 
 
-  public storeState(tableId: string, value: any, storageFieldName: string): void {
+  public storeState(id: string, value: any, storageFieldName: string): void {
     let data = {
-      [tableId]: value,
+      [id]: value,
     };
 
     if (storageFieldName in localStorage) {
@@ -49,11 +49,11 @@ export class OptionsService {
   }
 
 
-  public getStateFromStorage(tableId: string, storageFieldName: string): any {
+  public getStateFromStorage(id: string, storageFieldName: string): any {
     if (!(storageFieldName in localStorage)) {
       return null;
     }
 
-    return JSON.parse(localStorage.getItem(storageFieldName))[tableId];
+    return JSON.parse(localStorage.getItem(storageFieldName))[id];
   }
 }

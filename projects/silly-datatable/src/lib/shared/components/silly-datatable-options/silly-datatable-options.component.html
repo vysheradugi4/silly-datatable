@@ -2,6 +2,7 @@
     <div [ngClass]="settings?.columnsSectionClass">
         <form [formGroup]="columns"
             novalidate>
+            <div [ngClass]="settings?.columnsTitleClass">{{ settings?.columnsTitle || 'Columns:'}}</div>
             <div *ngFor="let column of optionsService?.columns[tableId]"
                 [ngClass]="settings?.checkboxContainerClass">
                 <input [ngClass]="settings?.checkboxClass"
@@ -21,7 +22,7 @@
 
     <div [ngClass]="settings?.itemsPerPageSectionClass">
         <label [ngClass]="settings?.labelSelectClass"
-            for="itemsPerPage">{{ settings?.itemsPerPageTitle || 'Items per page'}}</label>
+            for="itemsPerPage">{{ settings?.itemsPerPageTitle || 'Items per page:'}}</label>
         <select [ngClass]="settings?.selectClass"
             [formControl]="itemsPerPage"
             id="itemsPerPage">

@@ -1,5 +1,9 @@
 # Silly Datatable Change Log
 
+## 2.1.7 (2019-03-11)
+
+    Table id is required now.
+
 ## 2.1.4 (2019-03-11)
 
     Corrected parameters for class names in options component.

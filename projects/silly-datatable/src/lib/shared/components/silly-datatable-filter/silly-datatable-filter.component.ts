@@ -23,7 +23,7 @@ export class SillyDatatableFilterComponent implements OnInit, OnDestroy {
   /**
    * For link filter with table.
    */
-  @Input() public tableId = 'sole';
+  @Input() public tableId;
 
   @Input() public settings: FilterSettings;
 
@@ -44,6 +44,15 @@ export class SillyDatatableFilterComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
+
+    /**
+     * Table id required.
+     */
+    if (!this.tableId) {
+      throw new Error('Table id required.');
+    }
+
+
     this.filterForm = FormsHelper.toFormGroup(this.formFields, 'name', 'value', 'disabled');
 
     /**

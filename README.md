@@ -90,7 +90,7 @@ found' by default).
 is array of number. For example: `[10, 30, 100]`.
       
    
-All properties are optional. 
+All properties are optional except id. 
 
 
 Example of settings:
@@ -594,6 +594,11 @@ __Options settings:__
    
 * `columnsSectionClass` – Css class for columns checkboxes section div container.
    
+* `columnsTitleClass` – Css class for columns title section.
+   
+* `columnsTitle` – Title text for sction of columns checkboxes (`Columns:` by
+default).
+      
 * `checkboxContainerClass` – Css containter class for each checkbox with label.
    
 * `checkboxClass` – Css class for checkbox
@@ -606,7 +611,8 @@ __Options settings:__
    
 * `labelSelectClass` – Css class for select label
    
-* `itemsPerPageTitle` – Title (label) text for select of count items per page.
+* `itemsPerPageTitle` – Title (label) text for select of count items per page
+(`Items per page:` by default).
    
 * `selectClass` – Items per page select's css class.
       
@@ -616,9 +622,11 @@ For example:
 ```
 this.optionsSettings = {
   containerClass: 'containerClass',
-  columnsSectionClass: 'columnsSectionClass', 
+  columnsSectionClass: 'columnsSectionClass',
+  columnsTitleClass: 'columnsTitleClass',
+  columnsTitle: 'columnsTitle',
   checkboxContainerClass: 'checkboxContainerClass',
-  checkboxClass: 'checkboxClass', 
+  checkboxClass: 'checkboxClass',
   labelCheckboxContainerClass: 'labelCheckboxContainerClass',
   labelCheckboxClass: 'labelCheckboxClass',
   itemsPerPageSectionClass: 'itemsPerPageSectionClass',
