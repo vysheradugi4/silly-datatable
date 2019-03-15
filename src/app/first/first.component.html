@@ -7,8 +7,9 @@ Routing: <button routerLink="/second">Second</button>
     <br>
 </ng-template>
 
-<ngx-silly-datatable-search tableId="sole" placeholder="Search..."
+<ngx-silly-datatable-search #soleSearch
     inputId="search"
+    placeholder="Search..."
     inputClass="search-field"
     [prefix]="prefix"
     [suffix]="suffix"
@@ -33,17 +34,17 @@ Routing: <button routerLink="/second">Second</button>
 
 <hr>
 
-<ngx-silly-datatable-paging tableId="sole"
+<!-- <ngx-silly-datatable-paging tableId="sole"
     [settings]="paginationSettings">
-</ngx-silly-datatable-paging>
+</ngx-silly-datatable-paging> -->
 
 <hr>
 
-<ngx-silly-datatable-filter tableId="sole"
+<!-- <ngx-silly-datatable-filter tableId="sole"
     [formFields]="filterFormFields"
     [settings]="filterSettings"
     (valueChanges)="filterValueChanges($event)">
-</ngx-silly-datatable-filter>
+</ngx-silly-datatable-filter> -->
 
 <ng-template #customInput
     let-filterFieldSettings="filterFieldSettings"
@@ -60,6 +61,6 @@ Routing: <button routerLink="/second">Second</button>
 <hr>
 
 <h3>Options</h3>
-<ngx-silly-datatable-options tableId="sole"
+<!-- <ngx-silly-datatable-options tableId="sole"
     [settings]="optionsSettings">
-</ngx-silly-datatable-options>
+</ngx-silly-datatable-options> -->

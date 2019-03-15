@@ -3,8 +3,6 @@ import { FormControl } from '@angular/forms';
 import { Subject, merge } from 'rxjs';
 import { filter, debounceTime, distinctUntilChanged, takeUntil, take, skip } from 'rxjs/operators';
 
-import { RequestService } from './../../services/request.service';
-
 
 @Component({
   selector: 'ngx-silly-datatable-search',
@@ -34,10 +32,7 @@ export class SillyDatatableSearchComponent implements OnInit {
   }
 
 
-  /**
-   * For link with current table.
-   */
-  @Input() public tableId;
+  @Input() public inputId: string;
 
 
   /**
@@ -84,19 +79,9 @@ export class SillyDatatableSearchComponent implements OnInit {
   private _unsubscribe = new Subject<boolean>();
   private _disabled = false;
 
-  constructor(
-    private _requestService: RequestService
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
-
-    /**
-     * Table id required.
-     */
-    if (!this.tableId) {
-      throw new Error('Table id required.');
-    }
-
 
     /**
      * Used external control for enter search string.
@@ -136,9 +121,9 @@ export class SillyDatatableSearchComponent implements OnInit {
 
 
   private requestNewSearch(search: string): void {
-    this._requestService.tableParams[this.tableId].pagination.page = 0;
-    this._requestService.tableParams[this.tableId].search = search;
+    // this._requestService.tableParams[this.tableId].pagination.page = 0;
+    // this._requestService.tableParams[this.tableId].search = search;
 
-    this._requestService.next(this.tableId);
+    // this._requestService.next(this.tableId);
   }
 }

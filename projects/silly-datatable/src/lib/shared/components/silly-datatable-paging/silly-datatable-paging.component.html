@@ -16,7 +16,7 @@
         [innerHTML]="settings?.prev || '<'"></button>
 
     <button
-        *ngFor="let page of requestService?.tableParams[this.tableId]?.pagination?.pages | pageArray | slice:start:end"
+        *ngFor="let page of tableParams?.pagination?.pages | pageArray | slice:start:end"
         [ngClass]="settings?.numberButtonClass"
         [class.active]="currentPage === (page - 1)"
         (click)="pageRequest(page - 1)"

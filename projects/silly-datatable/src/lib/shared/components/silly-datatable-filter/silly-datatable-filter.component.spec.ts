@@ -2,7 +2,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { SillyDatatableFilterComponent } from './silly-datatable-filter.component';
-import { RequestService } from './../../../shared/services/request.service';
 import { FilterFieldComponent } from './../filter-field/filter-field.component';
 
 
@@ -19,9 +18,6 @@ describe('SillyDatatableFilterComponent', () => {
         SillyDatatableFilterComponent,
         FilterFieldComponent,
       ],
-      providers: [
-        RequestService,
-      ],
     })
       .compileComponents();
   }));
@@ -34,5 +30,9 @@ describe('SillyDatatableFilterComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should emit filter values when apply filters', () => {
+
   });
 });

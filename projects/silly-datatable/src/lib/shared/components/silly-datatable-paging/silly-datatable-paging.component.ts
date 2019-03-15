@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { PaginationSettings } from './../../models/pagination-settings.model';
-import { RequestService } from './../../services/request.service';
+import { TableParams } from './../../models/table-params.model';
 
 
 @Component({
@@ -18,40 +18,29 @@ export class SillyDatatablePagingComponent implements OnInit, OnDestroy {
    * Settings for customization pagination component.
    */
   @Input() public settings: PaginationSettings;
-
-  @Input() public tableId;
+  @Input() public tableParams: TableParams;
 
   private _unsubscribe: Subject<boolean> = new Subject<boolean>();
 
-  constructor(
-    public requestService: RequestService
-  ) { }
+  constructor() { }
 
-  ngOnInit() {
-
-    /**
-     * Table id required.
-     */
-    if (!this.tableId) {
-      throw new Error('Table id required.');
-    }
-  }
+  ngOnInit() {  }
 
 
   public pageRequest(page: number): void {
-    this.requestService.tableParams[this.tableId].pagination.page = page;
+    // this.requestService.tableParams[this.tableId].pagination.page = page;
 
-    this.requestService.next(this.tableId);
+    // this.requestService.next(this.tableId);
   }
 
 
   public get currentPage(): number {
-    return this.requestService.tableParams[this.tableId].pagination.page;
+    return this.tableParams.pagination.page;
   }
 
 
   public get numberOfPages(): number {
-    return this.requestService.tableParams[this.tableId].pagination.pages;
+    return this.tableParams.pagination.pages;
   }
 
 

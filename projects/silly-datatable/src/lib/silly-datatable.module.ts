@@ -8,9 +8,8 @@ import { SillyDatatableSearchComponent } from './shared/components/silly-datatab
 import { SillyDatatablePagingComponent } from './shared/components/silly-datatable-paging/silly-datatable-paging.component';
 import { SillyDatatableFilterComponent } from './shared/components/silly-datatable-filter/silly-datatable-filter.component';
 import { SillyDatatableOptionsComponent } from './shared/components/silly-datatable-options/silly-datatable-options.component';
-import { RequestService } from './shared/services/request.service';
-import { OptionsService } from './shared/services/options.service';
 import { PipesModule } from './shared/pipes/pipes.module';
+import { StoreService } from './shared/services/store.service';
 
 
 @NgModule({
@@ -32,8 +31,7 @@ import { PipesModule } from './shared/pipes/pipes.module';
     SillyDatatableOptionsComponent,
   ],
   providers: [
-    RequestService,
-    OptionsService,
+    StoreService,
   ],
 })
 export class SillyDatatableModule { }

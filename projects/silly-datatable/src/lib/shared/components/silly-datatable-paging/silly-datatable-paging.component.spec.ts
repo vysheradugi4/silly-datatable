@@ -1,13 +1,17 @@
-import { RequestMockService } from './../../services/request-mock.service';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SillyDatatablePagingComponent } from './silly-datatable-paging.component';
 import { PipesModule } from './../../pipes/pipes.module';
-import { RequestService } from './../../../shared/services/request.service';
+import { TableParams } from './../../models/table-params.model';
+import { Pagination } from './../../../shared/models/pagination.model';
+
 
 describe('SillyDatatablePagingComponent', () => {
   let component: SillyDatatablePagingComponent;
   let fixture: ComponentFixture<SillyDatatablePagingComponent>;
+
+  const tableParams = new TableParams();
+  tableParams.pagination = new Pagination();
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -15,12 +19,6 @@ describe('SillyDatatablePagingComponent', () => {
         PipesModule,
       ],
       declarations: [SillyDatatablePagingComponent],
-      providers: [
-        {
-          provide: RequestService,
-          useClass: RequestMockService,
-        },
-      ],
     })
       .compileComponents();
   }));
@@ -28,10 +26,11 @@ describe('SillyDatatablePagingComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SillyDatatablePagingComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    component.tableParams = tableParams;
   });
 
   it('should create', () => {
+    fixture.detectChanges();
     expect(component).toBeTruthy();
   });
 });

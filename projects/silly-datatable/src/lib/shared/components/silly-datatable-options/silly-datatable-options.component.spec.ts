@@ -2,13 +2,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SillyDatatableOptionsComponent } from './silly-datatable-options.component';
-import { OptionsMockService } from './../../services/options-mock.service';
-import { OptionsService } from './../../services/options.service';
+import { StoreService } from './../../services/store.service';
 
 
 describe('SillyDatatableOptionsComponent', () => {
   let component: SillyDatatableOptionsComponent;
   let fixture: ComponentFixture<SillyDatatableOptionsComponent>;
+
+  const columns = [];
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -17,10 +18,7 @@ describe('SillyDatatableOptionsComponent', () => {
       ],
       declarations: [SillyDatatableOptionsComponent],
       providers: [
-        {
-          provide: OptionsService,
-          useClass: OptionsMockService,
-        },
+        StoreService,
       ],
     })
       .compileComponents();
@@ -29,6 +27,7 @@ describe('SillyDatatableOptionsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SillyDatatableOptionsComponent);
     component = fixture.componentInstance;
+    component.columns = columns;
     fixture.detectChanges();
   });
 

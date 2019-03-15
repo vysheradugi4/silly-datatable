@@ -2,6 +2,7 @@
     <ng-container *ngTemplateOutlet="prefix"></ng-container>
 
     <input [formControl]="search"
+        [id]="inputId"
         type="text"
         [ngClass]="searchInputClass"
         [placeholder]="placeholder">

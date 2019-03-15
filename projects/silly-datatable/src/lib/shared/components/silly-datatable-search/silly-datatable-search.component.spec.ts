@@ -2,7 +2,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { SillyDatatableSearchComponent } from './silly-datatable-search.component';
-import { RequestService } from './../../../shared/services/request.service';
 
 
 describe('SillyDatatableSearchComponent', () => {
@@ -14,21 +13,18 @@ describe('SillyDatatableSearchComponent', () => {
       imports: [
         ReactiveFormsModule,
       ],
-      declarations: [ SillyDatatableSearchComponent ],
-      providers: [
-        RequestService,
-      ],
+      declarations: [SillyDatatableSearchComponent],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SillyDatatableSearchComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {
+    fixture.detectChanges();
     expect(component).toBeTruthy();
   });
 });

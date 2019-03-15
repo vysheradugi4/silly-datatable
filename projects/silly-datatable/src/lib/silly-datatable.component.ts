@@ -13,12 +13,11 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import forIn from 'lodash/forIn';
-import { OptionsService } from './shared/services/options.service';
 import { TableSettings } from './shared/models/table-settings.model';
 import { Column } from './shared/models/column.model';
 import { Sort } from './shared/models/sort.model';
-import { RequestService } from './shared/services/request.service';
 import { TableParams } from './shared/models/table-params.model';
+import { Pagination } from 'projects/silly-datatable/src/lib/shared/models/pagination.model';
 
 
 @Component({
@@ -30,46 +29,50 @@ import { TableParams } from './shared/models/table-params.model';
 export class SillyDatatableComponent implements OnInit, OnDestroy {
 
   /**
-   * Current state of sorting. Contains column id string and boolean isAsc for
-   * define sort direction.
+   * For identify table when use loading options from localStorage.
    */
-  public currentSort: Sort;
+  @Input() public id: string;
+
 
   /**
-   * Id string for link current datatable component with filter, search etc.
+   * For store columns settings.
    */
-  @Input() public id;
+  @Input() public columns: Array<Column>;
 
-  @Input() public set columns(list: Array<Column>) {
-
-    this.optionsService.columns[this.id] = this.setColumnsDisplay(list);
-  }
 
   /**
    * Table params contains current paging, search string, sort params.
    */
-  @Input() public set tableParams(params: TableParams) {
-    this.requestService.tableParams[this.id] = params;
+  @Input() public set tableParams(tableParams: TableParams) {
+    this._tableParams = tableParams;
   }
+
 
   /**
    * Stored table settings in service.
    */
   @Input() public settings: TableSettings;
 
+
+  /**
+   * Current state of sorting. Contains column id string and boolean isAsc for
+   * define sort direction.
+   */
+  public currentSort: Sort;
+
+
   @Output() public request: EventEmitter<TableParams> = new EventEmitter<TableParams>();
   @Output() public rowClicked: EventEmitter<any> = new EventEmitter<any>();
   @Output() public rowDoubleClicked: EventEmitter<any> = new EventEmitter<any>();
   @Output() public componentCellEvent: EventEmitter<any> = new EventEmitter<any>();
 
+
   private _unsubscribe: Subject<boolean> = new Subject<boolean>();
   private _singleClick = true;
+  private _tableParams: TableParams;
 
   constructor(
-    public requestService: RequestService,
-    public optionsService: OptionsService,
-    private _changeDetectorRef: ChangeDetectorRef,
-    private _elementRef: ElementRef
+    private _changeDetectorRef: ChangeDetectorRef
   ) { }
 
 
@@ -86,39 +89,39 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
     /**
      * Table params required.
      */
-    if (!this.requestService.tableParams[this.id]) {
+    if (!this._tableParams) {
       throw new Error('Table params required.');
     }
 
 
-    /**
-     * Search request hanlder.
-     */
-    this.requestService.call(this.id).pipe(
-      takeUntil(this._unsubscribe)
-    )
-      .subscribe((tableParams: TableParams) => {
-        this.request.emit(tableParams);
-      });
+
+    //   this.optionsService.columnsChanged$.pipe(
+    //     takeUntil(this._unsubscribe)
+    //   )
+    //     .subscribe(() => {
+    //       this._changeDetectorRef.detectChanges();
+    //     });
 
 
-    this.optionsService.columnsChanged$.pipe(
-      takeUntil(this._unsubscribe)
-    )
-      .subscribe(() => {
-        this._changeDetectorRef.detectChanges();
-      });
+    //   /**
+    //    * Store items per page option for current table (this.id - is id of table).
+    //    */
+    //   this.optionsService.itemsPerPageList[this.id] = this.settings && this.settings.itemsPerPage ? this.settings.itemsPerPage : [10];
+
+    //   const itemsPerPage = this.optionsService.getStateFromStorage(this.id, 'itemsPerPage');
+
+    //   (this.requestService.tableParams[this.id] as TableParams)
+    //     .pagination.itemsPerPage = itemsPerPage || this.optionsService.itemsPerPageList[this.id][0];
+  }
 
 
-    /**
-     * Store items per page option for current table (this.id - is id of table).
-     */
-    this.optionsService.itemsPerPageList[this.id] = this.settings && this.settings.itemsPerPage ? this.settings.itemsPerPage : [10];
+  public get tableParams(): TableParams {
+    return this._tableParams;
+  }
 
-    const itemsPerPage = this.optionsService.getStateFromStorage(this.id, 'itemsPerPage');
 
-    (this.requestService.tableParams[this.id] as TableParams)
-      .pagination.itemsPerPage = itemsPerPage || this.optionsService.itemsPerPageList[this.id][0];
+  public sendRequest(): void {
+    this.request.emit(this._tableParams);
   }
 
 
@@ -144,8 +147,8 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
       isAsc,
     } as Sort;
 
-    this.requestService.tableParams[this.id].sort = this.currentSort;
-    this.requestService.next(this.id);
+    this._tableParams.sort = this.currentSort;
+    this.sendRequest();
   }
 
 
@@ -196,36 +199,36 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy() {
-    this._unsubscribe.next(true);
-    this._unsubscribe.unsubscribe();
+    // this._unsubscribe.next(true);
+    // this._unsubscribe.unsubscribe();
 
-    this.requestService.clearTableParams(this.id);
-    this.optionsService.clearColumns(this.id);
-    this.optionsService.clearItemsPerPageInfo(this.id);
+    // this.requestService.clearTableParams(this.id);
+    // this.optionsService.clearColumns(this.id);
+    // this.optionsService.clearItemsPerPageInfo(this.id);
   }
 
 
-  /**
-   * Set columns visibility by the localstorage data (user's defined);
-   * @param columns List of columns
-   * @returns Changed list.
-   */
-  private setColumnsDisplay(columns: Array<Column>): Array<Column> {
+  // /**
+  //  * Set columns visibility by the localstorage data (user's defined);
+  //  * @param columns List of columns
+  //  * @returns Changed list.
+  //  */
+  // private setColumnsDisplay(columns: Array<Column>): Array<Column> {
 
-    /**
-     * Gets user's settings for columns.
-     */
-    const states = this.optionsService.getStateFromStorage(this.id, 'shownColumns');
+  //   /**
+  //    * Gets user's settings for columns.
+  //    */
+  //   const states = this.optionsService.getStateFromStorage(this.id, 'shownColumns');
 
-    if (states) {
-      forIn(states, (status: boolean, key: string) => {
-        const column = (columns as Column[])
-          .find(c => c.id === key);
+  //   if (states) {
+  //     forIn(states, (status: boolean, key: string) => {
+  //       const column = (columns as Column[])
+  //         .find(c => c.id === key);
 
-        column.show = status;
-      });
-    }
+  //       column.show = status;
+  //     });
+  //   }
 
-    return columns;
-  }
+  //   return columns;
+  // }
 }
