@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Subject, merge } from 'rxjs';
+import { Subject, merge, Observable } from 'rxjs';
 import { filter, debounceTime, distinctUntilChanged, takeUntil, take, skip } from 'rxjs/operators';
 
 
@@ -69,7 +69,7 @@ export class SillyDatatableSearchComponent implements OnInit {
    * Search string from external form control.
    */
   @Input() public set dataFromExternalControl(search: string) {
-    this.requestNewSearch(search);
+    this._searchRequest.next(search);
   }
 
 
@@ -78,6 +78,7 @@ export class SillyDatatableSearchComponent implements OnInit {
    */
   private _unsubscribe = new Subject<boolean>();
   private _disabled = false;
+  private _searchRequest: Subject<string> = new Subject<string>();
 
   constructor() { }
 
@@ -115,15 +116,11 @@ export class SillyDatatableSearchComponent implements OnInit {
       takeUntil(this._unsubscribe)
     )
       .subscribe((search: string) => {
-        this.requestNewSearch(search);
+        this._searchRequest.next(search);
       });
   }
 
-
-  private requestNewSearch(search: string): void {
-    // this._requestService.tableParams[this.tableId].pagination.page = 0;
-    // this._requestService.tableParams[this.tableId].search = search;
-
-    // this._requestService.next(this.tableId);
+  public get searchRequest(): Observable<string> {
+    return this._searchRequest.asObservable();
   }
 }
