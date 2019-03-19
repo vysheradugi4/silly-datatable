@@ -1,3 +1,4 @@
+import { SillyDatatablePagingComponent } from './shared/components/silly-datatable-paging/silly-datatable-paging.component';
 import {
   Component,
   Input,
@@ -17,7 +18,8 @@ import { TableSettings } from './shared/models/table-settings.model';
 import { Column } from './shared/models/column.model';
 import { Sort } from './shared/models/sort.model';
 import { TableParams } from './shared/models/table-params.model';
-import { Pagination } from 'projects/silly-datatable/src/lib/shared/models/pagination.model';
+import { SillyDatatableSearchComponent } from './shared/components/silly-datatable-search/silly-datatable-search.component';
+import { SillyDatatableFilterComponent } from './shared/components/silly-datatable-filter/silly-datatable-filter.component';
 
 
 @Component({
@@ -45,6 +47,8 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
    */
   @Input() public set tableParams(tableParams: TableParams) {
     this._tableParams = tableParams;
+
+    this.updatePaging();
   }
 
 
@@ -52,6 +56,24 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
    * Stored table settings in service.
    */
   @Input() public settings: TableSettings;
+
+
+  /**
+   * Search component if defined (quick search textbox).
+   */
+  @Input() public searchComponent: SillyDatatableSearchComponent;
+
+
+  /**
+   * Filters component if defined.
+   */
+  @Input() public filterComponent: SillyDatatableFilterComponent;
+
+
+  /**
+   * Pagination component if defined.
+   */
+  @Input() public pagingComponent: SillyDatatablePagingComponent;
 
 
   /**
@@ -92,6 +114,15 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
     if (!this._tableParams) {
       throw new Error('Table params required.');
     }
+
+
+    /**
+     * For handle data from outer components (search, pagination, filters, options).
+     */
+    this.searchRequestHandler();
+    this.filterRequestHandler();
+    this.updatePaging();
+    this.pagingRequestHandler();
 
 
 
@@ -199,12 +230,68 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy() {
-    // this._unsubscribe.next(true);
-    // this._unsubscribe.unsubscribe();
+    this._unsubscribe.next(true);
+    this._unsubscribe.unsubscribe();
 
     // this.requestService.clearTableParams(this.id);
     // this.optionsService.clearColumns(this.id);
     // this.optionsService.clearItemsPerPageInfo(this.id);
+  }
+
+
+  private searchRequestHandler(): void {
+    if (!this.searchComponent) {
+      return;
+    }
+
+    this.searchComponent.searchRequest.pipe(
+      takeUntil(this._unsubscribe)
+    )
+      .subscribe((searchString: string) => {
+        this._tableParams.search = searchString;
+        this._tableParams.pagination.page = 0;
+        this.sendRequest();
+      });
+  }
+
+
+  private filterRequestHandler(): void {
+    if (!this.filterComponent) {
+      return;
+    }
+
+    this.filterComponent.filtersUpdated.pipe(
+      takeUntil(this._unsubscribe)
+    )
+      .subscribe((filterValues: string) => {
+        this._tableParams.filters = filterValues;
+        this._tableParams.pagination.page = 0;
+        this.sendRequest();
+      });
+  }
+
+
+  private updatePaging(): void {
+    if (!this.pagingComponent) {
+      return;
+    }
+
+    this.pagingComponent.pagination = this._tableParams.pagination;
+  }
+
+
+  private pagingRequestHandler(): void {
+    if (!this.pagingComponent) {
+      return;
+    }
+
+    this.pagingComponent.pageUpdated.pipe(
+      takeUntil(this._unsubscribe)
+    )
+      .subscribe((page: number) => {
+        this._tableParams.pagination.page = page;
+        this.sendRequest();
+      });
   }
 
 

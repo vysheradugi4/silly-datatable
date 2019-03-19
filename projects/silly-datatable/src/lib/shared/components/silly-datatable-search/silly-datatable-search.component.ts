@@ -91,10 +91,12 @@ export class SillyDatatableSearchComponent implements OnInit {
       return;
     }
 
+
     this.search = new FormControl({
       value: '',
       disabled: this._disabled,
     });
+
 
     /**
      * Handle input value changes. Skip first empty string.

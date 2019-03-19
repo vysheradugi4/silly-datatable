@@ -4,6 +4,10 @@ import { SillyDatatableComponent } from './silly-datatable.component';
 import { ComponentsModule } from './shared/components/components.module';
 import { TableParams } from './shared/models/table-params.model';
 import { PipesModule } from './shared/pipes/pipes.module';
+import { SillyDatatableSearchComponent } from './shared/components/silly-datatable-search/silly-datatable-search.component';
+import { Pagination } from 'projects/silly-datatable/src/lib/shared/models/pagination.model';
+import { SillyDatatableFilterComponent } from './shared/components/silly-datatable-filter/silly-datatable-filter.component';
+import { FilterFormField } from './shared/models/filter-form-field.model';
 
 
 describe('SillyDatatableComponent', () => {
@@ -162,5 +166,43 @@ describe('SillyDatatableComponent', () => {
     });
     component.onComponentCellEvent({ edit: 5 });
     expect(row).toEqual({ edit: 5 });
+  });
+
+  /**
+   * Search component.
+   */
+  it('should request new data with search string in table params', (done) => {
+    component.searchComponent = new SillyDatatableSearchComponent();
+    component.searchComponent.ngOnInit();
+    component.tableParams = new TableParams();
+    component.tableParams.pagination = new Pagination();
+    component.ngOnInit();
+
+    component.request.subscribe((tableParams: TableParams) => {
+      expect(tableParams.search).toBe('search string');
+      done();
+    });
+
+    component.searchComponent.search.setValue('search string');
+  });
+
+  /**
+   * Filter component.
+   */
+  it('shout request new data with filter value in table params', (done) => {
+    component.filterComponent = new SillyDatatableFilterComponent();
+    component.filterComponent.formFields = [
+      {id: 'name', name: 'name'} as FilterFormField,
+    ];
+    component.filterComponent.ngOnInit();
+    component.tableParams = new TableParams();
+    component.tableParams.pagination = new Pagination();
+    component.ngOnInit();
+    component.request.subscribe((tableParams: TableParams) => {
+      expect(tableParams.filters.name).toBe('test');
+      done();
+    });
+    component.filterComponent.filterForm.setValue({name: 'test'});
+    component.filterComponent.applyFilters();
   });
 });
