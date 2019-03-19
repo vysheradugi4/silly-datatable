@@ -1,22 +1,27 @@
 <div [ngClass]="settings?.containerClass">
-    <span *ngIf="(currentPage || currentPage === 0) && numberOfPages" [ngClass]="settings?.infoClass">
-        Page {{ currentPage + 1 }} of {{ numberOfPages }}
+    <span *ngIf="(currentPage || currentPage === 0) && numberOfPages"
+        [ngClass]="settings?.infoClass">
+        <ng-container *ngIf="!pageOf; else pageOfCustom">
+            Page {{ currentPage + 1 }} of {{ numberOfPages }}
+        </ng-container>
+        <ng-template #pageOfCustom>
+            <ng-container *ngTemplateOutlet="pageOf; context:pagingContext"></ng-container>
+        </ng-template>
     </span>
-    
-    <button
-        *ngIf="currentPage > 0 && numberOfPages > 2"
+
+    <button *ngIf="currentPage > 0 && numberOfPages > 2"
+        id="start"
         [ngClass]="settings?.arrowButtonClass"
         (click)="pageRequest(0)"
         [innerHTML]="settings?.start || '<<'"></button>
 
-    <button
-        *ngIf="currentPage > 0"
+    <button *ngIf="currentPage > 0"
+        id="prev"
         [ngClass]="settings?.arrowButtonClass"
         (click)="pageRequest(currentPage - 1)"
         [innerHTML]="settings?.prev || '<'"></button>
 
-    <button
-        *ngFor="let page of pagination?.pages | pageArray | slice:start:end"
+    <button *ngFor="let page of pagination?.pages | pageArray | slice:start:end"
         [ngClass]="settings?.numberButtonClass"
         [class.active]="currentPage === (page - 1)"
         (click)="pageRequest(page - 1)"
@@ -24,14 +29,14 @@
         {{ page }}
     </button>
 
-    <button
-        *ngIf="(currentPage + 1) < numberOfPages"
+    <button *ngIf="(currentPage + 1) < numberOfPages"
+        id="next"
         [ngClass]="settings?.arrowButtonClass"
         (click)="pageRequest(currentPage + 1)"
         [innerHTML]="settings?.next || '>'"></button>
 
-    <button
-        *ngIf="(currentPage + 1) < numberOfPages && numberOfPages > 2"
+    <button *ngIf="(currentPage + 1) < numberOfPages && numberOfPages > 2"
+        id="last"
         [ngClass]="settings?.arrowButtonClass"
         (click)="pageRequest(numberOfPages - 1)"
         [innerHTML]="settings?.last || '>>'"></button>

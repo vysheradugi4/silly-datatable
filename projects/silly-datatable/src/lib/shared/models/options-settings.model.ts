@@ -21,7 +21,7 @@ export class OptionsSettings {
   /**
    * Title text for sction of columns checkboxes.
    */
-  public columnsTitle: string;
+  public columnsTitle?: string;
 
   /**
    * Css containter class for each checkbox with label.

@@ -42,7 +42,7 @@ describe('SillyDatatableFilterComponent', () => {
     component.formFields = [nameFormField];
     component.ngOnInit();
 
-    component.filtersUpdated.subscribe((filterValues) => {
+    component.filtersUpdated$.subscribe((filterValues) => {
       expect(filterValues.name).toBe('test');
       done();
     });

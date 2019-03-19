@@ -31,7 +31,7 @@ export class SillyDatatableFilterComponent implements OnInit, OnDestroy {
   @Output() public valueChanges: EventEmitter<any> = new EventEmitter<any>();
 
   private _unsubscribe: Subject<boolean> = new Subject<boolean>();
-  private _filtersUpdated: Subject<any> = new Subject<any>();
+  private _filtersUpdated$: Subject<any> = new Subject<any>();
 
   constructor() { }
 
@@ -60,8 +60,8 @@ export class SillyDatatableFilterComponent implements OnInit, OnDestroy {
   }
 
 
-  public get filtersUpdated(): Observable<any> {
-    return this._filtersUpdated.asObservable();
+  public get filtersUpdated$(): Observable<any> {
+    return this._filtersUpdated$.asObservable();
   }
 
 
@@ -69,7 +69,7 @@ export class SillyDatatableFilterComponent implements OnInit, OnDestroy {
    * Send request for get filtered source.
    */
   public applyFilters(): void {
-    this._filtersUpdated.next(this.values);
+    this._filtersUpdated$.next(this.values);
   }
 
 

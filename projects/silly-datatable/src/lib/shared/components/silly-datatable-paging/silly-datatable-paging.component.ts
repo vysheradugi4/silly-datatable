@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 
 import { PaginationSettings } from './../../models/pagination-settings.model';
@@ -16,10 +16,18 @@ export class SillyDatatablePagingComponent implements OnInit {
    * Settings for customization pagination component.
    */
   @Input() public settings: PaginationSettings;
-
   @Input() public pagination: Pagination;
 
-  private _pageUpdated: Subject<number> = new Subject<number>();
+
+  /**
+   * Template for replace text "Page 5 of 10" to anything else with use page
+   * number (use {{ currentPage + 1 }}) and pages count (use {{ numberOfPages }})
+   * values.
+   */
+  @Input() public pageOf: TemplateRef<any>;
+  public pagingContext: any;
+
+  private _pageUpdated$: Subject<number> = new Subject<number>();
 
   constructor() { }
 
@@ -29,20 +37,34 @@ export class SillyDatatablePagingComponent implements OnInit {
     if (!this.pagination) {
       throw new Error('Pagination data required.');
     }
+
+    /**
+     * Create context for Page .. of .. custom template.
+     */
+    if (this.pageOf) {
+      this.pagingContext = {
+        currentPage: this.currentPage,
+        numberOfPages: this.numberOfPages,
+      };
+    }
   }
 
 
-  public get pageUpdated(): Observable<number> {
-    return this._pageUpdated.asObservable();
+  public get pageUpdated$(): Observable<number> {
+    return this._pageUpdated$.asObservable();
   }
 
 
   public pageRequest(page: number): void {
-    this._pageUpdated.next(page);
+    this._pageUpdated$.next(page);
   }
 
 
   public get currentPage(): number {
+    if (this.pagination.page < 0 || (this.pagination.page + 1) > this.numberOfPages) {
+      return 0;
+    }
+
     return this.pagination.page;
   }
 

@@ -45,7 +45,7 @@ describe('SillyDatatablePagingComponent', () => {
   });
 
   it('should emit pageUpdated when call pageRequest method', (done) => {
-    component.pageUpdated.subscribe((page: number) => {
+    component.pageUpdated$.subscribe((page: number) => {
       expect(page).toBe(4);
       done();
     });
@@ -59,6 +59,18 @@ describe('SillyDatatablePagingComponent', () => {
   it('should equal pagination page and current page', () => {
     component.pagination.page = 1;
     expect(component.pagination.page).toBe(component.currentPage);
+  });
+
+  it('should return 0 if page is negative', () => {
+    component.pagination.page = -3;
+    component.pagination.pages = 10;
+    expect(component.currentPage).toBe(0);
+  });
+
+  it('should return 0 if page more than pages count', () => {
+    component.pagination.page = 10; // Page number start with 0;
+    component.pagination.pages = 10;
+    expect(component.currentPage).toBe(0);
   });
 
   /**
@@ -149,5 +161,56 @@ describe('SillyDatatablePagingComponent', () => {
     component.pagination.page = 4;
     component.pagination.pages = 10;
     expect(component.end).toBe(7);
+  });
+
+  /**
+   * Arrows
+   */
+  it('should hide "to start" arrow button for page = 0', () => {
+    component.pagination.page = 0;
+    component.pagination.pages = 10;
+    fixture.detectChanges();
+    const button = fixture.debugElement.nativeElement.querySelector('#start');
+    expect(button).toBeNull();
+  });
+
+  it('should hide "to prev" arrow button for page = 0', () => {
+    component.pagination.page = 0;
+    component.pagination.pages = 10;
+    fixture.detectChanges();
+    const button = fixture.debugElement.nativeElement.querySelector('#prev');
+    expect(button).toBeNull();
+  });
+
+  it('should show "to start" arrow button for page = 1', () => {
+    component.pagination.page = 1;
+    component.pagination.pages = 10;
+    fixture.detectChanges();
+    const button = fixture.debugElement.nativeElement.querySelector('#start');
+    expect(button).toBeTruthy();
+  });
+
+  it('should show "to prev" arrow button for page = 1', () => {
+    component.pagination.page = 1;
+    component.pagination.pages = 10;
+    fixture.detectChanges();
+    const button = fixture.debugElement.nativeElement.querySelector('#prev');
+    expect(button).toBeTruthy();
+  });
+
+  it('should hide "to next" arrow button for page = 9 and pages = 10', () => {
+    component.pagination.page = 9;
+    component.pagination.pages = 10;
+    fixture.detectChanges();
+    const button = fixture.debugElement.nativeElement.querySelector('#next');
+    expect(button).toBeNull();
+  });
+
+  it('should hide "to last" arrow button for page = 9 and pages = 10', () => {
+    component.pagination.page = 9;
+    component.pagination.pages = 10;
+    fixture.detectChanges();
+    const button = fixture.debugElement.nativeElement.querySelector('#last');
+    expect(button).toBeNull();
   });
 });

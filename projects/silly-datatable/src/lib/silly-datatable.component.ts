@@ -1,3 +1,4 @@
+import { SillyDatatableOptionsComponent } from './shared/components/silly-datatable-options/silly-datatable-options.component';
 import { SillyDatatablePagingComponent } from './shared/components/silly-datatable-paging/silly-datatable-paging.component';
 import {
   Component,
@@ -20,6 +21,7 @@ import { Sort } from './shared/models/sort.model';
 import { TableParams } from './shared/models/table-params.model';
 import { SillyDatatableSearchComponent } from './shared/components/silly-datatable-search/silly-datatable-search.component';
 import { SillyDatatableFilterComponent } from './shared/components/silly-datatable-filter/silly-datatable-filter.component';
+import { StoreService } from './shared/services/store.service';
 
 
 @Component({
@@ -77,6 +79,12 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
 
 
   /**
+   * Pagination component if defined.
+   */
+  @Input() public optionsComponent: SillyDatatableOptionsComponent;
+
+
+  /**
    * Current state of sorting. Contains column id string and boolean isAsc for
    * define sort direction.
    */
@@ -94,7 +102,8 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
   private _tableParams: TableParams;
 
   constructor(
-    private _changeDetectorRef: ChangeDetectorRef
+    private _changeDetectorRef: ChangeDetectorRef,
+    private _storeService: StoreService
   ) { }
 
 
@@ -124,6 +133,11 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
     this.updatePaging();
     this.pagingRequestHandler();
 
+    if (this.optionsComponent) {
+      this.updateOptionsColumns();
+      this.updateOptionsItemPerPage();
+      this.optionsChangeHandler();
+    }
 
 
     //   this.optionsService.columnsChanged$.pipe(
@@ -244,7 +258,7 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.searchComponent.searchRequest.pipe(
+    this.searchComponent.searchRequest$.pipe(
       takeUntil(this._unsubscribe)
     )
       .subscribe((searchString: string) => {
@@ -260,7 +274,7 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.filterComponent.filtersUpdated.pipe(
+    this.filterComponent.filtersUpdated$.pipe(
       takeUntil(this._unsubscribe)
     )
       .subscribe((filterValues: string) => {
@@ -285,12 +299,47 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.pagingComponent.pageUpdated.pipe(
+    this.pagingComponent.pageUpdated$.pipe(
       takeUntil(this._unsubscribe)
     )
       .subscribe((page: number) => {
         this._tableParams.pagination.page = page;
         this.sendRequest();
+      });
+  }
+
+
+  private updateOptionsColumns(): void {
+    this.optionsComponent.columns = this.columns;
+  }
+
+
+  private updateOptionsItemPerPage(): void {
+    this.optionsComponent.pagination = this._tableParams.pagination;
+    this.optionsComponent.itemsPerPageList = this.settings.itemsPerPage;
+  }
+
+
+  private optionsChangeHandler(): void {
+    this.optionsComponent.columnsChanged$.pipe(
+      takeUntil(this._unsubscribe)
+    )
+      .subscribe((changedColumns: Array<Column>) => {
+        this.columns = changedColumns;
+        this._changeDetectorRef.detectChanges();
+
+        const forStore = changedColumns.map((column: Column) => {
+          return { id: column.id, show: column.show };
+        });
+        this._storeService.storeState(forStore, 'shownColumns');
+      });
+
+    this.optionsComponent.itemsPerPageChanged$.pipe(
+      takeUntil(this._unsubscribe)
+    )
+      .subscribe((items: number) => {
+        this._tableParams.pagination.itemsPerPage = items;
+        this._storeService.storeState(items, 'itemsPerPage');
       });
   }
 

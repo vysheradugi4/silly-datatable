@@ -26,6 +26,7 @@ Routing: <button routerLink="/second">Second</button>
     [searchComponent]="searchComponent"
     [filterComponent]="filterComponent"
     [pagingComponent]="pagingComponent"
+    [optionsComponent]="optionsComponent"
     [settings]="settings"
     [columns]="columns"
     [tableParams]="tableParams"
@@ -38,7 +39,8 @@ Routing: <button routerLink="/second">Second</button>
 <hr>
 
 <ngx-silly-datatable-paging #pagingComponent
-    [settings]="paginationSettings">
+    [settings]="paginationSettings"
+    [pageOf]="pageOf">
 </ngx-silly-datatable-paging>
 
 <hr>
@@ -64,6 +66,12 @@ Routing: <button routerLink="/second">Second</button>
 <hr>
 
 <h3>Options</h3>
-<!-- <ngx-silly-datatable-options tableId="sole"
+<ngx-silly-datatable-options #optionsComponent
     [settings]="optionsSettings">
-</ngx-silly-datatable-options> -->
+</ngx-silly-datatable-options>
+
+<ng-template #pageOf
+    let-currentPage="currentPage"
+    let-numberOfPages="numberOfPages">
+    Pager {{ currentPage + 1 }} of {{ numberOfPages }}
+</ng-template>

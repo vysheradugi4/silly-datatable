@@ -8,6 +8,8 @@ import { SillyDatatableSearchComponent } from './shared/components/silly-datatab
 import { Pagination } from 'projects/silly-datatable/src/lib/shared/models/pagination.model';
 import { SillyDatatableFilterComponent } from './shared/components/silly-datatable-filter/silly-datatable-filter.component';
 import { FilterFormField } from './shared/models/filter-form-field.model';
+import { SillyDatatablePagingComponent } from './shared/components/silly-datatable-paging/silly-datatable-paging.component';
+import { StoreService } from './shared/services/store.service';
 
 
 describe('SillyDatatableComponent', () => {
@@ -21,6 +23,9 @@ describe('SillyDatatableComponent', () => {
         PipesModule,
       ],
       declarations: [SillyDatatableComponent],
+      providers: [
+        StoreService,
+      ],
     })
       .compileComponents();
   }));
@@ -192,7 +197,7 @@ describe('SillyDatatableComponent', () => {
   it('shout request new data with filter value in table params', (done) => {
     component.filterComponent = new SillyDatatableFilterComponent();
     component.filterComponent.formFields = [
-      {id: 'name', name: 'name'} as FilterFormField,
+      { id: 'name', name: 'name' } as FilterFormField,
     ];
     component.filterComponent.ngOnInit();
     component.tableParams = new TableParams();
@@ -202,7 +207,28 @@ describe('SillyDatatableComponent', () => {
       expect(tableParams.filters.name).toBe('test');
       done();
     });
-    component.filterComponent.filterForm.setValue({name: 'test'});
+    component.filterComponent.filterForm.setValue({ name: 'test' });
     component.filterComponent.applyFilters();
+  });
+
+  /**
+   * Pagination component.
+   */
+  it('should request new data for new page', (done) => {
+    component.tableParams = new TableParams();
+    component.tableParams.pagination = new Pagination();
+    component.pagingComponent = new SillyDatatablePagingComponent();
+    component.pagingComponent.pagination = new Pagination();
+    component.pagingComponent.ngOnInit();
+    component.pagingComponent.pagination.page = 0;
+    component.pagingComponent.pagination.pages = 10;
+    component.ngOnInit();
+
+    component.request.subscribe((tableParams: TableParams) => {
+      expect(tableParams.pagination.page).toBe(1);
+      done();
+    });
+
+    component.pagingComponent.pageRequest(1);
   });
 });

@@ -7,7 +7,7 @@ import forIn from 'lodash/forIn';
 import { OptionsSettings } from './../../models/options-settings.model';
 import { FormsHelper } from './../../helpers/forms.helper';
 import { Column } from './../../models/column.model';
-import { StoreService } from './../../services/store.service';
+import { Pagination } from './../../models/pagination.model';
 
 
 @Component({
@@ -21,16 +21,16 @@ export class SillyDatatableOptionsComponent implements OnInit, OnDestroy {
   @Input() public columns: Array<Column>;
   @Input() public itemsPerPageList: Array<number>;
   @Input() public settings: OptionsSettings;
+  @Input() public pagination: Pagination;
 
   public columnsForm: FormGroup;
   public itemsPerPage: FormControl;
 
   private _unsubscribe: Subject<boolean> = new Subject<boolean>();
-  private _columnsChanged: Subject<Array<Column>> = new Subject<Array<Column>>();
+  private _columnsChanged$: Subject<Array<Column>> = new Subject<Array<Column>>();
+  private _itemsPerPageChanged$: Subject<number> = new Subject<number>();
 
-  constructor(
-    private _storeService: StoreService
-  ) { }
+  constructor() { }
 
   ngOnInit() {
 
@@ -62,7 +62,7 @@ export class SillyDatatableOptionsComponent implements OnInit, OnDestroy {
      * Set form control for select. For select number of items per page.
      */
     this.itemsPerPage = new FormControl(
-      // (this._requestService.tableParams[this.tableId] as TableParams).pagination.itemsPerPage
+      this.pagination.itemsPerPage
     );
 
 
@@ -83,7 +83,8 @@ export class SillyDatatableOptionsComponent implements OnInit, OnDestroy {
 
           column.show = status;
         });
-        this._storeService.storeState(values, 'shownColumns');
+
+        this._columnsChanged$.next(this.columns);
       });
 
 
@@ -91,15 +92,18 @@ export class SillyDatatableOptionsComponent implements OnInit, OnDestroy {
       takeUntil(this._unsubscribe)
     )
       .subscribe((items) => {
-        // this._requestService.tableParams[this.tableId].pagination.itemsPerPage = items;
-        this._storeService.storeState(items, 'itemsPerPage');
-        // this._requestService.next(this.tableId);
+        this._itemsPerPageChanged$.next(items);
       });
   }
 
 
-  get columnsChanged(): Observable<Array<Column>> {
-    return this._columnsChanged.asObservable();
+  public get columnsChanged$(): Observable<Array<Column>> {
+    return this._columnsChanged$.asObservable();
+  }
+
+
+  public get itemsPerPageChanged$(): Observable<number> {
+    return this._itemsPerPageChanged$.asObservable();
   }
 
 

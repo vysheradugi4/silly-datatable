@@ -69,7 +69,7 @@ export class SillyDatatableSearchComponent implements OnInit {
    * Search string from external form control.
    */
   @Input() public set dataFromExternalControl(search: string) {
-    this._searchRequest.next(search);
+    this._searchRequest$.next(search);
   }
 
 
@@ -78,7 +78,7 @@ export class SillyDatatableSearchComponent implements OnInit {
    */
   private _unsubscribe = new Subject<boolean>();
   private _disabled = false;
-  private _searchRequest: Subject<string> = new Subject<string>();
+  private _searchRequest$: Subject<string> = new Subject<string>();
 
   constructor() { }
 
@@ -118,11 +118,11 @@ export class SillyDatatableSearchComponent implements OnInit {
       takeUntil(this._unsubscribe)
     )
       .subscribe((search: string) => {
-        this._searchRequest.next(search);
+        this._searchRequest$.next(search);
       });
   }
 
-  public get searchRequest(): Observable<string> {
-    return this._searchRequest.asObservable();
+  public get searchRequest$(): Observable<string> {
+    return this._searchRequest$.asObservable();
   }
 }

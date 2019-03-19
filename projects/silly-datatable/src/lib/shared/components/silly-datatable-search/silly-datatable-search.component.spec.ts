@@ -103,7 +103,7 @@ describe('SillyDatatableSearchComponent', () => {
   it('should emit new search string from outer control', (done) => {
     component.usedExternalControl = true;
     fixture.detectChanges();
-    component.searchRequest.subscribe((value) => {
+    component.searchRequest$.subscribe((value) => {
       expect(value).toBe('test');
       done();
     });
@@ -111,7 +111,7 @@ describe('SillyDatatableSearchComponent', () => {
   });
 
   it('should emit new search string from inner control', fakeAsync(() => {
-    component.searchRequest.subscribe((value) => {
+    component.searchRequest$.subscribe((value) => {
       expect(value).toBe('test');
     });
 
@@ -123,7 +123,7 @@ describe('SillyDatatableSearchComponent', () => {
   }));
 
   it('should skip first empty string.', fakeAsync(() => {
-    component.searchRequest.subscribe((value) => {
+    component.searchRequest$.subscribe((value) => {
       expect(value).toBe('test');
     });
 
@@ -139,7 +139,7 @@ describe('SillyDatatableSearchComponent', () => {
   }));
 
   it('should skip first empty string, but next empty strings are emits.', fakeAsync(() => {
-    component.searchRequest.pipe(
+    component.searchRequest$.pipe(
       skip(1)
     ).subscribe((value) => {
       expect(value).toBe('');

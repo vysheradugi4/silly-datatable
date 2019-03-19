@@ -1,3 +1,4 @@
+import { Pagination } from 'projects/silly-datatable/src/lib/shared/models/pagination.model';
 import { ReactiveFormsModule } from '@angular/forms';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
@@ -28,6 +29,7 @@ describe('SillyDatatableOptionsComponent', () => {
     fixture = TestBed.createComponent(SillyDatatableOptionsComponent);
     component = fixture.componentInstance;
     component.columns = columns;
+    component.pagination = new Pagination();
     fixture.detectChanges();
   });
 
