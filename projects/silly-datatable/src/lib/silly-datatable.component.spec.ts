@@ -10,6 +10,9 @@ import { SillyDatatableFilterComponent } from './shared/components/silly-datatab
 import { FilterFormField } from './shared/models/filter-form-field.model';
 import { SillyDatatablePagingComponent } from './shared/components/silly-datatable-paging/silly-datatable-paging.component';
 import { StoreService } from './shared/services/store.service';
+import { TableSettings } from './shared/models/table-settings.model';
+import { Column } from './shared/models/column.model';
+import { SillyDatatableOptionsComponent } from './shared/components/silly-datatable-options/silly-datatable-options.component';
 
 
 describe('SillyDatatableComponent', () => {
@@ -34,11 +37,14 @@ describe('SillyDatatableComponent', () => {
     fixture = TestBed.createComponent(SillyDatatableComponent);
     component = fixture.componentInstance;
     component.id = 'sole';
-    (component as SillyDatatableComponent).tableParams = new TableParams();
-    fixture.detectChanges();
+    const tableParams = {
+      pagination: new Pagination(),
+    } as TableParams;
+    (component as SillyDatatableComponent).tableParams = tableParams;
   });
 
   it('should create', () => {
+    fixture.detectChanges();
     expect(component).toBeTruthy();
   });
 
@@ -179,8 +185,6 @@ describe('SillyDatatableComponent', () => {
   it('should request new data with search string in table params', (done) => {
     component.searchComponent = new SillyDatatableSearchComponent();
     component.searchComponent.ngOnInit();
-    component.tableParams = new TableParams();
-    component.tableParams.pagination = new Pagination();
     component.ngOnInit();
 
     component.request.subscribe((tableParams: TableParams) => {
@@ -200,8 +204,6 @@ describe('SillyDatatableComponent', () => {
       { id: 'name', name: 'name' } as FilterFormField,
     ];
     component.filterComponent.ngOnInit();
-    component.tableParams = new TableParams();
-    component.tableParams.pagination = new Pagination();
     component.ngOnInit();
     component.request.subscribe((tableParams: TableParams) => {
       expect(tableParams.filters.name).toBe('test');
@@ -215,8 +217,6 @@ describe('SillyDatatableComponent', () => {
    * Pagination component.
    */
   it('should request new data for new page', (done) => {
-    component.tableParams = new TableParams();
-    component.tableParams.pagination = new Pagination();
     component.pagingComponent = new SillyDatatablePagingComponent();
     component.pagingComponent.pagination = new Pagination();
     component.pagingComponent.ngOnInit();
@@ -230,5 +230,34 @@ describe('SillyDatatableComponent', () => {
     });
 
     component.pagingComponent.pageRequest(1);
+  });
+
+  /**
+   * Set itemsPerPage.
+   */
+  it('should set itemsPerPage as 1 (first element of itemsPerPageList)', () => {
+    const settings: TableSettings = {
+      itemsPerPageList: [1, 3, 5],
+    };
+    component.settings = settings;
+    (component as any).setItemsPerPage();
+    expect(component.tableParams.pagination.itemsPerPage).toBe(1);
+  });
+
+  it('should set value in option itemsPerPage same in stored in localStorage', () => {
+    const service: StoreService = TestBed.get(StoreService);
+    component.optionsComponent = new SillyDatatableOptionsComponent();
+    component.settings = {
+      itemsPerPageList: [1, 3, 5],
+    } as TableSettings;
+    component.columns = [
+      {id: 'id', name: 'name'} as Column,
+    ];
+    component.tableParams.pagination.itemsPerPage = 1;
+    service.storeState('itemsPerPage', 'Object_sole', 3);
+    component.ngOnInit();
+    component.optionsComponent.ngOnInit();
+    expect(component.optionsComponent.itemsPerPageControl.value).toBe(3);
+    localStorage.clear();
   });
 });

@@ -29,5 +29,5 @@ export class TableSettings {
   /**
    * List of possible counts of items per page.
    */
-  public itemsPerPage?: Array<number>;
+  public itemsPerPageList?: Array<number>;
 }

@@ -21,20 +21,21 @@ Routing: <button routerLink="/second">Second</button>
 </ng-template>
 
 <hr>
-
-<ngx-silly-datatable id="sole"
-    [searchComponent]="searchComponent"
-    [filterComponent]="filterComponent"
-    [pagingComponent]="pagingComponent"
-    [optionsComponent]="optionsComponent"
-    [settings]="settings"
-    [columns]="columns"
-    [tableParams]="tableParams"
-    (rowClicked)="selected($event)"
-    (rowDoubleClicked)="dblClickSelected($event)"
-    (request)="request($event)"
-    (componentCellEvent)="eventInCellComponent($event)">
-</ngx-silly-datatable>
+<div>
+        <ngx-silly-datatable id="sole"
+        [searchComponent]="searchComponent"
+        [filterComponent]="filterComponent"
+        [pagingComponent]="pagingComponent"
+        [optionsComponent]="optionsComponent"
+        [settings]="settings"
+        [columns]="columns"
+        [tableParams]="tableParams"
+        (rowClicked)="selected($event)"
+        (rowDoubleClicked)="dblClickSelected($event)"
+        (request)="request($event)"
+        (componentCellEvent)="eventInCellComponent($event)">
+    </ngx-silly-datatable>
+</div>
 
 <hr>
 

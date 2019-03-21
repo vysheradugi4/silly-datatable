@@ -9,12 +9,12 @@ import {
   OnInit,
   OnDestroy,
   ChangeDetectorRef,
-  ElementRef
+  Injector
 } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import forIn from 'lodash/forIn';
+import unionBy from 'lodash/unionBy';
 import { TableSettings } from './shared/models/table-settings.model';
 import { Column } from './shared/models/column.model';
 import { Sort } from './shared/models/sort.model';
@@ -100,10 +100,12 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
   private _unsubscribe: Subject<boolean> = new Subject<boolean>();
   private _singleClick = true;
   private _tableParams: TableParams;
+  private _tableUid: string;
 
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
-    private _storeService: StoreService
+    private _storeService: StoreService,
+    private _inj: Injector
   ) { }
 
 
@@ -126,6 +128,18 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
 
 
     /**
+     * Create tableUid, will be used for store options.
+     */
+    this.createTableUid();
+
+
+    /**
+     * Setup columns states by saved options.
+     */
+    this.setColumnsDisplay();
+
+
+    /**
      * For handle data from outer components (search, pagination, filters, options).
      */
     this.searchRequestHandler();
@@ -133,30 +147,13 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
     this.updatePaging();
     this.pagingRequestHandler();
 
+    this.setItemsPerPage();
+
     if (this.optionsComponent) {
       this.updateOptionsColumns();
-      this.updateOptionsItemPerPage();
+      this.updateOptionsItemsPerPage();
       this.optionsChangeHandler();
     }
-
-
-    //   this.optionsService.columnsChanged$.pipe(
-    //     takeUntil(this._unsubscribe)
-    //   )
-    //     .subscribe(() => {
-    //       this._changeDetectorRef.detectChanges();
-    //     });
-
-
-    //   /**
-    //    * Store items per page option for current table (this.id - is id of table).
-    //    */
-    //   this.optionsService.itemsPerPageList[this.id] = this.settings && this.settings.itemsPerPage ? this.settings.itemsPerPage : [10];
-
-    //   const itemsPerPage = this.optionsService.getStateFromStorage(this.id, 'itemsPerPage');
-
-    //   (this.requestService.tableParams[this.id] as TableParams)
-    //     .pagination.itemsPerPage = itemsPerPage || this.optionsService.itemsPerPageList[this.id][0];
   }
 
 
@@ -246,10 +243,6 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this._unsubscribe.next(true);
     this._unsubscribe.unsubscribe();
-
-    // this.requestService.clearTableParams(this.id);
-    // this.optionsService.clearColumns(this.id);
-    // this.optionsService.clearItemsPerPageInfo(this.id);
   }
 
 
@@ -314,9 +307,9 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
   }
 
 
-  private updateOptionsItemPerPage(): void {
-    this.optionsComponent.pagination = this._tableParams.pagination;
-    this.optionsComponent.itemsPerPageList = this.settings.itemsPerPage;
+  private updateOptionsItemsPerPage(): void {
+    this.optionsComponent.itemsPerPage = this._tableParams.pagination.itemsPerPage;
+    this.optionsComponent.itemsPerPageList = this.settings.itemsPerPageList;
   }
 
 
@@ -328,10 +321,19 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
         this.columns = changedColumns;
         this._changeDetectorRef.detectChanges();
 
-        const forStore = changedColumns.map((column: Column) => {
+        let dataForStore = changedColumns.map((column: Column) => {
           return { id: column.id, show: column.show };
         });
-        this._storeService.storeState(forStore, 'shownColumns');
+
+        /**
+         * Merge old state with new.
+         */
+        if (this._storeService.isStored('shownColumns', this._tableUid)) {
+          const oldData = this._storeService.getStateFromStorage('shownColumns', this._tableUid);
+          dataForStore = unionBy(dataForStore, oldData, 'id');
+        }
+
+        this._storeService.storeState('shownColumns', this._tableUid, dataForStore);
       });
 
     this.optionsComponent.itemsPerPageChanged$.pipe(
@@ -339,32 +341,69 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
     )
       .subscribe((items: number) => {
         this._tableParams.pagination.itemsPerPage = items;
-        this._storeService.storeState(items, 'itemsPerPage');
+
+        this._storeService.storeState('itemsPerPage', this._tableUid, items);
       });
   }
 
 
-  // /**
-  //  * Set columns visibility by the localstorage data (user's defined);
-  //  * @param columns List of columns
-  //  * @returns Changed list.
-  //  */
-  // private setColumnsDisplay(columns: Array<Column>): Array<Column> {
+  private setItemsPerPage(): void {
 
-  //   /**
-  //    * Gets user's settings for columns.
-  //    */
-  //   const states = this.optionsService.getStateFromStorage(this.id, 'shownColumns');
+    if (!this.settings) {
+      this.settings = new TableSettings();
+    }
 
-  //   if (states) {
-  //     forIn(states, (status: boolean, key: string) => {
-  //       const column = (columns as Column[])
-  //         .find(c => c.id === key);
+    if (this._storeService.isStored('itemsPerPage', this._tableUid)) {
+      this._tableParams.pagination.itemsPerPage = this._storeService.getStateFromStorage('itemsPerPage', this._tableUid);
+    }
 
-  //       column.show = status;
-  //     });
-  //   }
+    if (this.settings.itemsPerPageList) {
 
-  //   return columns;
-  // }
+      if (!this._tableParams.pagination.itemsPerPage) {
+        this._tableParams.pagination.itemsPerPage = this.settings.itemsPerPageList[0];
+      }
+    } else {
+
+      if (!this._tableParams.pagination.itemsPerPage) {
+        /**
+         * 10 items per page by default.
+         */
+        this._tableParams.pagination.itemsPerPage = 10;
+      }
+
+      this.settings.itemsPerPageList = [this._tableParams.pagination.itemsPerPage];
+    }
+  }
+
+
+  private createTableUid() {
+    const parentComponentTypeName = (this._inj as any).view.component.constructor.name;
+    this._tableUid = `${parentComponentTypeName}_${this.id}`;
+  }
+
+
+  /**
+   * Set columns visibility by the localstorage data (user's defined);
+   * @param columns List of columns
+   * @returns Changed list.
+   */
+  private setColumnsDisplay(): void {
+
+    if (!this._storeService.isStored('shownColumns', this._tableUid)) {
+      return;
+    }
+
+
+    /**
+     * Gets user's settings for columns.
+     */
+    const states = this._storeService.getStateFromStorage('shownColumns', this._tableUid);
+
+
+    if (states) {
+      states.forEach(colStatus => {
+        this.columns.find((column: Column) => column.id === colStatus.id).show = colStatus.show;
+      });
+    }
+  }
 }

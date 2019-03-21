@@ -41,7 +41,7 @@ export class FirstComponent implements OnInit {
     this.tableParams.pagination = {
       page: 0,
       pages: 10,
-      itemsPerPage: 10,
+      itemsPerPage: 1,
     } as Pagination;
 
     this.paginationSettings = {
@@ -60,7 +60,7 @@ export class FirstComponent implements OnInit {
       headerRowClass: 'header-row',
       rowClass: 'data-row',
       sortHeaderClass: 'sort',
-      itemsPerPage: [1, 3, 5],
+      itemsPerPageList: [1, 3, 5],
     } as TableSettings;
 
     this.columns = [

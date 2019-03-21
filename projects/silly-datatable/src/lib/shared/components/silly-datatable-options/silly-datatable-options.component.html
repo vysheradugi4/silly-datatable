@@ -20,11 +20,12 @@
         </form>
     </div>
 
-    <div [ngClass]="settings?.itemsPerPageSectionClass">
+    <div *ngIf="itemsPerPage"
+        [ngClass]="settings?.itemsPerPageSectionClass">
         <label [ngClass]="settings?.labelSelectClass"
             for="itemsPerPage">{{ settings?.itemsPerPageTitle || 'Items per page:'}}</label>
         <select [ngClass]="settings?.selectClass"
-            [formControl]="itemsPerPage"
+            [formControl]="itemsPerPageControl"
             id="itemsPerPage">
             <option *ngFor="let number of itemsPerPageList"
                 [ngValue]="number">{{ number }}</option>

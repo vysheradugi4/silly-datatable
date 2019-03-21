@@ -7,7 +7,6 @@ import forIn from 'lodash/forIn';
 import { OptionsSettings } from './../../models/options-settings.model';
 import { FormsHelper } from './../../helpers/forms.helper';
 import { Column } from './../../models/column.model';
-import { Pagination } from './../../models/pagination.model';
 
 
 @Component({
@@ -21,10 +20,10 @@ export class SillyDatatableOptionsComponent implements OnInit, OnDestroy {
   @Input() public columns: Array<Column>;
   @Input() public itemsPerPageList: Array<number>;
   @Input() public settings: OptionsSettings;
-  @Input() public pagination: Pagination;
+  @Input() public itemsPerPage: number;
 
   public columnsForm: FormGroup;
-  public itemsPerPage: FormControl;
+  public itemsPerPageControl: FormControl;
 
   private _unsubscribe: Subject<boolean> = new Subject<boolean>();
   private _columnsChanged$: Subject<Array<Column>> = new Subject<Array<Column>>();
@@ -59,14 +58,6 @@ export class SillyDatatableOptionsComponent implements OnInit, OnDestroy {
 
 
     /**
-     * Set form control for select. For select number of items per page.
-     */
-    this.itemsPerPage = new FormControl(
-      this.pagination.itemsPerPage
-    );
-
-
-    /**
      * Update columns status.
      */
     this.columnsForm.valueChanges.pipe(
@@ -88,7 +79,22 @@ export class SillyDatatableOptionsComponent implements OnInit, OnDestroy {
       });
 
 
-    this.itemsPerPage.valueChanges.pipe(
+    /**
+     * ItemsPerPage section.
+     */
+    if (!this.itemsPerPage) {
+      return;
+    }
+
+    /**
+     * Set form control for select. For select number of items per page.
+     */
+    this.itemsPerPageControl = new FormControl(
+      this.itemsPerPage
+    );
+
+
+    this.itemsPerPageControl.valueChanges.pipe(
       takeUntil(this._unsubscribe)
     )
       .subscribe((items) => {
