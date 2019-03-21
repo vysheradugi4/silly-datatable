@@ -39,8 +39,8 @@ export class FirstComponent implements OnInit {
     // }, 10000);
 
     this.tableParams.pagination = {
-      page: 0,
-      pages: 10,
+      pageNumber: 0,
+      pageCount: 10,
       itemsPerPage: 1,
     } as Pagination;
 

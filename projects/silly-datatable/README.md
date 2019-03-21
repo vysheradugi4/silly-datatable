@@ -123,7 +123,7 @@ Don't forget import class:
    
 TableParams contains:
    
-* `search` – Current search string.
+* `searchText` – Current search string.
    
 * `sort` – Instance of `Sort` class.
    
@@ -153,7 +153,7 @@ Part of TableParams class. This class contains:
    
 * `columnName` – The column name what will be used for sorting.
    
-* `isAsc` – For define sort direction. Sorts the records in ascending order by
+* `isDesc` – For define sort direction. Sorts the records in ascending order by
 default.
    
 Sort can be used with pagination and search.
@@ -163,9 +163,9 @@ __Pagination__
    
 The part of TableParams class. This class contains:
    
-* `page` – Current page number.
+* `pageNumber` – Current page number.
    
-* `pages` – Number of pages.
+* `pageCount` – Number of pages.
    
 * `itemsPerPage` – Number of elements on the page.
       

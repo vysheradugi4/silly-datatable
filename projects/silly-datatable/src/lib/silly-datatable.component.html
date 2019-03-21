@@ -5,8 +5,8 @@
             [ngClass]="column.headerClass">
             <ng-container *ngIf="column.sortable; else withoutSort">
                 <a [ngClass]="settings?.sortHeaderClass"
-                    [class.asc]="currentSort?.columnName === column.id && currentSort?.isAsc"
-                    [class.desc]="currentSort?.columnName === column.id && !currentSort?.isAsc"
+                    [class.asc]="currentSort?.columnName === column.id && !currentSort?.isDesc"
+                    [class.desc]="currentSort?.columnName === column.id && currentSort?.isDesc"
                     (click)="sortEnable(column.id)">
                     {{ column.title }}
                 </a>

@@ -61,16 +61,16 @@ export class SillyDatatablePagingComponent implements OnInit {
 
 
   public get currentPage(): number {
-    if (this.pagination.page < 0 || (this.pagination.page + 1) > this.numberOfPages) {
+    if (this.pagination.pageNumber < 0 || (this.pagination.pageNumber + 1) > this.numberOfPages) {
       return 0;
     }
 
-    return this.pagination.page;
+    return this.pagination.pageNumber;
   }
 
 
   public get numberOfPages(): number {
-    return this.pagination.pages;
+    return this.pagination.pageCount;
   }
 
 

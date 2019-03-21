@@ -21,7 +21,7 @@
         (click)="pageRequest(currentPage - 1)"
         [innerHTML]="settings?.prev || '<'"></button>
 
-    <button *ngFor="let page of pagination?.pages | pageArray | slice:start:end"
+    <button *ngFor="let page of pagination?.pageCount | pageArray | slice:start:end"
         [ngClass]="settings?.numberButtonClass"
         [class.active]="currentPage === (page - 1)"
         (click)="pageRequest(page - 1)"

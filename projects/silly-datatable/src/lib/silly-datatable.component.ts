@@ -85,7 +85,7 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
 
 
   /**
-   * Current state of sorting. Contains column id string and boolean isAsc for
+   * Current state of sorting. Contains column id string and boolean isDesc for
    * define sort direction.
    */
   public currentSort: Sort;
@@ -179,14 +179,14 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
     /**
      * Change direction
      */
-    let isAsc = true;
-    if (this.currentSort && this.currentSort.columnName === columnName && this.currentSort.isAsc) {
-      isAsc = false;
+    let isDesc = false;
+    if (this.currentSort && this.currentSort.columnName === columnName && !this.currentSort.isDesc) {
+      isDesc = true;
     }
 
     this.currentSort = {
       columnName,
-      isAsc,
+      isDesc,
     } as Sort;
 
     this._tableParams.sort = this.currentSort;
@@ -255,8 +255,8 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
       takeUntil(this._unsubscribe)
     )
       .subscribe((searchString: string) => {
-        this._tableParams.search = searchString;
-        this._tableParams.pagination.page = 0;
+        this._tableParams.searchText = searchString;
+        this._tableParams.pagination.pageNumber = 0;
         this.sendRequest();
       });
   }
@@ -272,7 +272,7 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
     )
       .subscribe((filterValues: string) => {
         this._tableParams.filters = filterValues;
-        this._tableParams.pagination.page = 0;
+        this._tableParams.pagination.pageNumber = 0;
         this.sendRequest();
       });
   }
@@ -296,7 +296,7 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
       takeUntil(this._unsubscribe)
     )
       .subscribe((page: number) => {
-        this._tableParams.pagination.page = page;
+        this._tableParams.pagination.pageNumber = page;
         this.sendRequest();
       });
   }

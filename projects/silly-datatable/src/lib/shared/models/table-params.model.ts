@@ -3,10 +3,10 @@ import { Sort } from './sort.model';
 
 
 export class TableParams {
-  public search?: string;
+  public searchText?: string;
   public sort?: Sort;
-  public pagination: Pagination;
   public filters?: any;
+  public pagination: Pagination;
 
   /**
    * The dataset for show in the table.

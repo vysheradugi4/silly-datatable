@@ -82,7 +82,7 @@ describe('SillyDatatableComponent', () => {
     expect(tableParams.sort.columnName).toBe('name');
   });
 
-  it('sortEnable should add sort param with isAsc param equal true in tableParams object', () => {
+  it('sortEnable should add sort param with isDesc param equal false in tableParams object', () => {
     let tableParams: TableParams;
 
     component.request.subscribe((request) => {
@@ -90,7 +90,32 @@ describe('SillyDatatableComponent', () => {
     });
 
     component.sortEnable('name');
-    expect(tableParams.sort.isAsc).toBe(true);
+    expect(tableParams.sort.isDesc).toBeFalsy();
+  });
+
+  it('sortEnable should add sort param with isDesc param equal true in tableParams object after second click', () => {
+    let tableParams: TableParams;
+
+    component.request.subscribe((request) => {
+      tableParams = request;
+    });
+
+    component.sortEnable('name');
+    component.sortEnable('name');
+    expect(tableParams.sort.isDesc).toBeTruthy();
+  });
+
+  it('sortEnable should add sort param with isDesc param equal false in tableParams object after third click', () => {
+    let tableParams: TableParams;
+
+    component.request.subscribe((request) => {
+      tableParams = request;
+    });
+
+    component.sortEnable('name');
+    component.sortEnable('name');
+    component.sortEnable('name');
+    expect(tableParams.sort.isDesc).toBeFalsy();
   });
 
   it('sortEnable should change column name to `age`', () => {
@@ -105,7 +130,7 @@ describe('SillyDatatableComponent', () => {
     expect(tableParams.sort.columnName).toBe('age');
   });
 
-  it('sortEnable should change isAsc to true when change name to `age`', () => {
+  it('sortEnable should change isDesc to false when change name to `age`', () => {
     let tableParams: TableParams;
 
     component.request.subscribe((request) => {
@@ -115,7 +140,7 @@ describe('SillyDatatableComponent', () => {
     component.sortEnable('name');
     component.sortEnable('name');
     component.sortEnable('age');
-    expect(tableParams.sort.isAsc).toBeTruthy();
+    expect(tableParams.sort.isDesc).toBeFalsy();
   });
 
 
@@ -188,7 +213,7 @@ describe('SillyDatatableComponent', () => {
     component.ngOnInit();
 
     component.request.subscribe((tableParams: TableParams) => {
-      expect(tableParams.search).toBe('search string');
+      expect(tableParams.searchText).toBe('search string');
       done();
     });
 
@@ -220,12 +245,12 @@ describe('SillyDatatableComponent', () => {
     component.pagingComponent = new SillyDatatablePagingComponent();
     component.pagingComponent.pagination = new Pagination();
     component.pagingComponent.ngOnInit();
-    component.pagingComponent.pagination.page = 0;
-    component.pagingComponent.pagination.pages = 10;
+    component.pagingComponent.pagination.pageNumber = 0;
+    component.pagingComponent.pagination.pageCount = 10;
     component.ngOnInit();
 
     component.request.subscribe((tableParams: TableParams) => {
-      expect(tableParams.pagination.page).toBe(1);
+      expect(tableParams.pagination.pageNumber).toBe(1);
       done();
     });
 
