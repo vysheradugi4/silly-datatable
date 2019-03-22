@@ -1,9 +1,7 @@
 import { Component, OnInit, Input, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Subject, merge } from 'rxjs';
+import { Subject, merge, Observable } from 'rxjs';
 import { filter, debounceTime, distinctUntilChanged, takeUntil, take, skip } from 'rxjs/operators';
-
-import { RequestService } from './../../services/request.service';
 
 
 @Component({
@@ -34,10 +32,7 @@ export class SillyDatatableSearchComponent implements OnInit {
   }
 
 
-  /**
-   * For link with current table.
-   */
-  @Input() public tableId;
+  @Input() public inputId: string;
 
 
   /**
@@ -74,7 +69,7 @@ export class SillyDatatableSearchComponent implements OnInit {
    * Search string from external form control.
    */
   @Input() public set dataFromExternalControl(search: string) {
-    this.requestNewSearch(search);
+    this._searchRequest$.next(search);
   }
 
 
@@ -83,20 +78,11 @@ export class SillyDatatableSearchComponent implements OnInit {
    */
   private _unsubscribe = new Subject<boolean>();
   private _disabled = false;
+  private _searchRequest$: Subject<string> = new Subject<string>();
 
-  constructor(
-    private _requestService: RequestService
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
-
-    /**
-     * Table id required.
-     */
-    if (!this.tableId) {
-      throw new Error('Table id required.');
-    }
-
 
     /**
      * Used external control for enter search string.
@@ -105,10 +91,12 @@ export class SillyDatatableSearchComponent implements OnInit {
       return;
     }
 
+
     this.search = new FormControl({
       value: '',
       disabled: this._disabled,
     });
+
 
     /**
      * Handle input value changes. Skip first empty string.
@@ -130,15 +118,11 @@ export class SillyDatatableSearchComponent implements OnInit {
       takeUntil(this._unsubscribe)
     )
       .subscribe((search: string) => {
-        this.requestNewSearch(search);
+        this._searchRequest$.next(search);
       });
   }
 
-
-  private requestNewSearch(search: string): void {
-    this._requestService.tableParams[this.tableId].pagination.page = 0;
-    this._requestService.tableParams[this.tableId].search = search;
-
-    this._requestService.next(this.tableId);
+  public get searchRequest$(): Observable<string> {
+    return this._searchRequest$.asObservable();
   }
 }

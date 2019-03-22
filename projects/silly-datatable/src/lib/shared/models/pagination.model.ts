@@ -3,13 +3,13 @@ export class Pagination {
   /**
    * Current page.
    */
-  public page: number;
+  public pageNumber: number;
 
 
   /**
    * Number of pages.
    */
-  public pages?: number;
+  public pageCount?: number;
 
 
   /**

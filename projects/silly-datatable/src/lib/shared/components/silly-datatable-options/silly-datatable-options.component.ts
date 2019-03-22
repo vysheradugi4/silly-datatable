@@ -1,15 +1,12 @@
 import { FormGroup, FormControl } from '@angular/forms';
 import { Component, OnInit, Input, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 
 import forIn from 'lodash/forIn';
-import { OptionsService } from './../../services/options.service';
 import { OptionsSettings } from './../../models/options-settings.model';
 import { FormsHelper } from './../../helpers/forms.helper';
 import { Column } from './../../models/column.model';
-import { RequestService } from './../../services/request.service';
-import { TableParams } from './../../models/table-params.model';
 
 
 @Component({
@@ -20,37 +17,26 @@ import { TableParams } from './../../models/table-params.model';
 })
 export class SillyDatatableOptionsComponent implements OnInit, OnDestroy {
 
-  /**
-   * Id for link with table.
-   */
-  @Input() public tableId;
-
+  @Input() public columns: Array<Column>;
+  @Input() public itemsPerPageList: Array<number>;
   @Input() public settings: OptionsSettings;
+  @Input() public itemsPerPage: number;
 
-  public columns: FormGroup;
-  public itemsPerPage: FormControl;
+  public columnsForm: FormGroup;
+  public itemsPerPageControl: FormControl;
 
   private _unsubscribe: Subject<boolean> = new Subject<boolean>();
+  private _columnsChanged$: Subject<Array<Column>> = new Subject<Array<Column>>();
+  private _itemsPerPageChanged$: Subject<number> = new Subject<number>();
 
-  constructor(
-    public optionsService: OptionsService,
-    private _requestService: RequestService
-  ) { }
+  constructor() { }
 
   ngOnInit() {
 
     /**
-     * Table id required.
-     */
-    if (!this.tableId) {
-      throw new Error('Table id required.');
-    }
-
-
-    /**
      * Exit without columns.
      */
-    if (!this.optionsService.columns[this.tableId]) {
+    if (!this.columns) {
       throw new Error('Columns of table not defined.');
     }
 
@@ -58,7 +44,7 @@ export class SillyDatatableOptionsComponent implements OnInit, OnDestroy {
     /**
      * Add show parameter in columns.
      */
-    this.optionsService.columns[this.tableId].forEach((column: Column) => {
+    this.columns.forEach((column: Column) => {
       if (column.show === undefined) {
         column.show = true;
       }
@@ -68,49 +54,62 @@ export class SillyDatatableOptionsComponent implements OnInit, OnDestroy {
     /**
      * Create form group with checkboxes for show hide columns.
      */
-    this.columns = FormsHelper.toFormGroup(
-      this.optionsService.columns[this.tableId], 'id', 'show'
-    );
-
-
-    /**
-     * Set form control for select. For select number of items per page.
-     */
-    this.itemsPerPage = new FormControl(
-      (this._requestService.tableParams[this.tableId] as TableParams).pagination.itemsPerPage
-    );
+    this.columnsForm = FormsHelper.toFormGroup(this.columns, 'id', 'show');
 
 
     /**
      * Update columns status.
      */
-    this.columns.valueChanges.pipe(
+    this.columnsForm.valueChanges.pipe(
       takeUntil(this._unsubscribe)
     )
-      .subscribe((values) => {
+      .subscribe((values: any) => {
 
         /**
          * Toggle status of columns (show, hide);
          */
         forIn(values, (status: boolean, columnId: string) => {
-          const column = (this.optionsService.columns[this.tableId] as Column[])
-            .find((c, i, a) => c.id === columnId);
+          const column = (this.columns as Array<Column>)
+            .find(c => c.id === columnId);
 
           column.show = status;
         });
-        this.optionsService.storeState(this.tableId, values, 'shownColumns');
-        this.optionsService.columnsChanged();
+
+        this._columnsChanged$.next(this.columns);
       });
 
 
-    this.itemsPerPage.valueChanges.pipe(
+    /**
+     * ItemsPerPage section.
+     */
+    if (!this.itemsPerPage) {
+      return;
+    }
+
+    /**
+     * Set form control for select. For select number of items per page.
+     */
+    this.itemsPerPageControl = new FormControl(
+      this.itemsPerPage
+    );
+
+
+    this.itemsPerPageControl.valueChanges.pipe(
       takeUntil(this._unsubscribe)
     )
       .subscribe((items) => {
-        this._requestService.tableParams[this.tableId].pagination.itemsPerPage = items;
-        this.optionsService.storeState(this.tableId, items, 'itemsPerPage');
-        this._requestService.next(this.tableId);
+        this._itemsPerPageChanged$.next(items);
       });
+  }
+
+
+  public get columnsChanged$(): Observable<Array<Column>> {
+    return this._columnsChanged$.asObservable();
+  }
+
+
+  public get itemsPerPageChanged$(): Observable<number> {
+    return this._itemsPerPageChanged$.asObservable();
   }
 
 

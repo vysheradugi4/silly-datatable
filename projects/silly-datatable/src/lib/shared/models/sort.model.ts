@@ -7,5 +7,5 @@ export class Sort {
   /**
    * Sorts the records in ascending order by default.
    */
-  public isAsc: boolean;
+  public isDesc: boolean;
 }

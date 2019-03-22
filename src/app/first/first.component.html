@@ -7,8 +7,9 @@ Routing: <button routerLink="/second">Second</button>
     <br>
 </ng-template>
 
-<ngx-silly-datatable-search tableId="sole" placeholder="Search..."
+<ngx-silly-datatable-search #searchComponent
     inputId="search"
+    placeholder="Search..."
     inputClass="search-field"
     [prefix]="prefix"
     [suffix]="suffix"
@@ -20,26 +21,32 @@ Routing: <button routerLink="/second">Second</button>
 </ng-template>
 
 <hr>
-
-<ngx-silly-datatable id="sole"
-    [settings]="settings"
-    [columns]="columns"
-    [tableParams]="tableParams"
-    (rowClicked)="selected($event)"
-    (rowDoubleClicked)="dblClickSelected($event)"
-    (request)="request($event)"
-    (componentCellEvent)="eventInCellComponent($event)">
-</ngx-silly-datatable>
+<div>
+        <ngx-silly-datatable id="sole"
+        [searchComponent]="searchComponent"
+        [filterComponent]="filterComponent"
+        [pagingComponent]="pagingComponent"
+        [optionsComponent]="optionsComponent"
+        [settings]="settings"
+        [columns]="columns"
+        [tableParams]="tableParams"
+        (rowClicked)="selected($event)"
+        (rowDoubleClicked)="dblClickSelected($event)"
+        (request)="request($event)"
+        (componentCellEvent)="eventInCellComponent($event)">
+    </ngx-silly-datatable>
+</div>
 
 <hr>
 
-<ngx-silly-datatable-paging tableId="sole"
-    [settings]="paginationSettings">
+<ngx-silly-datatable-paging #pagingComponent
+    [settings]="paginationSettings"
+    [pageOf]="pageOf">
 </ngx-silly-datatable-paging>
 
 <hr>
 
-<ngx-silly-datatable-filter tableId="sole"
+<ngx-silly-datatable-filter #filterComponent
     [formFields]="filterFormFields"
     [settings]="filterSettings"
     (valueChanges)="filterValueChanges($event)">
@@ -60,6 +67,12 @@ Routing: <button routerLink="/second">Second</button>
 <hr>
 
 <h3>Options</h3>
-<ngx-silly-datatable-options tableId="sole"
+<ngx-silly-datatable-options #optionsComponent
     [settings]="optionsSettings">
 </ngx-silly-datatable-options>
+
+<ng-template #pageOf
+    let-currentPage="currentPage"
+    let-numberOfPages="numberOfPages">
+    Pager {{ currentPage + 1 }} of {{ numberOfPages }}
+</ng-template>

@@ -1,9 +1,8 @@
 import { Component, OnInit, Input, OnDestroy, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { takeUntil, take, filter, skip } from 'rxjs/operators';
-import { Subject, merge } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { Subject, Observable } from 'rxjs';
 
-import { RequestService } from './../../services/request.service';
 import { FilterFormField } from './../../models/filter-form-field.model';
 import { FormsHelper } from './../../helpers/forms.helper';
 import { FilterSettings } from './../../models/filter-settings.model';
@@ -20,16 +19,9 @@ export class SillyDatatableFilterComponent implements OnInit, OnDestroy {
   public values: any;
   public filterForm: FormGroup;
 
-  /**
-   * For link filter with table.
-   */
-  @Input() public tableId;
-
   @Input() public settings: FilterSettings;
 
   @Input() public formFields: Array<FilterFormField>;
-
-  private _unsubscribe: Subject<boolean> = new Subject<boolean>();
 
   @Output() public cancel: EventEmitter<null> = new EventEmitter();
 
@@ -38,20 +30,13 @@ export class SillyDatatableFilterComponent implements OnInit, OnDestroy {
    */
   @Output() public valueChanges: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(
-    private _requestService: RequestService
-  ) { }
+  private _unsubscribe: Subject<boolean> = new Subject<boolean>();
+  private _filtersUpdated$: Subject<any> = new Subject<any>();
+
+  constructor() { }
 
 
   ngOnInit() {
-
-    /**
-     * Table id required.
-     */
-    if (!this.tableId) {
-      throw new Error('Table id required.');
-    }
-
 
     this.filterForm = FormsHelper.toFormGroup(this.formFields, 'name', 'value', 'disabled');
 
@@ -63,20 +48,9 @@ export class SillyDatatableFilterComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Handle input value changes. Skip first empty string.
+     * Handle input value changes.
      */
-    const first$ = this.filterForm.valueChanges.pipe(
-      take(1),
-      filter((str: string) => str !== ''),
-      takeUntil(this._unsubscribe)
-    );
-
-    const other$ = this.filterForm.valueChanges.pipe(
-      skip(1),
-      takeUntil(this._unsubscribe)
-    );
-
-    merge(first$, other$).pipe(
+    this.filterForm.valueChanges.pipe(
       takeUntil(this._unsubscribe)
     )
       .subscribe(() => {
@@ -86,13 +60,16 @@ export class SillyDatatableFilterComponent implements OnInit, OnDestroy {
   }
 
 
+  public get filtersUpdated$(): Observable<any> {
+    return this._filtersUpdated$.asObservable();
+  }
+
+
   /**
    * Send request for get filtered source.
    */
   public applyFilters(): void {
-    this._requestService.tableParams[this.tableId].filters = this.values;
-    this._requestService.tableParams[this.tableId].pagination.page = 0;
-    this._requestService.next(this.tableId);
+    this._filtersUpdated$.next(this.values);
   }
 
 
@@ -100,7 +77,7 @@ export class SillyDatatableFilterComponent implements OnInit, OnDestroy {
    * Cancel button click handler.
    */
   public onCancel(): void {
-    this.cancel.emit();
+    this.cancel.emit(null);
   }
 
 
@@ -109,7 +86,7 @@ export class SillyDatatableFilterComponent implements OnInit, OnDestroy {
    * @param index Index
    * @param item Changed parameter for detect.
    */
-  public trackByFn(index: number, item: FilterFormField): string | any[] {
+  public trackByFn(_, item: FilterFormField): string | any[] {
     return item.value + '-' + item.source;
   }
 

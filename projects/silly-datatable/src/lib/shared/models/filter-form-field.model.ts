@@ -84,5 +84,5 @@ export class FilterFormField {
   /**
    * Disable form field.
    */
-  public disabled: boolean;
+  public disabled?: boolean;
 }
