@@ -2,38 +2,65 @@
 
 # compiled output
 /dist
+/silly-datatable-documentation/dist
 /tmp
+/silly-datatable-documentation/tmp
 /out-tsc
+/silly-datatable-documentation/out-tsc
 
 # dependencies
 /node_modules
+/silly-datatable-documentation/node_modules
 
 # IDEs and editors
 /.idea
+/silly-datatable-documentation/.idea
 .project
+/silly-datatable-documentation/.project
 .classpath
+/silly-datatable-documentation/.classpath
 .c9/
+/silly-datatable-documentation/.c9/
 *.launch
+/silly-datatable-documentation/*.launch
 .settings/
+/silly-datatable-documentation/.settings/
 *.sublime-workspace
+/silly-datatable-documentation/*.sublime-workspace
 
 # IDE - VSCode
 .vscode/*
+/silly-datatable-documentation/.vscode/*
 !.vscode/settings.json
+!/silly-datatable-documentation/.vscode/settings.json
 !.vscode/tasks.json
+!/silly-datatable-documentation/.vscode/tasks.json
 !.vscode/launch.json
+!/silly-datatable-documentation/.vscode/launch.json
 !.vscode/extensions.json
+!/silly-datatable-documentation/.vscode/extensions.json
 
 # misc
 /.sass-cache
+/silly-datatable-documentation/.sass-cache
 /connect.lock
+/silly-datatable-documentation/connect.lock
 /coverage
+/silly-datatable-documentation/coverage
 /libpeerconnection.log
+/silly-datatable-documentation/libpeerconnection.log
 npm-debug.log
+/silly-datatable-documentation/npm-debug.log
 yarn-error.log
+/silly-datatable-documentation/yarn-error.log
 testem.log
+/silly-datatable-documentation/testem.log
 /typings
+/silly-datatable-documentation/typings
+
 
 # System Files
 .DS_Store
+/silly-datatable-documentation/.DS_Store
 Thumbs.db
+/silly-datatable-documentation/Thumbs.db
