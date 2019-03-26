@@ -40,7 +40,7 @@ describe('SillyDatatableFilterComponent', () => {
     nameFormField.name = 'name';
 
     component.formFields = [nameFormField];
-    component.ngOnInit();
+    (component as any).initFormFieldsLogic();
 
     component.filtersUpdated$.subscribe((filterValues) => {
       expect(filterValues.name).toBe('test');
@@ -57,7 +57,7 @@ describe('SillyDatatableFilterComponent', () => {
     nameFormField.name = 'name';
 
     component.formFields = [nameFormField];
-    component.ngOnInit();
+    (component as any).initFormFieldsLogic();
 
     component.valueChanges.subscribe((filterValues) => {
       expect(filterValues.name).toBe('test');
@@ -69,6 +69,7 @@ describe('SillyDatatableFilterComponent', () => {
 
   it('should be emit when call cancel', (done) => {
     component.settings = new FilterSettings();
+    component.formFields = [];
     component.settings.cancelButtonClass = 'cancel';
     fixture.detectChanges();
     component.cancel.subscribe((value: null) => {

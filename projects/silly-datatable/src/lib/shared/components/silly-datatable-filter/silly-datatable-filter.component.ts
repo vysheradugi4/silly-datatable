@@ -44,30 +44,6 @@ export class SillyDatatableFilterComponent implements OnDestroy {
   constructor() { }
 
 
-  public initFormFieldsLogic() {
-
-    this.filterForm = FormsHelper.toFormGroup(this._formFields, 'name', 'value', 'disabled');
-
-    /**
-     * Check filter has form controls.
-     */
-    if (!this.filterForm) {
-      return;
-    }
-
-    /**
-     * Handle input value changes.
-     */
-    this.filterForm.valueChanges.pipe(
-      takeUntil(this._unsubscribe)
-    )
-      .subscribe(() => {
-        this.values = this.filterForm.getRawValue();
-        this.valueChanges.emit(this.values);
-      });
-  }
-
-
   public get formFields(): Array<FilterFormField> {
     return this._formFields;
   }
@@ -107,5 +83,29 @@ export class SillyDatatableFilterComponent implements OnDestroy {
   ngOnDestroy() {
     this._unsubscribe.next(true);
     this._unsubscribe.unsubscribe();
+  }
+
+
+  private initFormFieldsLogic(): void {
+
+    this.filterForm = FormsHelper.toFormGroup(this._formFields, 'name', 'value', 'disabled');
+
+    /**
+     * Check filter has form controls.
+     */
+    if (!this.filterForm) {
+      return;
+    }
+
+    /**
+     * Handle input value changes.
+     */
+    this.filterForm.valueChanges.pipe(
+      takeUntil(this._unsubscribe)
+    )
+      .subscribe(() => {
+        this.values = this.filterForm.getRawValue();
+        this.valueChanges.emit(this.values);
+      });
   }
 }

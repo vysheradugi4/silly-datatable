@@ -228,7 +228,7 @@ describe('SillyDatatableComponent', () => {
     component.filterComponent.formFields = [
       { id: 'name', name: 'name' } as FilterFormField,
     ];
-    component.filterComponent.ngOnInit();
+    (component.filterComponent as any).initFormFieldsLogic();
     component.ngOnInit();
     component.request.subscribe((tableParams: TableParams) => {
       expect(tableParams.filters.name).toBe('test');
