@@ -38,12 +38,6 @@ describe('SillyDatatablePagingComponent', () => {
    * ngOnInit.
    */
 
-  it('onInit should return throw when pagination not defined', () => {
-    const fixture2 = TestBed.createComponent(SillyDatatablePagingComponent);
-    component = fixture2.componentInstance;
-    expect(() => fixture2.detectChanges()).toThrow(new Error('Pagination data required.'));
-  });
-
   it('should emit pageUpdated when call pageRequest method', (done) => {
     component.pageUpdated$.subscribe((page: number) => {
       expect(page).toBe(4);

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, TemplateRef } from '@angular/core';
+import { Component, Input, TemplateRef } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 
 import { PaginationSettings } from './../../models/pagination-settings.model';
@@ -10,13 +10,21 @@ import { Pagination } from './../../models/pagination.model';
   templateUrl: './silly-datatable-paging.component.html',
   styles: [],
 })
-export class SillyDatatablePagingComponent implements OnInit {
+export class SillyDatatablePagingComponent {
 
   /**
    * Settings for customization pagination component.
    */
   @Input() public settings: PaginationSettings;
-  @Input() public pagination: Pagination;
+
+  @Input() public set pagination(value: Pagination) {
+    if (!value) {
+      return;
+    }
+
+    this._pagination = value;
+    this.initPaginationLogic();
+  }
 
 
   /**
@@ -28,15 +36,12 @@ export class SillyDatatablePagingComponent implements OnInit {
   public pagingContext: any;
 
   private _pageUpdated$: Subject<number> = new Subject<number>();
+  private _pagination: Pagination;
 
   constructor() { }
 
 
-  ngOnInit(): void {
-
-    if (!this.pagination) {
-      throw new Error('Pagination data required.');
-    }
+  public initPaginationLogic(): void {
 
     /**
      * Create context for Page .. of .. custom template.
@@ -47,6 +52,11 @@ export class SillyDatatablePagingComponent implements OnInit {
         numberOfPages: this.numberOfPages,
       };
     }
+  }
+
+
+  public get pagination(): Pagination {
+    return this._pagination;
   }
 
 
@@ -61,16 +71,16 @@ export class SillyDatatablePagingComponent implements OnInit {
 
 
   public get currentPage(): number {
-    if (this.pagination.pageNumber < 0 || (this.pagination.pageNumber + 1) > this.numberOfPages) {
+    if (this._pagination.pageNumber < 0 || (this._pagination.pageNumber + 1) > this.numberOfPages) {
       return 0;
     }
 
-    return this.pagination.pageNumber;
+    return this._pagination.pageNumber;
   }
 
 
   public get numberOfPages(): number {
-    return this.pagination.pageCount;
+    return this._pagination.pageCount;
   }
 
 

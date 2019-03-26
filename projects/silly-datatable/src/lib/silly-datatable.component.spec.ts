@@ -243,10 +243,12 @@ describe('SillyDatatableComponent', () => {
    */
   it('should request new data for new page', (done) => {
     component.pagingComponent = new SillyDatatablePagingComponent();
-    component.pagingComponent.pagination = new Pagination();
-    component.pagingComponent.ngOnInit();
-    component.pagingComponent.pagination.pageNumber = 0;
-    component.pagingComponent.pagination.pageCount = 10;
+    component.pagingComponent.pagination = {
+      pageNumber: 0,
+      pageCount: 10,
+      itemsPerPage: 10,
+    };
+
     component.ngOnInit();
 
     component.request.subscribe((tableParams: TableParams) => {

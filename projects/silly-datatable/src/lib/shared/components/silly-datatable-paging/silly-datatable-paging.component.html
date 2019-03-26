@@ -1,4 +1,5 @@
-<div [ngClass]="settings?.containerClass">
+<div *ngIf="pagination"
+    [ngClass]="settings?.containerClass">
     <span *ngIf="(currentPage || currentPage === 0) && numberOfPages"
         [ngClass]="settings?.infoClass">
         <ng-container *ngIf="!pageOf; else pageOfCustom">

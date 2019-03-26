@@ -88,14 +88,6 @@ export class SillyDatatableOptionsComponent implements OnDestroy {
   private initColumnsLogic(): void {
 
     /**
-     * Exit without columns.
-     */
-    if (!this._columns) {
-      throw new Error('Columns of table not defined.');
-    }
-
-
-    /**
      * Add show parameter in columns.
      */
     this._columns.forEach((column: Column) => {
