@@ -1,4 +1,5 @@
-<div [ngClass]="settings?.formContainerClass">
+<div *ngIf="formFields"
+    [ngClass]="settings?.formContainerClass">
     <form *ngIf="filterForm"
         [formGroup]="filterForm">
 

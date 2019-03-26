@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, OnDestroy, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
 import { Subject, Observable } from 'rxjs';
@@ -14,14 +14,21 @@ import { FilterSettings } from './../../models/filter-settings.model';
   styles: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SillyDatatableFilterComponent implements OnInit, OnDestroy {
+export class SillyDatatableFilterComponent implements OnDestroy {
 
   public values: any;
   public filterForm: FormGroup;
 
   @Input() public settings: FilterSettings;
 
-  @Input() public formFields: Array<FilterFormField>;
+  @Input() public set formFields(value: Array<FilterFormField>) {
+    if (!value) {
+      return;
+    }
+
+    this._formFields = value;
+    this.initFormFieldsLogic();
+  }
 
   @Output() public cancel: EventEmitter<null> = new EventEmitter();
 
@@ -30,15 +37,16 @@ export class SillyDatatableFilterComponent implements OnInit, OnDestroy {
    */
   @Output() public valueChanges: EventEmitter<any> = new EventEmitter<any>();
 
+  private _formFields: Array<FilterFormField>;
   private _unsubscribe: Subject<boolean> = new Subject<boolean>();
   private _filtersUpdated$: Subject<any> = new Subject<any>();
 
   constructor() { }
 
 
-  ngOnInit() {
+  public initFormFieldsLogic() {
 
-    this.filterForm = FormsHelper.toFormGroup(this.formFields, 'name', 'value', 'disabled');
+    this.filterForm = FormsHelper.toFormGroup(this._formFields, 'name', 'value', 'disabled');
 
     /**
      * Check filter has form controls.
@@ -57,6 +65,11 @@ export class SillyDatatableFilterComponent implements OnInit, OnDestroy {
         this.values = this.filterForm.getRawValue();
         this.valueChanges.emit(this.values);
       });
+  }
+
+
+  public get formFields(): Array<FilterFormField> {
+    return this._formFields;
   }
 
 
