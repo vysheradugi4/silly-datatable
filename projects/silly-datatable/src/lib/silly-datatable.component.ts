@@ -45,19 +45,23 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
 
 
   /**
-   * Table params contains current paging, search string, sort params.
-   */
-  @Input() public set tableParams(tableParams: TableParams) {
-    this._tableParams = tableParams;
-
-    this.updatePaging();
-  }
-
-
-  /**
    * Stored table settings in service.
    */
   @Input() public settings: TableSettings;
+
+
+  /**
+   * Table params contains current paging, search string, sort params.
+   */
+  @Input() public set tableParams(tableParams: TableParams) {
+    if (!tableParams) {
+      return;
+    }
+
+    this._tableParams = tableParams;
+    this.updatePaging();
+    this.updateOptionsItemsPerPage();
+  }
 
 
   /**
@@ -79,9 +83,19 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
 
 
   /**
-   * Pagination component if defined.
+   * Options component if defined.
    */
-  @Input() public optionsComponent: SillyDatatableOptionsComponent;
+  @Input() public set optionsComponent(component) {
+    if (!component) {
+      return;
+    }
+
+    this._optionsComponent = component;
+
+    this.updateOptionsColumns();
+    this.updateOptionsItemsPerPage();
+    this.optionsChangeHandler();
+  }
 
 
   /**
@@ -101,12 +115,18 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
   private _singleClick = true;
   private _tableParams: TableParams;
   private _tableUid: string;
+  private _optionsComponent: SillyDatatableOptionsComponent;
 
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
     private _storeService: StoreService,
     private _inj: Injector
   ) { }
+
+
+  public get optionsComponent() {
+    return this._optionsComponent;
+  }
 
 
   ngOnInit() {
@@ -144,16 +164,7 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
      */
     this.searchRequestHandler();
     this.filterRequestHandler();
-    this.updatePaging();
     this.pagingRequestHandler();
-
-    this.setItemsPerPage();
-
-    if (this.optionsComponent) {
-      this.updateOptionsColumns();
-      this.updateOptionsItemsPerPage();
-      this.optionsChangeHandler();
-    }
   }
 
 
@@ -279,11 +290,38 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
 
 
   private updatePaging(): void {
-    if (!this.pagingComponent) {
-      return;
+
+    /**
+     * Try to load stored value for items per page.
+     */
+    if (this._storeService.isStored('itemsPerPage', this._tableUid)) {
+      this._tableParams.pagination.itemsPerPage = this._storeService.getStateFromStorage('itemsPerPage', this._tableUid);
     }
 
-    this.pagingComponent.pagination = this._tableParams.pagination;
+
+    /**
+     * Fill items per page and items per page list.
+     */
+    if (this._tableParams.pagination.itemsPerPageList) {
+
+      if (!this._tableParams.pagination.itemsPerPage) {
+        this._tableParams.pagination.itemsPerPage = this._tableParams.pagination.itemsPerPageList[0];
+      }
+    } else {
+
+      if (!this._tableParams.pagination.itemsPerPage) {
+        /**
+         * 10 items per page by default.
+         */
+        this._tableParams.pagination.itemsPerPage = 10;
+      }
+
+      this._tableParams.pagination.itemsPerPageList = [this._tableParams.pagination.itemsPerPage];
+    }
+
+    if (this.pagingComponent) {
+      this.pagingComponent.pagination = this._tableParams.pagination;
+    }
   }
 
 
@@ -303,13 +341,19 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
 
 
   private updateOptionsColumns(): void {
-    this.optionsComponent.columns = this.columns;
+    this._optionsComponent.columns = this.columns;
   }
 
 
   private updateOptionsItemsPerPage(): void {
-    this.optionsComponent.itemsPerPage = this._tableParams.pagination.itemsPerPage;
-    this.optionsComponent.itemsPerPageList = this.settings.itemsPerPageList;
+    if (!this._optionsComponent) {
+      return;
+    }
+
+    this._optionsComponent.itemsPerPageObjects = {
+      itemsPerPage: this._tableParams.pagination.itemsPerPage,
+      itemsPerPageList: this._tableParams.pagination.itemsPerPageList,
+    };
   }
 
 
@@ -344,35 +388,6 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
 
         this._storeService.storeState('itemsPerPage', this._tableUid, items);
       });
-  }
-
-
-  private setItemsPerPage(): void {
-
-    if (!this.settings) {
-      this.settings = new TableSettings();
-    }
-
-    if (this._storeService.isStored('itemsPerPage', this._tableUid)) {
-      this._tableParams.pagination.itemsPerPage = this._storeService.getStateFromStorage('itemsPerPage', this._tableUid);
-    }
-
-    if (this.settings.itemsPerPageList) {
-
-      if (!this._tableParams.pagination.itemsPerPage) {
-        this._tableParams.pagination.itemsPerPage = this.settings.itemsPerPageList[0];
-      }
-    } else {
-
-      if (!this._tableParams.pagination.itemsPerPage) {
-        /**
-         * 10 items per page by default.
-         */
-        this._tableParams.pagination.itemsPerPage = 10;
-      }
-
-      this.settings.itemsPerPageList = [this._tableParams.pagination.itemsPerPage];
-    }
   }
 
 

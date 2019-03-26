@@ -2,7 +2,7 @@ import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 
 import { PaginationSettings } from './../../models/pagination-settings.model';
-import { Pagination } from 'projects/silly-datatable/src/lib/shared/models/pagination.model';
+import { Pagination } from './../../models/pagination.model';
 
 
 @Component({

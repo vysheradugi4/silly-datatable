@@ -8,7 +8,7 @@ describe('EditButtonComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditButtonComponent ]
+      declarations: [ EditButtonComponent ],
     })
     .compileComponents();
   }));

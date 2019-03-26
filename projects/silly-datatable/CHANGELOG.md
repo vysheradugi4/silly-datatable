@@ -1,5 +1,11 @@
 # Silly Datatable Change Log
 
+## 3.0.0 (2019-03-21)
+
+    Changed few fields in Pagination (page to pageNumber, pages to pageCount),
+    Sort (isAsc to isDesc), TableParams (search to searchText). Changed relations
+    with silly-datatable component and filter, search, pagination, options.
+
 ## 2.1.7 (2019-03-11)
 
     Table id is required now.

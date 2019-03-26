@@ -123,7 +123,7 @@ Don't forget import class:
    
 TableParams contains:
    
-* `searchText` – Current search string.
+* `search` – Current search string.
    
 * `sort` – Instance of `Sort` class.
    

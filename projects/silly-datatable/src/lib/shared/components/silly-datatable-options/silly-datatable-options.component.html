@@ -1,5 +1,6 @@
 <div [ngClass]="settings?.containerClass">
-    <div [ngClass]="settings?.columnsSectionClass">
+    <div *ngIf="columns"
+        [ngClass]="settings?.columnsSectionClass">
         <form [formGroup]="columnsForm"
             novalidate>
             <div [ngClass]="settings?.columnsTitleClass">{{ settings?.columnsTitle || 'Columns:'}}</div>

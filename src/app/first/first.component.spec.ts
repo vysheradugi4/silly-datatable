@@ -5,6 +5,8 @@ import { SillyDatatableModule } from 'projects/silly-datatable/src/public_api';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { EditButtonComponent } from 'src/app/shared/components/edit-button/edit-button.component';
+import { TableOptionsComponent } from './../shared/components/table-options/table-options.component';
+
 
 describe('FirstComponent', () => {
   let component: FirstComponent;
@@ -19,6 +21,7 @@ describe('FirstComponent', () => {
       declarations: [
         FirstComponent,
         EditButtonComponent,
+        TableOptionsComponent,
       ],
     })
       .overrideModule(BrowserDynamicTestingModule, {

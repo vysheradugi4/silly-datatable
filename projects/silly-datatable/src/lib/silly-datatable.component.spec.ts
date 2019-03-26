@@ -261,27 +261,40 @@ describe('SillyDatatableComponent', () => {
    * Set itemsPerPage.
    */
   it('should set itemsPerPage as 1 (first element of itemsPerPageList)', () => {
-    const settings: TableSettings = {
+    const tableParams = new TableParams();
+
+    tableParams.pagination = {
       itemsPerPageList: [1, 3, 5],
-    };
-    component.settings = settings;
-    (component as any).setItemsPerPage();
+    } as any;
+
+    component.tableParams = tableParams;
+    (component as any).updatePaging();
     expect(component.tableParams.pagination.itemsPerPage).toBe(1);
   });
 
   it('should set value in option itemsPerPage same in stored in localStorage', () => {
     const service: StoreService = TestBed.get(StoreService);
-    component.optionsComponent = new SillyDatatableOptionsComponent();
-    component.settings = {
-      itemsPerPageList: [1, 3, 5],
-    } as TableSettings;
+    service.storeState('itemsPerPage', undefined, 3);
+
+    const cdRefMock = {
+      markForCheck: () => null,
+    } as any;
+
+    component.optionsComponent = new SillyDatatableOptionsComponent(cdRefMock);
+
     component.columns = [
-      {id: 'id', name: 'name'} as Column,
+      { id: 'id', name: 'name' } as Column,
     ];
-    component.tableParams.pagination.itemsPerPage = 1;
-    service.storeState('itemsPerPage', 'Object_sole', 3);
+
+    component.tableParams = {
+      pagination: {
+        pageNumber: 0,
+        itemsPerPage: 1,
+        itemsPerPageList: [1, 3, 5],
+      },
+    } as any;
     component.ngOnInit();
-    component.optionsComponent.ngOnInit();
+    (component.optionsComponent as any).initItemsPerPageLogic();
     expect(component.optionsComponent.itemsPerPageControl.value).toBe(3);
     localStorage.clear();
   });

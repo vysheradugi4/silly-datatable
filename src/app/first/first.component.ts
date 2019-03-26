@@ -11,6 +11,7 @@ import {
 } from 'projects/silly-datatable/src/public_api';
 import { EditButtonComponent } from 'src/app/shared/components/edit-button/edit-button.component';
 
+
 @Component({
   selector: 'app-first',
   templateUrl: './first.component.html',
@@ -26,17 +27,13 @@ export class FirstComponent implements OnInit {
   public filterFormFields: Array<FilterFormField>;
   public filterSettings: FilterSettings;
   public detailsDropboxFilter: FilterFormField;
+  public optionsComponent: any;
 
   @ViewChild('customInput') public customInput: TemplateRef<any>;
 
   constructor() { }
 
   ngOnInit(): void {
-
-    // setTimeout(() => {
-    //   this.detailsDropboxFilter.value = Object.assign(this.detailsDropboxFilter, { value: null });
-    //   this.filterFormFields = this.filterFormFields.slice();
-    // }, 10000);
 
     this.tableParams.pagination = {
       pageNumber: 0,
@@ -207,4 +204,9 @@ export class FirstComponent implements OnInit {
     }
   }
 
+  getOptions(component) {
+    setTimeout(() => {
+      this.optionsComponent = component;
+    });
+  }
 }

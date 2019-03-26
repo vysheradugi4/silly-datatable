@@ -25,9 +25,4 @@ export class TableSettings {
    * Text under heading when data is not found ('Data not found' by default).
    */
   public dataNotFoundPhrase?: string;
-
-  /**
-   * List of possible counts of items per page.
-   */
-  public itemsPerPageList?: Array<number>;
 }

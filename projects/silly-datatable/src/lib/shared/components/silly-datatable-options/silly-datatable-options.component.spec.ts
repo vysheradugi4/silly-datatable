@@ -35,22 +35,13 @@ describe('SillyDatatableOptionsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  /**
-   * ngOnInit.
-   */
-  it('should return throw error if colunms not defined', () => {
-    let fixture2: ComponentFixture<SillyDatatableOptionsComponent>;
-    fixture2 = TestBed.createComponent(SillyDatatableOptionsComponent);
-    expect(() => fixture2.detectChanges()).toThrow(new Error('Columns of table not defined.'));
-  });
-
-  it('should add "show" property to columns object if thise property is absent', () => {
+  it('should add "show" property to columns object if this property is absent', () => {
     columns = [
       { id: 'id1' } as Column,
       { id: 'id2' } as Column,
     ];
     component.columns = columns;
-    component.ngOnInit();
+    (component as any).initColumnsLogic();
     expect(component.columns[0].show).toBeTruthy();
   });
 
@@ -60,7 +51,7 @@ describe('SillyDatatableOptionsComponent', () => {
       { id: 'id2' } as Column,
     ];
     component.columns = columns;
-    component.ngOnInit();
+    (component as any).initColumnsLogic();
     expect(component.columns[0].show).toBeFalsy();
   });
 
@@ -70,7 +61,7 @@ describe('SillyDatatableOptionsComponent', () => {
       { id: 'id2' } as Column,
     ];
     component.columns = columns;
-    component.ngOnInit();
+    (component as any).initColumnsLogic();
     expect(component.columns[0].show).toBeTruthy();
   });
 
@@ -80,18 +71,20 @@ describe('SillyDatatableOptionsComponent', () => {
       { id: 'id2' } as Column,
     ];
     component.columns = columns;
-    component.ngOnInit();
+    (component as any).initColumnsLogic();
     expect(component.columnsForm).toBeDefined();
   });
 
   it('should not create form group for setup itemsPerPage parameter', () => {
-    component.ngOnInit();
+    (component as any).initItemsPerPageLogic();
     expect(component.itemsPerPageControl).toBeUndefined();
   });
 
   it('should create form group for setup itemsPerPage parameter', () => {
-    component.itemsPerPage = 10;
-    component.ngOnInit();
+    component.itemsPerPageObjects = {
+      itemsPerPage: 10,
+    };
+    (component as any).initItemsPerPageLogic();
     expect(component.itemsPerPageControl).toBeDefined();
   });
 
@@ -102,7 +95,7 @@ describe('SillyDatatableOptionsComponent', () => {
     component.columns = [
       { id: 'id1', show: true } as Column,
     ];
-    component.ngOnInit();
+    (component as any).initColumnsLogic();
     component.columnsChanged$.subscribe((changedColumns: Array<Column>) => {
       expect(changedColumns[0].show).toBeFalsy();
       done();
@@ -115,9 +108,12 @@ describe('SillyDatatableOptionsComponent', () => {
    * ItemsPerPage changed functional.
    */
   it('should emit new itemsPerPage value', (done) => {
-    component.itemsPerPage = 10;
-    component.itemsPerPageList = [10, 30, 50];
-    component.ngOnInit();
+    component.itemsPerPageObjects = {
+      itemsPerPage: 10,
+      itemsPerPageList: [10, 30, 50],
+    };
+
+    (component as any).initItemsPerPageLogic();
     component.itemsPerPageChanged$.subscribe((itemsPerPage) => {
       expect(itemsPerPage).toBe(30);
       done();

@@ -1,5 +1,5 @@
 import { FormGroup, FormControl } from '@angular/forms';
-import { Component, OnInit, Input, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
 import { Subject, Observable } from 'rxjs';
 
@@ -15,28 +15,82 @@ import { Column } from './../../models/column.model';
   styles: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SillyDatatableOptionsComponent implements OnInit, OnDestroy {
+export class SillyDatatableOptionsComponent implements OnDestroy {
 
-  @Input() public columns: Array<Column>;
-  @Input() public itemsPerPageList: Array<number>;
+  @Input() public set columns(value: Array<Column>) {
+    if (!value) {
+      return;
+    }
+
+    this._columns = value;
+    this.initColumnsLogic();
+  }
+
+  @Input() public set itemsPerPageObjects(value: any) {
+    if (!value) {
+      return;
+    }
+
+    this._itemsPerPage = value.itemsPerPage;
+    this._itemsPerPageList = value.itemsPerPageList;
+    this.initItemsPerPageLogic();
+  }
+
   @Input() public settings: OptionsSettings;
-  @Input() public itemsPerPage: number;
 
   public columnsForm: FormGroup;
   public itemsPerPageControl: FormControl;
+
+  private _columns: Array<Column>;
+  private _itemsPerPageList: Array<number>;
+  private _itemsPerPage: number;
 
   private _unsubscribe: Subject<boolean> = new Subject<boolean>();
   private _columnsChanged$: Subject<Array<Column>> = new Subject<Array<Column>>();
   private _itemsPerPageChanged$: Subject<number> = new Subject<number>();
 
-  constructor() { }
+  constructor(
+    private _changeDetectorRef: ChangeDetectorRef
+  ) { }
 
-  ngOnInit() {
+
+  public get columnsChanged$(): Observable<Array<Column>> {
+    return this._columnsChanged$.asObservable();
+  }
+
+
+  public get itemsPerPageChanged$(): Observable<number> {
+    return this._itemsPerPageChanged$.asObservable();
+  }
+
+
+  public get columns(): Array<Column> | undefined {
+    return this._columns;
+  }
+
+
+  public get itemsPerPage(): number {
+    return this._itemsPerPage;
+  }
+
+
+  public get itemsPerPageList(): Array<number> {
+    return this._itemsPerPageList;
+  }
+
+
+  ngOnDestroy() {
+    this._unsubscribe.next(true);
+    this._unsubscribe.unsubscribe();
+  }
+
+
+  private initColumnsLogic(): void {
 
     /**
      * Exit without columns.
      */
-    if (!this.columns) {
+    if (!this._columns) {
       throw new Error('Columns of table not defined.');
     }
 
@@ -44,7 +98,7 @@ export class SillyDatatableOptionsComponent implements OnInit, OnDestroy {
     /**
      * Add show parameter in columns.
      */
-    this.columns.forEach((column: Column) => {
+    this._columns.forEach((column: Column) => {
       if (column.show === undefined) {
         column.show = true;
       }
@@ -54,7 +108,7 @@ export class SillyDatatableOptionsComponent implements OnInit, OnDestroy {
     /**
      * Create form group with checkboxes for show hide columns.
      */
-    this.columnsForm = FormsHelper.toFormGroup(this.columns, 'id', 'show');
+    this.columnsForm = FormsHelper.toFormGroup(this._columns, 'id', 'show');
 
 
     /**
@@ -69,20 +123,25 @@ export class SillyDatatableOptionsComponent implements OnInit, OnDestroy {
          * Toggle status of columns (show, hide);
          */
         forIn(values, (status: boolean, columnId: string) => {
-          const column = (this.columns as Array<Column>)
+          const column = (this._columns as Array<Column>)
             .find(c => c.id === columnId);
 
           column.show = status;
         });
 
-        this._columnsChanged$.next(this.columns);
+        this._columnsChanged$.next(this._columns);
       });
 
+    this._changeDetectorRef.markForCheck();
+  }
+
+
+  private initItemsPerPageLogic(): void {
 
     /**
      * ItemsPerPage section.
      */
-    if (!this.itemsPerPage) {
+    if (!this._itemsPerPage) {
       return;
     }
 
@@ -90,7 +149,7 @@ export class SillyDatatableOptionsComponent implements OnInit, OnDestroy {
      * Set form control for select. For select number of items per page.
      */
     this.itemsPerPageControl = new FormControl(
-      this.itemsPerPage
+      this._itemsPerPage
     );
 
 
@@ -100,21 +159,7 @@ export class SillyDatatableOptionsComponent implements OnInit, OnDestroy {
       .subscribe((items) => {
         this._itemsPerPageChanged$.next(items);
       });
-  }
 
-
-  public get columnsChanged$(): Observable<Array<Column>> {
-    return this._columnsChanged$.asObservable();
-  }
-
-
-  public get itemsPerPageChanged$(): Observable<number> {
-    return this._itemsPerPageChanged$.asObservable();
-  }
-
-
-  ngOnDestroy() {
-    this._unsubscribe.next(true);
-    this._unsubscribe.unsubscribe();
+    this._changeDetectorRef.markForCheck();
   }
 }

@@ -66,10 +66,7 @@ Routing: <button routerLink="/second">Second</button>
 
 <hr>
 
-<h3>Options</h3>
-<ngx-silly-datatable-options #optionsComponent
-    [settings]="optionsSettings">
-</ngx-silly-datatable-options>
+<app-table-options (options)="getOptions($event)"></app-table-options>
 
 <ng-template #pageOf
     let-currentPage="currentPage"
