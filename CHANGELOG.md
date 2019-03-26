@@ -1,5 +1,9 @@
 # Silly Datatable Change Log
 
+## 3.0.2 (2019-06-26)
+
+    Moved itemsPerPageList parameter from table settings ot pagination object.
+
 ## 3.0.0 (2019-03-21)
 
     Changed few fields in Pagination (page to pageNumber, pages to pageCount),
