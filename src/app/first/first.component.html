@@ -39,10 +39,7 @@ Routing: <button routerLink="/second">Second</button>
 
 <hr>
 
-<ngx-silly-datatable-paging #pagingComponent
-    [settings]="paginationSettings"
-    [pageOf]="pageOf">
-</ngx-silly-datatable-paging>
+<app-table-paging (paging)="getPaging($event)"></app-table-paging>
 
 <hr>
 
@@ -67,9 +64,3 @@ Routing: <button routerLink="/second">Second</button>
 <hr>
 
 <app-table-options (options)="getOptions($event)"></app-table-options>
-
-<ng-template #pageOf
-    let-currentPage="currentPage"
-    let-numberOfPages="numberOfPages">
-    Pager {{ currentPage + 1 }} of {{ numberOfPages }}
-</ng-template>

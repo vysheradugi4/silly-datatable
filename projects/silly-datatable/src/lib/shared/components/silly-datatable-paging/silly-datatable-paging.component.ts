@@ -23,7 +23,7 @@ export class SillyDatatablePagingComponent {
     }
 
     this._pagination = value;
-    this.initPaginationLogic();
+    this.setPageOfContext();
   }
 
 
@@ -32,26 +32,25 @@ export class SillyDatatablePagingComponent {
    * number (use {{ currentPage + 1 }}) and pages count (use {{ numberOfPages }})
    * values.
    */
-  @Input() public pageOf: TemplateRef<any>;
+  @Input() public set pageOf(value: TemplateRef<any>) {
+    if (!value) {
+      return;
+    }
+
+    this._pageOf = value;
+    this.setPageOfContext();
+  }
+
   public pagingContext: any;
 
   private _pageUpdated$: Subject<number> = new Subject<number>();
   private _pagination: Pagination;
+  private _pageOf: TemplateRef<any>;
 
   constructor() { }
 
-
-  public initPaginationLogic(): void {
-
-    /**
-     * Create context for Page .. of .. custom template.
-     */
-    if (this.pageOf) {
-      this.pagingContext = {
-        currentPage: this.currentPage,
-        numberOfPages: this.numberOfPages,
-      };
-    }
+  public get pageOf(): TemplateRef<any> {
+    return this._pageOf;
   }
 
 
@@ -118,5 +117,24 @@ export class SillyDatatablePagingComponent {
     }
 
     return this.currentPage + 3;
+  }
+
+
+  private setPageOfContext() {
+
+    if (!this._pagination) {
+      return;
+    }
+
+
+    /**
+     * Create context for Page .. of .. custom template.
+     */
+    if (this.pageOf) {
+      this.pagingContext = {
+        currentPage: this.currentPage,
+        numberOfPages: this.numberOfPages,
+      };
+    }
   }
 }

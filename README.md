@@ -86,7 +86,7 @@ added to each `<tr>` tag except first.
 * `dataNotFoundPhrase` – Text under heading when data is not found ('Data not
 found' by default).
    
-* `itemsPerPage` – List of possible counts of items per page (10 by default). This
+* `itemsPerPageList` – List of possible counts of items per page (10 by default). This
 is array of number. For example: `[10, 30, 100]`.
       
    

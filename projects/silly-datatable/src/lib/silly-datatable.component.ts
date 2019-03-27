@@ -47,7 +47,7 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
   /**
    * Stored table settings in service.
    */
-  @Input() public settings: TableSettings;
+  @Input() public settings: TableSettings = new TableSettings();
 
 
   /**
@@ -59,7 +59,17 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
     }
 
     this._tableParams = tableParams;
-    this.updatePaging();
+
+
+    /**
+     * Needs to update pagination in pagingComponent.
+     */
+    this.updatePagingComponentData();
+
+
+    /**
+     * Needs to update itemsPerPage in optionsComponent.
+     */
     this.updateOptionsItemsPerPage();
   }
 
@@ -79,13 +89,31 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
   /**
    * Pagination component if defined.
    */
-  @Input() public pagingComponent: SillyDatatablePagingComponent;
+  @Input() public set pagingComponent(component: SillyDatatablePagingComponent) {
+    if (!component) {
+      return;
+    }
+
+    this._pagingComponent = component;
+
+
+    /**
+     * Needs to update pagination in pagingComponent.
+     */
+    this.updatePagingComponentData();
+
+
+    /**
+     * Subscribition on changes in pagingComponent.
+     */
+    this.pagingRequestHandler();
+  }
 
 
   /**
    * Options component if defined.
    */
-  @Input() public set optionsComponent(component) {
+  @Input() public set optionsComponent(component: SillyDatatableOptionsComponent) {
     if (!component) {
       return;
     }
@@ -94,6 +122,11 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
 
     this.updateOptionsColumns();
     this.updateOptionsItemsPerPage();
+
+
+    /**
+     * Subscription on changes in optionsComponent.
+     */
     this.optionsChangeHandler();
   }
 
@@ -116,6 +149,7 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
   private _tableParams: TableParams;
   private _tableUid: string;
   private _optionsComponent: SillyDatatableOptionsComponent;
+  private _pagingComponent: SillyDatatablePagingComponent;
 
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
@@ -154,17 +188,45 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
 
 
     /**
+     * Try to load stored value for items per page.
+     */
+    if (this._storeService.isStored('itemsPerPage', this._tableUid)) {
+      this._tableParams.pagination.itemsPerPage = this._storeService.getStateFromStorage('itemsPerPage', this._tableUid);
+    }
+
+
+    /**
+     * Fill items per page and items per page list.
+     */
+    if (this.settings.itemsPerPageList) {
+
+      if (!this._tableParams.pagination.itemsPerPage) {
+        this._tableParams.pagination.itemsPerPage = this.settings.itemsPerPageList[0];
+      }
+    } else {
+
+      if (!this._tableParams.pagination.itemsPerPage) {
+        /**
+         * 10 items per page by default.
+         */
+        this._tableParams.pagination.itemsPerPage = 10;
+      }
+
+      this.settings.itemsPerPageList = [this._tableParams.pagination.itemsPerPage];
+    }
+
+
+    /**
      * Setup columns states by saved options.
      */
     this.setColumnsDisplay();
 
 
     /**
-     * For handle data from outer components (search, pagination, filters, options).
+     * For handle data from outer components (search, filters).
      */
     this.searchRequestHandler();
     this.filterRequestHandler();
-    this.pagingRequestHandler();
   }
 
 
@@ -289,48 +351,20 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
   }
 
 
-  private updatePaging(): void {
+  private updatePagingComponentData(): void {
 
-    /**
-     * Try to load stored value for items per page.
-     */
-    if (this._storeService.isStored('itemsPerPage', this._tableUid)) {
-      this._tableParams.pagination.itemsPerPage = this._storeService.getStateFromStorage('itemsPerPage', this._tableUid);
-    }
-
-
-    /**
-     * Fill items per page and items per page list.
-     */
-    if (this._tableParams.pagination.itemsPerPageList) {
-
-      if (!this._tableParams.pagination.itemsPerPage) {
-        this._tableParams.pagination.itemsPerPage = this._tableParams.pagination.itemsPerPageList[0];
-      }
-    } else {
-
-      if (!this._tableParams.pagination.itemsPerPage) {
-        /**
-         * 10 items per page by default.
-         */
-        this._tableParams.pagination.itemsPerPage = 10;
-      }
-
-      this._tableParams.pagination.itemsPerPageList = [this._tableParams.pagination.itemsPerPage];
-    }
-
-    if (this.pagingComponent) {
-      this.pagingComponent.pagination = this._tableParams.pagination;
+    if (this._pagingComponent) {
+      this._pagingComponent.pagination = this._tableParams.pagination;
     }
   }
 
 
   private pagingRequestHandler(): void {
-    if (!this.pagingComponent) {
+    if (!this._pagingComponent) {
       return;
     }
 
-    this.pagingComponent.pageUpdated$.pipe(
+    this._pagingComponent.pageUpdated$.pipe(
       takeUntil(this._unsubscribe)
     )
       .subscribe((page: number) => {
@@ -341,24 +375,30 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
 
 
   private updateOptionsColumns(): void {
+
+    if (!this._optionsComponent) {
+      return;
+    }
+
     this._optionsComponent.columns = this.columns;
   }
 
 
   private updateOptionsItemsPerPage(): void {
+
     if (!this._optionsComponent) {
       return;
     }
 
     this._optionsComponent.itemsPerPageObjects = {
       itemsPerPage: this._tableParams.pagination.itemsPerPage,
-      itemsPerPageList: this._tableParams.pagination.itemsPerPageList,
+      itemsPerPageList: this.settings.itemsPerPageList,
     };
   }
 
 
   private optionsChangeHandler(): void {
-    this.optionsComponent.columnsChanged$.pipe(
+    this._optionsComponent.columnsChanged$.pipe(
       takeUntil(this._unsubscribe)
     )
       .subscribe((changedColumns: Array<Column>) => {
@@ -380,7 +420,7 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
         this._storeService.storeState('shownColumns', this._tableUid, dataForStore);
       });
 
-    this.optionsComponent.itemsPerPageChanged$.pipe(
+    this._optionsComponent.itemsPerPageChanged$.pipe(
       takeUntil(this._unsubscribe)
     )
       .subscribe((items: number) => {

@@ -28,6 +28,7 @@ export class FirstComponent implements OnInit {
   public filterSettings: FilterSettings;
   public detailsDropboxFilter: FilterFormField;
   public optionsComponent: any;
+  public pagingComponent: any;
 
   @ViewChild('customInput') public customInput: TemplateRef<any>;
 
@@ -204,9 +205,16 @@ export class FirstComponent implements OnInit {
     }
   }
 
-  getOptions(component) {
+  public getOptions(component) {
     setTimeout(() => {
       this.optionsComponent = component;
+    });
+  }
+
+
+  public getPaging(component) {
+    setTimeout(() => {
+      this.pagingComponent = component;
     });
   }
 }

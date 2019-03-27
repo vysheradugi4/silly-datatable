@@ -10,7 +10,6 @@ import { SillyDatatableFilterComponent } from './shared/components/silly-datatab
 import { FilterFormField } from './shared/models/filter-form-field.model';
 import { SillyDatatablePagingComponent } from './shared/components/silly-datatable-paging/silly-datatable-paging.component';
 import { StoreService } from './shared/services/store.service';
-import { TableSettings } from './shared/models/table-settings.model';
 import { Column } from './shared/models/column.model';
 import { SillyDatatableOptionsComponent } from './shared/components/silly-datatable-options/silly-datatable-options.component';
 
@@ -242,12 +241,15 @@ describe('SillyDatatableComponent', () => {
    * Pagination component.
    */
   it('should request new data for new page', (done) => {
+    component.tableParams = {
+      pagination: {
+        pageNumber: 0,
+        pageCount: 10,
+        itemsPerPage: 10,
+      },
+    } as any;
+
     component.pagingComponent = new SillyDatatablePagingComponent();
-    component.pagingComponent.pagination = {
-      pageNumber: 0,
-      pageCount: 10,
-      itemsPerPage: 10,
-    };
 
     component.ngOnInit();
 
@@ -256,27 +258,43 @@ describe('SillyDatatableComponent', () => {
       done();
     });
 
-    component.pagingComponent.pageRequest(1);
+    (component as any)._pagingComponent.pageRequest(1);
   });
 
   /**
    * Set itemsPerPage.
    */
   it('should set itemsPerPage as 1 (first element of itemsPerPageList)', () => {
-    const tableParams = new TableParams();
 
-    tableParams.pagination = {
+    const settings = {
       itemsPerPageList: [1, 3, 5],
     } as any;
 
-    component.tableParams = tableParams;
-    (component as any).updatePaging();
+    component.settings = settings;
+    component.ngOnInit();
     expect(component.tableParams.pagination.itemsPerPage).toBe(1);
   });
 
   it('should set value in option itemsPerPage same in stored in localStorage', () => {
     const service: StoreService = TestBed.get(StoreService);
-    service.storeState('itemsPerPage', undefined, 3);
+    service.storeState('itemsPerPage', 'Object_sole', 3);
+
+    component.columns = [
+      { id: 'id', name: 'name' } as Column,
+    ];
+
+    component.settings = {
+      itemsPerPageList: [1, 3, 5],
+    };
+
+    component.tableParams = {
+      pagination: {
+        pageNumber: 0,
+        itemsPerPage: 1,
+      },
+    } as any;
+
+    component.ngOnInit();
 
     const cdRefMock = {
       markForCheck: () => null,
@@ -284,20 +302,9 @@ describe('SillyDatatableComponent', () => {
 
     component.optionsComponent = new SillyDatatableOptionsComponent(cdRefMock);
 
-    component.columns = [
-      { id: 'id', name: 'name' } as Column,
-    ];
+    ((component as any)._optionsComponent as any).initItemsPerPageLogic();
 
-    component.tableParams = {
-      pagination: {
-        pageNumber: 0,
-        itemsPerPage: 1,
-        itemsPerPageList: [1, 3, 5],
-      },
-    } as any;
-    component.ngOnInit();
-    (component.optionsComponent as any).initItemsPerPageLogic();
-    expect(component.optionsComponent.itemsPerPageControl.value).toBe(3);
+    expect((component as any)._optionsComponent.itemsPerPageControl.value).toBe(3);
     localStorage.clear();
   });
 });

@@ -1,3 +1,4 @@
+import { TablePagingComponent } from './../shared/components/table-paging/table-paging.component';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
@@ -24,6 +25,7 @@ describe('FirstComponent', () => {
         FirstComponent,
         EditButtonComponent,
         TableOptionsComponent,
+        TablePagingComponent,
       ],
     })
       .overrideModule(BrowserDynamicTestingModule, {
