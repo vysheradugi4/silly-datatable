@@ -138,7 +138,7 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
   public currentSort: Sort;
 
 
-  @Output() public request: EventEmitter<TableParams> = new EventEmitter<TableParams>();
+  @Output() public tableParamsChange: EventEmitter<TableParams> = new EventEmitter<TableParams>();
   @Output() public rowClicked: EventEmitter<any> = new EventEmitter<any>();
   @Output() public rowDoubleClicked: EventEmitter<any> = new EventEmitter<any>();
   @Output() public componentCellEvent: EventEmitter<any> = new EventEmitter<any>();
@@ -186,7 +186,6 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
      */
     this.createTableUid();
 
-
     /**
      * Try to load stored value for items per page.
      */
@@ -227,6 +226,12 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
      */
     this.searchRequestHandler();
     this.filterRequestHandler();
+
+
+    /**
+     * One time init request.
+     */
+    this.tableParamsChange.emit(this._tableParams);
   }
 
 
@@ -236,7 +241,7 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
 
 
   public sendRequest(): void {
-    this.request.emit(this._tableParams);
+    this.tableParamsChange.emit(this._tableParams);
   }
 
 
@@ -424,9 +429,10 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
       takeUntil(this._unsubscribe)
     )
       .subscribe((items: number) => {
-        this._tableParams.pagination.itemsPerPage = items;
 
+        this._tableParams.pagination.itemsPerPage = items;
         this._storeService.storeState('itemsPerPage', this._tableUid, items);
+        this.tableParamsChange.emit(this._tableParams);
       });
   }
 

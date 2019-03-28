@@ -20,7 +20,6 @@ import { EditButtonComponent } from 'src/app/shared/components/edit-button/edit-
 export class FirstComponent implements OnInit {
 
   public settings: TableSettings;
-  public tableParams: TableParams = new TableParams();
   public paginationSettings: PaginationSettings;
   public columns: Array<Column>;
   public source: Array<any>;
@@ -32,11 +31,23 @@ export class FirstComponent implements OnInit {
 
   @ViewChild('customInput') public customInput: TemplateRef<any>;
 
+  private _tableParams: TableParams = new TableParams();
+
   constructor() { }
+
+  public get tableParams(): TableParams {
+    return this._tableParams;
+  }
+
+
+  public set tableParams(value: TableParams) {
+    console.log('Request with table params = ', value);
+  }
+
 
   ngOnInit(): void {
 
-    this.tableParams.pagination = {
+    this._tableParams.pagination = {
       pageNumber: 0,
       pageCount: 10,
       itemsPerPage: 1,
@@ -103,7 +114,7 @@ export class FirstComponent implements OnInit {
       { id: 5, name: 'test5', description: 'some description' },
     ];
 
-    this.tableParams.source = this.source;
+    this._tableParams.source = this.source;
 
     this.detailsDropboxFilter = {
       id: 'details',
@@ -167,13 +178,6 @@ export class FirstComponent implements OnInit {
       submitButtonClass: 'submit-button-class',
       submitButtonTitle: 'Submit',
     } as FilterSettings;
-  }
-
-
-  public request(tableParams: TableParams) {
-    this.tableParams = Object.assign({}, tableParams);
-    this.tableParams.source = this.source.slice(0, 4);
-    console.log('Request with table params = ', tableParams);
   }
 
 

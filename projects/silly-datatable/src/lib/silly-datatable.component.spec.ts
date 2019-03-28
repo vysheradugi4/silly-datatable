@@ -73,7 +73,7 @@ describe('SillyDatatableComponent', () => {
   it('sortEnable should add sort param with columnName `name` in tableParams object', () => {
     let tableParams: TableParams;
 
-    component.request.subscribe((request) => {
+    component.tableParamsChange.subscribe((request) => {
       tableParams = request;
     });
 
@@ -84,7 +84,7 @@ describe('SillyDatatableComponent', () => {
   it('sortEnable should add sort param with isDesc param equal false in tableParams object', () => {
     let tableParams: TableParams;
 
-    component.request.subscribe((request) => {
+    component.tableParamsChange.subscribe((request) => {
       tableParams = request;
     });
 
@@ -95,7 +95,7 @@ describe('SillyDatatableComponent', () => {
   it('sortEnable should add sort param with isDesc param equal true in tableParams object after second click', () => {
     let tableParams: TableParams;
 
-    component.request.subscribe((request) => {
+    component.tableParamsChange.subscribe((request) => {
       tableParams = request;
     });
 
@@ -107,7 +107,7 @@ describe('SillyDatatableComponent', () => {
   it('sortEnable should add sort param with isDesc param equal false in tableParams object after third click', () => {
     let tableParams: TableParams;
 
-    component.request.subscribe((request) => {
+    component.tableParamsChange.subscribe((request) => {
       tableParams = request;
     });
 
@@ -120,7 +120,7 @@ describe('SillyDatatableComponent', () => {
   it('sortEnable should change column name to `age`', () => {
     let tableParams: TableParams;
 
-    component.request.subscribe((request) => {
+    component.tableParamsChange.subscribe((request) => {
       tableParams = request;
     });
 
@@ -132,7 +132,7 @@ describe('SillyDatatableComponent', () => {
   it('sortEnable should change isDesc to false when change name to `age`', () => {
     let tableParams: TableParams;
 
-    component.request.subscribe((request) => {
+    component.tableParamsChange.subscribe((request) => {
       tableParams = request;
     });
 
@@ -211,7 +211,7 @@ describe('SillyDatatableComponent', () => {
     component.searchComponent.ngOnInit();
     component.ngOnInit();
 
-    component.request.subscribe((tableParams: TableParams) => {
+    component.tableParamsChange.subscribe((tableParams: TableParams) => {
       expect(tableParams.searchText).toBe('search string');
       done();
     });
@@ -229,7 +229,7 @@ describe('SillyDatatableComponent', () => {
     ];
     (component.filterComponent as any).initFormFieldsLogic();
     component.ngOnInit();
-    component.request.subscribe((tableParams: TableParams) => {
+    component.tableParamsChange.subscribe((tableParams: TableParams) => {
       expect(tableParams.filters.name).toBe('test');
       done();
     });
@@ -253,7 +253,7 @@ describe('SillyDatatableComponent', () => {
 
     component.ngOnInit();
 
-    component.request.subscribe((tableParams: TableParams) => {
+    component.tableParamsChange.subscribe((tableParams: TableParams) => {
       expect(tableParams.pagination.pageNumber).toBe(1);
       done();
     });
