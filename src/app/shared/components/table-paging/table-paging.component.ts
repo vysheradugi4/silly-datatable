@@ -32,5 +32,4 @@ export class TablePagingComponent implements OnInit {
 
     this.paging.emit(this.tablePaging);
   }
-
 }

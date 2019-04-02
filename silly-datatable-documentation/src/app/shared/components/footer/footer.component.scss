@@ -1,3 +1,9 @@
+@import 'variables';
+
+.footer {
+  height: $footer-height;
+}
+
 .footer-title {
-  font-size: 1rem;
+  font-size: 0.8125rem;
 }
