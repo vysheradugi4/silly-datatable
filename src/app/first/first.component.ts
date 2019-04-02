@@ -31,6 +31,8 @@ export class FirstComponent implements OnInit {
 
   @ViewChild('customInput') public customInput: TemplateRef<any>;
 
+  public loading: boolean;
+
   private _tableParams: TableParams = new TableParams();
 
   constructor() { }
