@@ -77,13 +77,37 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
   /**
    * Search component if defined (quick search textbox).
    */
-  @Input() public searchComponent: SillyDatatableSearchComponent;
+  @Input() public set searchComponent(component: SillyDatatableSearchComponent) {
+    if (!component) {
+      return;
+    }
+
+    this._searchComponent = component;
+
+
+    /**
+     * Subscribition on changes in search.
+     */
+    this.searchRequestHandler();
+  }
 
 
   /**
    * Filters component if defined.
    */
-  @Input() public filterComponent: SillyDatatableFilterComponent;
+  @Input() public set filterComponent(component: SillyDatatableFilterComponent) {
+    if (!component) {
+      return;
+    }
+
+    this._filterComponent = component;
+
+
+    /**
+     * Subscribition on changes in filters.
+     */
+    this.filterRequestHandler();
+  }
 
 
   /**
@@ -150,6 +174,8 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
   private _tableUid: string;
   private _optionsComponent: SillyDatatableOptionsComponent;
   private _pagingComponent: SillyDatatablePagingComponent;
+  private _filterComponent: SillyDatatableFilterComponent;
+  private _searchComponent: SillyDatatableSearchComponent;
 
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
@@ -219,13 +245,6 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
      * Setup columns states by saved options.
      */
     this.setColumnsDisplay();
-
-
-    /**
-     * For handle data from outer components (search, filters).
-     */
-    this.searchRequestHandler();
-    this.filterRequestHandler();
 
 
     /**
@@ -325,11 +344,11 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
 
 
   private searchRequestHandler(): void {
-    if (!this.searchComponent) {
+    if (!this._searchComponent) {
       return;
     }
 
-    this.searchComponent.searchRequest$.pipe(
+    this._searchComponent.searchRequest$.pipe(
       takeUntil(this._unsubscribe)
     )
       .subscribe((searchString: string) => {
@@ -341,11 +360,11 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
 
 
   private filterRequestHandler(): void {
-    if (!this.filterComponent) {
+    if (!this._filterComponent) {
       return;
     }
 
-    this.filterComponent.filtersUpdated$.pipe(
+    this._filterComponent.filtersUpdated$.pipe(
       takeUntil(this._unsubscribe)
     )
       .subscribe((filterValues: string) => {

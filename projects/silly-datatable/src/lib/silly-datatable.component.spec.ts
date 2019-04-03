@@ -208,7 +208,7 @@ describe('SillyDatatableComponent', () => {
    */
   it('should request new data with search string in table params', (done) => {
     component.searchComponent = new SillyDatatableSearchComponent();
-    component.searchComponent.ngOnInit();
+    (component as any)._searchComponent.ngOnInit();
     component.ngOnInit();
 
     component.tableParamsChange.subscribe((tableParams: TableParams) => {
@@ -216,25 +216,26 @@ describe('SillyDatatableComponent', () => {
       done();
     });
 
-    component.searchComponent.search.setValue('search string');
+    (component as any)._searchComponent.search.setValue('search string');
   });
 
   /**
    * Filter component.
    */
-  it('shout request new data with filter value in table params', (done) => {
-    component.filterComponent = new SillyDatatableFilterComponent();
-    component.filterComponent.formFields = [
+  it('should request new data with filter value in table params', (done) => {
+    const filterComponent = new SillyDatatableFilterComponent();
+    filterComponent.formFields = [
       { id: 'name', name: 'name' } as FilterFormField,
     ];
-    (component.filterComponent as any).initFormFieldsLogic();
-    component.ngOnInit();
+    component.filterComponent = filterComponent;
+    ((component as any)._filterComponent as any).initFormFieldsLogic();
+
     component.tableParamsChange.subscribe((tableParams: TableParams) => {
       expect(tableParams.filters.name).toBe('test');
       done();
     });
-    component.filterComponent.filterForm.setValue({ name: 'test' });
-    component.filterComponent.applyFilters();
+    (component as any)._filterComponent.filterForm.setValue({ name: 'test' });
+    (component as any)._filterComponent.applyFilters();
   });
 
   /**
