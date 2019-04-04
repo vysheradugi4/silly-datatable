@@ -1,0 +1,32 @@
+<h2>Cell Component</h2>
+
+<p>
+    When in cell placed custom component, Silly datatable provided to pass event
+    from this component to output property.
+</p>
+
+<code>&lt;ngx-silly-datatable [settings]="settings"
+    (componentCellEvent)="eventInCellComponent($event)"&gt;&lt;/ngx-silly-datatable&gt;</code>
+
+<p>
+    Need to create method-handler <strong>eventInCellComponent</strong> for catch
+    event.
+</p>
+
+<p>
+    For data exchange with cell component without additional services use
+    componentCellEvent. For use event emitter in your component define public variable:
+</p>
+
+<code>public componentCellEvent: EventEmitter&lt;any&gt; = new EventEmitter&lt;any&gt;();</code>
+
+<p>For send data from cell component use call:</p>
+
+<code>this.componentCellEvent.next(this.someData);</code>
+
+<p>
+    In public variable <strong>row</strong> in cell component will be able data
+    of current row. Just add in component:
+</p>
+
+<code>public row: any;</code>

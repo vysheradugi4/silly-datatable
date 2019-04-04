@@ -1,3 +1,15 @@
+<h2>Row Clicked Event</h2>
+
 <p>
-  row-clicked works!
+    For catch user's click or double click by row Silly Datatable provided output
+    with event emitter.
 </p>
+
+<p>Click:</p>
+<code>&lt;ngx-silly-datatable (rowClicked)="selected($event)"&gt;&lt;/ngx-silly-datatable&gt;</code>
+
+<p>Double click:</p>
+<code>&lt;ngx-silly-datatable (rowDoubleClicked)="dblClickSelected($event)"&gt;&lt;/ngx-silly-datatable&gt;</code>
+
+<p>After this need to create method-handler <strong>selected</strong> (for click) or
+    <strong>dblClickSelected</strong> (for double click) in component.</p>

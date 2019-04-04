@@ -1,0 +1,66 @@
+<h1>Quick search</h1>
+
+<router-outlet (activate)="route = !!$event"
+    (deactivate)="route = !$event"></router-outlet>
+<ng-container *ngIf="!route">
+    <h2>Search component</h2>
+
+    <p>Tag of component for insert search field in template:</p>
+
+    <code>&lt;ngx-silly-datatable-search&gt;&lt;/ngx-silly-datatable-search&gt;</code>
+
+    <ul class="properties">
+        <li>
+            <strong>searchInputClass</strong> - Css class name will be added to search
+            &lt;input&gt; tag in search component.
+        </li>
+        <li>
+            <strong>prefix</strong> - Html template code for prefix before input
+            form field (can use for label for example) (TemplateRef).
+        </li>
+        <li>
+            <strong>suffix</strong> - Html template code for suffix after input
+            form field (can use as error notification for example) (TemplateRef).
+        </li>
+        <li>
+            <strong>disabled</strong> - Set input form field as disabled
+            dynamically (boolean).
+        </li>
+        <li>
+            <strong>placeholder</strong> - For Define input form field placeholder.
+        </li>
+        <li>
+            <strong>dataFromExternalControl</strong> - Api for use other form
+            control as search field.
+        </li>
+        <li>
+            <strong>usedExternalControl</strong> - The default search control
+            will not be shown. Use dataFromExternalControl parameter for send
+            search string in table params request (boolean).
+        </li>
+    </ul>
+
+</ng-container>
+
+<textarea highlight-js
+    [options]="{}"
+    [lang]="'typescript'">
+<ng-template #prefix>
+    <label for="search">Search field</label>
+    <br>
+</ng-template>
+
+<ngx-silly-datatable-search
+    placeholder="Search..."
+    inputId="search"
+    inputClass="search-field"
+    [prefix]="prefix"
+    [suffix]="suffix"
+    [disabled]="loading">
+</ngx-silly-datatable-search>
+
+<ng-template #suffix>
+    <br>
+    <span>required</span>
+</ng-template>
+</textarea>

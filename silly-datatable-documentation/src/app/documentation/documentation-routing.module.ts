@@ -10,6 +10,9 @@ import { TableSettingsComponent } from './table-settings/table-settings.componen
 import { SortComponent } from './sort/sort.component';
 import { PaginationComponent } from './pagination/pagination.component';
 import { ColumnsComponent } from './columns/columns.component';
+import { RowClickedComponent } from './row-clicked/row-clicked.component';
+import { CellComponentComponent } from './cell-component/cell-component.component';
+import { QuickSearchComponent } from './quick-search/quick-search.component';
 
 
 const routes = [
@@ -35,7 +38,17 @@ const routes = [
           { path: 'sort', component: SortComponent, data: { title: 'Sort' } },
           { path: 'pagination', component: PaginationComponent, data: { title: 'Pagination' } },
           { path: 'columns', component: ColumnsComponent, data: { title: 'Columns' } },
+          { path: 'row-clicked', component: RowClickedComponent, data: { title: 'Row clicked' } },
+          { path: 'cell-component', component: CellComponentComponent, data: { title: 'Cell component' } },
         ],
+      },
+      {
+        path: 'search',
+        component: QuickSearchComponent,
+        data: { title: 'Quick search', icon: 'search' },
+        // children: [
+        //   { path: 'integration', component: IntegrationComponent, data: { title: 'Integration' } },
+        // ],
       },
     ],
   },
