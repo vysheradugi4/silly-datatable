@@ -1,5 +1,9 @@
 @import 'variables';
 
-.wrapper {
-  padding-left: $menu-width;
+.custom-col {
+  flex: 0 0 $menu-width;
+}
+
+.content {
+  overflow-y: auto;
 }

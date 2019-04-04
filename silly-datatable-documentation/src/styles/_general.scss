@@ -1,3 +1,38 @@
 html, body {
   height: 100%;
+  overflow: hidden;
+}
+
+
+h1 {
+  margin-bottom: 1.5rem !important;
+  font-weight: 300 !important;
+}
+
+h2 {
+  font-size: 1.75rem !important;
+  font-weight: 300 !important;
+  font-style: italic;
+  margin-bottom: 1rem !important;
+}
+
+h3 {
+  font-size: 1.125rem !important;
+  color: $secondary;
+}
+
+
+code {
+  display: inline-block;
+  background-color: $code-bgcolor;
+  padding: 0.2rem 1rem;
+  margin-bottom: 3rem;
+}
+
+pre {
+  padding: 1rem !important;
+}
+
+.properties li {
+  margin-bottom: 0.5rem;
 }

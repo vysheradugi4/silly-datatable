@@ -1,9 +1,13 @@
-<div class="bg-secondary h-100 px-3 menu">
+<div class="bg-secondary h-100 px-3 pt-3">
     <nav class="nav flex-column">
         <a *ngFor="let menuItem of menuItems"
-            class="nav-link text-white"
+            class="nav-link text-white py-1"
             [routerLink]="menuItem.path"
-            routerLinkActive="active"><i class="material-icons align-text-bottom">add</i>{{ menuItem.data.title }}</a>
+            routerLinkActive="active">
+            <i class="material-icons align-bottom">
+                {{ menuItem.data.icon }}
+            </i> {{ menuItem.data.title }}
+        </a>
         <!-- <a *ngFor="let menuItem of menuItems"
             class="nav-link active"
             href="#">Active</a> -->

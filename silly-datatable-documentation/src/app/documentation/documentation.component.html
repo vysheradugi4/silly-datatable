@@ -1,4 +1,16 @@
-<app-menu></app-menu>
-<div class="wrapper">
-    <router-outlet></router-outlet>
+<div class="container-fluid h-100">
+    <div class="row h-100">
+        <div class="col custom-col px-0">
+            <app-menu></app-menu>
+        </div>
+        <div class="col pt-3 h-100 content">
+            <router-outlet (activate)="route = !!$event"
+                (deactivate)="route = !$event"></router-outlet>
+            <ng-container *ngIf="!route">
+                <h1>Silly Datatable – Angular 6+ light datatable</h1>
+                <h2>For angular 6+ versions apps. Easy styling datatable, all functionality is
+                    designed for use server side actions.</h2>
+            </ng-container>
+        </div>
+    </div>
 </div>
