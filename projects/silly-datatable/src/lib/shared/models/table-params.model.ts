@@ -11,5 +11,5 @@ export class TableParams {
   /**
    * The dataset for show in the table.
    */
-  public source: Array<any>;
+  public source?: Array<any>;
 }
