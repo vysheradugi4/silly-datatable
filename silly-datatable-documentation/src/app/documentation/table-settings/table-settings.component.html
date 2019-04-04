@@ -1,0 +1,58 @@
+<h2>Main settings</h2>
+
+<p>For setup styles and data representation of Silly Datatable component use
+    following attributes.</p>
+
+<code>&lt;ngx-silly-datatable [settings]="settings"&gt;&lt;/ngx-silly-datatable&gt;</code>
+
+<p>Object <strong>settings</strong> is a instance of class <strong>TableSettings</strong>.
+    It has the following properties for setup datatable:</p>
+
+<ul class="properties">
+    <li>
+        <strong>tableClass</strong> - Css class name will be added to
+        &lt;table&gt; tag. Class for all table.
+    </li>
+    <li>
+        <strong>headerRowClass</strong> - Css class name for first row of table
+        for header. Will be added in first &lt;tr&gt; tag.
+    </li>
+    <li>
+        <strong>rowClass</strong> - Css class name for each row in table except
+        first (header) row. Will be added to each &lt;tr&gt; tag except first.
+    </li>
+    <li>
+        <strong>sortHeaderClass</strong> - Css class name for sortable header
+        link. Will be added to &lt;a&gt; tag.
+    </li>
+    <li>
+        <strong>dataNotFoundPhrase</strong> - Text under heading when data is
+        not found ('Data not found' by default).
+    </li>
+    <li>
+        <strong>itemsPerPageList</strong> - List of possible counts of items per
+        page (hardcoded 10 by default). This is array of number.
+        For example: [10, 30, 100].
+    </li>
+</ul>
+
+<p>* - required property.</p>
+
+<P>For example:</P>
+
+<textarea highlight-js
+    [options]="{}"
+    [lang]="'typescript'">
+    this.settings = {
+        tableClass: 'table',
+        headerRowClass: 'header-row',
+        rowClass: 'data-row',
+        sortHeaderClass: 'sort',
+        dataNotFoundPhrase: 'Not found.',
+        itemsPerPageList: [10, 30, 100],
+    } as TableSettings;
+    </textarea>
+
+<p>Don't forget import TableSettings class:</p>
+
+<code>import {{'{'}} TableSettings {{'}'}} from 'silly-datatable';</code>

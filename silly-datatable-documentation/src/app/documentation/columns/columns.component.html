@@ -1,0 +1,84 @@
+<h2>Columns</h2>
+
+<p>Object columns is a array instances of array of class <strong>Column</strong>.
+    Column object has the following properties:</p>
+
+<ul class="properties">
+    <li>
+        <strong>id</strong> - * Column id for link with source.
+    </li>
+    <li>
+        <strong>title</strong> - Name of column. Title used as text for header
+        and sorting header of table.
+    </li>
+    <li>
+        <strong>headerClass</strong> - Custom css class for header of column.
+    </li>
+    <li>
+        <strong>cellClass</strong> - Custom css class for cells of current column.
+    </li>
+    <li>
+        <strong>sortable</strong> - Resolver for sorting current column (boolean).
+    </li>
+    <li>
+        <strong>show</strong> - Control for show or hide of the column (shown by
+        default).
+    </li>
+    <li>
+        <strong>prepareCellFunction</strong> - Customization function for
+        prepare data before showed.
+    </li>
+    <li>
+        <strong>componentCell</strong> - Custom component to display in the cell.
+        Can be used for place buttons, links, form fields and etc. in cell.
+        Property row in this custom component will be contains current source
+        of row. Make sure that your component added to entryComponents section
+        in your module. For data exchagange with componentCell use services or
+        defined event emitter <strong>componentCellEvent</strong>. Details below.
+    </li>
+</ul>
+
+<p>* - required property.</p>
+
+<p>For example:</p>
+
+<textarea highlight-js
+    [options]="{}"
+    [lang]="'typescript'">
+this.columns = [
+    {
+        id: 'id',
+        title: 'No.',
+        headerClass: 'id',
+        cellClass: 'cell',
+        sortable: true,
+    } as Column,
+    {
+        id: 'name',
+        title: 'Name',
+        headerClass: 'name',
+        cellClass: 'cell',
+        sortable: true,
+        prepareCellFunction: value => value.toUpperCase(),
+    } as Column,
+    {
+        id: 'description',
+        title: 'Description',
+        headerClass: 'description',
+        cellClass: 'cell',
+        sortable: false,
+    } as Column,
+    {
+        id: 'action',
+        title: 'Action',
+        headerClass: 'action',
+        cellClass: 'cell',
+        sortable: false,
+        componentCell: EditButtonComponent,
+    } as Column,
+];
+</textarea>
+
+<p>Don't forget import Column:</p>
+
+<code>import {{'{'}} Column {{'}'}} from 'silly-datatable';</code>

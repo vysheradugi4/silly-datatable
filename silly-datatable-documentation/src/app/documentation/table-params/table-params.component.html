@@ -1,0 +1,68 @@
+<h2>Table params</h2>
+
+<p>The <strong>tableParams</strong> object is is the instance of
+    <strong>TableParams</strong> class. Contains current search string,
+    sort params, filters params, pagination params and source for table.</p>
+
+<code>&lt;ngx-silly-datatable [(tableParams)]="tableParams"&gt;&lt;/ngx-silly-datatable&gt;</code>
+
+<p>
+    This is two way binding property. In datatable parent component need to
+    create private property, getter and setter for it.
+</p>
+
+<p>For example:</p>
+
+<textarea highlight-js
+    [options]="{}"
+    [lang]="'typescript'">
+public get tableParams(): TableParams {
+    return this._tableParams;
+}
+
+public set tableParams(value: TableParams) {
+    // <-- get source method here.
+}
+
+private _tableParams: TableParams = new TableParams();
+</textarea>
+
+<p>Don't forget import class:</p>
+
+<code>import {{'{'}} TableParams {{'}'}} from 'silly-datatable';</code>
+
+<p>Table params contains:</p>
+
+<ul class="properties">
+    <li>
+        <strong>searchText</strong> - Current search string from search component.
+    </li>
+    <li>
+        <strong>sort</strong> - Instance of Sort class. For data of sort by columns.
+    </li>
+    <li>
+        <strong>pagination</strong> - * Instance of Pagination class. Pagination data.
+    </li>
+    <li>
+        <strong>filters</strong> - Object, contains keys of filter and selected value.
+    </li>
+    <li>
+        <strong>source</strong> - Data source for placing data in a table (array).
+    </li>
+</ul>
+
+<p>* - required fields.</p>
+
+<p>Example of table source:</p>
+
+<textarea highlight-js
+    [options]="{}"
+    [lang]="'typescript'">
+this.source = [
+    { id: 1, name: 'test1', description: 'some description' },
+    { id: 2, name: 'test2', description: 'some description' },
+    { id: 3, name: 'test3', description: 'some description' },
+    { id: 4, name: 'test4', description: 'some description' },
+    { id: 5, name: 'test5', description: 'some description' },
+];
+</textarea>

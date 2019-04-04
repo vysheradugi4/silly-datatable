@@ -1,53 +1,32 @@
-<h1>Installation</h1>
-<h2>Installation in app</h2>
-<p>For installation Silly Datatable run follow command in root directory of
-    your Angular project:</p>
-<code>npm install silly-datatable --save</code>
-<p>After successful installation need to add Silly Datatable module into imports
-    in app module:</p>
+<router-outlet (activate)="route = !!$event"
+    (deactivate)="route = !$event"></router-outlet>
+<ng-container *ngIf="!route">
+    <h1>Installation</h1>
+    <h2>Installation in app</h2>
+    <p>For installation Silly Datatable run follow command in root directory of
+        your Angular project:</p>
+    <code>npm install silly-datatable --save</code>
+    <p>After successful installation need to add Silly Datatable module into imports
+        in app module:</p>
 
+    <textarea highlight-js
+        [options]="{}"
+        [lang]="'typescript'">
+@NgModule({
+    declarations: [
+        AppComponent,
+    ],
+    imports: [
+        BrowserModule,
+        SillyDatatableModule, // <-- Need to add.
+    ],
+    providers: [],
+    bootstrap: [AppComponent],
+})
+export class AppModule { }
+    </textarea>
 
+    <p>Don't forget import this module:</p>
 
-<textarea highlight-js
-    [options]="{}"
-    [lang]="'typescript'">
-    @NgModule({
-        declarations: [
-          AppComponent,
-        ],
-        imports: [
-          BrowserModule,
-          SillyDatatableModule, // <-- Need to add.
-        ],
-        providers: [],
-        bootstrap: [AppComponent],
-      })
-      export class AppModule { }
-</textarea>
-
-
-<p>Don't forget import this module:</p>
-
-<code>import {{'{'}} SillyDatatableModule {{'}'}} from 'silly-datatable';</code>
-
-<h2>Integration in templates</h2>
-
-<p>For use Silly Datatable insert in your template component tag:</p>
-<code>&lt;ngx-silly-datatable&gt;&lt;/ngx-silly-datatable&gt;</code>
-
-<p>All features of Silly Datatable are separated components. This is made for
-    easy integration into the user interface.</p>
-
-<p>For add search field insert in template:</p>
-<code>&lt;ngx-silly-datatable-search&gt;&lt;/ngx-silly-datatable-search&gt;</code>
-
-<p>For add pagination feature insert in template:</p>
-<code>&lt;ngx-silly-datatable-paging&gt;&lt;/ngx-silly-datatable-paging&gt;</code>
-
-<p>For add options of table insert in template:</p>
-<code>&lt;ngx-silly-datatable-options&gt;&lt;/ngx-silly-datatable-options&gt;</code>
-
-<p>For add filters insert in template:</p>
-<code>&lt;ngx-silly-datatable-filter&gt;&lt;/ngx-silly-datatable-filter&gt;</code>
-
-<p>All components required additional setup. Please look details info in specific sections.</p>
+    <code>import {{'{'}} SillyDatatableModule {{'}'}} from 'silly-datatable';</code>
+</ng-container>

@@ -1,0 +1,34 @@
+<h2>Pagination</h2>
+
+<p>The part of TableParams class. This class contains:</p>
+
+<ul class="properties">
+    <li>
+        <strong>pageNumber</strong> - * Current page number. Start with 0 (zero).
+    </li>
+    <li>
+        <strong>pageCount</strong> - Number of pages.
+    </li>
+    <li>
+        <strong>itemsPerPage</strong> - * Number of elements on the page.
+    </li>
+</ul>
+
+<p>* - required property.</p>
+
+<p>
+    Pagination are required object in TableParams object. Needs to define it
+    in ngOnInit Angular hook.
+</p>
+
+<p>For example:</p>
+
+<textarea highlight-js
+    [options]="{}"
+    [lang]="'typescript'">
+this._tableParams.pagination = {
+    pageNumber: 0,
+    pageCount: 10,
+    itemsPerPage: 10,
+} as Pagination;
+</textarea>

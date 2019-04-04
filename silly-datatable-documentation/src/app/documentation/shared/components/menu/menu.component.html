@@ -1,15 +1,25 @@
 <div class="bg-secondary h-100 px-3 pt-3">
     <nav class="nav flex-column">
-        <a *ngFor="let menuItem of menuItems"
-            class="nav-link text-white py-1"
-            [routerLink]="menuItem.path"
-            routerLinkActive="active">
-            <i class="material-icons align-bottom">
-                {{ menuItem.data.icon }}
-            </i> {{ menuItem.data.title }}
-        </a>
-        <!-- <a *ngFor="let menuItem of menuItems"
-            class="nav-link active"
-            href="#">Active</a> -->
+        <ng-container *ngFor="let menuItem of menuItems">
+            <a class="nav-link text-white text-nowrap py-2"
+                [routerLink]="menuItem.path"
+                routerLinkActive="active">
+                <i class="material-icons align-bottom">
+                    {{ menuItem.data.icon }}
+                </i> {{ menuItem.data.title }}
+            </a>
+
+            <ng-container *ngIf="menuItem.children">
+                <nav class="nav flex-column ml-5">
+                    <ng-container *ngFor="let childMenuItem of menuItem.children">
+                        <a class="nav-link text-white text-nowrap py-0"
+                            [routerLink]="[menuItem.path, childMenuItem.path]"
+                            routerLinkActive="active">
+                            {{ childMenuItem.data.title }}
+                        </a>
+                    </ng-container>
+                </nav>
+            </ng-container>
+        </ng-container>
     </nav>
 </div>

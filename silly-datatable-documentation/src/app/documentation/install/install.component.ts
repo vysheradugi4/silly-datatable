@@ -8,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InstallComponent implements OnInit {
 
+  public route: boolean;
+
   constructor() { }
 
   ngOnInit() {
