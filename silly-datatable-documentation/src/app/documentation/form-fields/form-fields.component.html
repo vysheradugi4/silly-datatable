@@ -1,0 +1,144 @@
+<h2>Form Fields</h2>
+
+<p>For configuration of filters component use form fields settings:</p>
+
+<code>&lt;ngx-silly-datatable-filter [formFields]="formFields"&gt;&lt;/ngx-silly-datatable-filter&gt;</code>
+
+<p>Object <strong>formFields</strong> is array of instances of class
+    <strong>FilterFormField</strong>. It has the following properties for
+    configuration datatable filters component:</p>
+
+<ul class="properties">
+    <li>
+        <strong>id</strong> - * Form field id.
+    </li>
+    <li>
+        <strong>name</strong> - * Form control name.
+    </li>
+    <li>
+        <strong>type</strong> - * Type of input. Available Values: 'textbox',
+        'dropbox', 'custom'.
+    </li>
+    <li>
+        <strong>value</strong> - Initial value of form field.
+    </li>
+    <li>
+        <strong>source</strong> - Accessory array of values for form control.
+        (Can be used in selects etc.)
+    </li>
+    <li>
+        <strong>valueKeyName</strong> - Used in dropbox input, for define value
+        key name for show data in select.
+    </li>
+    <li>
+        <strong>placeholder</strong> - Placeholder of form field.
+    </li>
+    <li>
+        <strong>controlClass</strong> - Form field css class name.
+    </li>
+    <li>
+        <strong>formGroupClass</strong> - Css class name for container that
+        combined label and form field.
+    </li>
+    <li>
+        <strong>controlContainerClass</strong> - Div container of form field
+        css class name.
+    </li>
+    <li>
+        <strong>labelContainerClass</strong> - Label container css class name.
+    </li>
+    <li>
+        <strong>formControlLabel</strong> - Title in label.
+    </li>
+    <li>
+        <strong>customInput</strong> - Custom input template (TemplateRef).
+    </li>
+    <li>
+        <strong>disabled</strong> - Disable form field.
+    </li>
+</ul>
+
+<p>* - required property.</p>
+
+<p>Don't forget import FilterFormField for create new instance:</p>
+
+<code>import {{'{'}} FilterFormField {{'}'}} from 'silly-datatable';</code>
+
+<p>For example:</p>
+
+<textarea highlight-js
+    [options]="{}"
+    lang="typescript">
+this.detailsDropboxFilter = {
+    id: 'details',
+    type: 'dropbox',
+    name: 'details',
+    placeholder: 'Select details ...',
+    value: null,
+    valueKeyName: 'value',
+    controlContainerClass: 'control-container',
+    labelContainerClass: 'label-container',
+    formControlLabel: 'Dropbox',
+} as FilterFormField;
+
+
+this.filterFormFields = [
+    {
+        id: 'dateRange',
+        type: 'custom',
+        name: 'dateRange',
+        placeholder: 'custom control',
+        controlContainerClass: 'control-container',
+        labelContainerClass: 'label-container',
+        formControlLabel: 'Textbox',
+        customInput: this.customInput,
+    } as FilterFormField,
+    {
+        id: 'name',
+        type: 'textbox',
+        name: 'name',
+        placeholder: 'Enter name...',
+        value: 'faster',
+        controlContainerClass: 'control-container',
+        labelContainerClass: 'label-container',
+        formControlLabel: 'Textbox',
+    } as FilterFormField,
+    {
+        id: 'type',
+        type: 'dropbox',
+        name: 'type',
+        value: null,
+        placeholder: 'Select type ...',
+        valueKeyName: 'value',
+        source: [
+            { key: 1, value: 'Test value 1' },
+            { key: 2, value: 'Test value 2' },
+            { key: 3, value: 'Test value 3' },
+        ],
+        controlContainerClass: 'control-container',
+        labelContainerClass: 'label-container',
+        formControlLabel: 'Dropbox',
+    } as FilterFormField,
+
+    this.detailsDropboxFilter,
+];
+</textarea>
+
+<p>Example of filter custom form control:</p>
+
+<textarea highlight-js
+    [options]="{}"
+    lang="html">
+<ng-template #customInput
+    let-filterFieldSettings="filterFieldSettings"
+    let-formControl="formControl"
+    let-touched="touched">
+    <input [formControl]="formControl"
+        [id]="filterFieldSettings.id"
+        type="text"
+        [ngClass]="filterFieldSettings.controlClass"
+        [placeholder]="filterFieldSettings.placeholder"
+        (blur)="touched()">
+</ng-template>
+</textarea>
+

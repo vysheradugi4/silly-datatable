@@ -1,0 +1,25 @@
+<h1>Pagination</h1>
+
+<router-outlet (activate)="route = !!$event"
+    (deactivate)="route = !$event"></router-outlet>
+<ng-container *ngIf="!route">
+    <h2>Pagination component</h2>
+
+    <p>Tag for insert paging component in template:</p>
+
+    <code>&lt;ngx-silly-datatable-paging&gt;&lt;/ngx-silly-datatable-paging&gt;</code>
+
+    <p>
+        For use pagination together with datatable component need to define
+        reference. This reference will be used for specify in datatable component:
+    </p>
+
+    <textarea highlight-js
+        [options]="{}"
+        lang="html">
+<ngx-silly-datatable-paging #pagingComponent></ngx-silly-datatable-paging>
+
+<ngx-silly-datatable [pagingComponent]="pagingComponent"></ngx-silly-datatable>
+    </textarea>
+
+</ng-container>

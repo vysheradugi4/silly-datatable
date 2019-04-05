@@ -1,5 +1,12 @@
 <h2>Table Settings</h2>
 
+
+<p>The <strong>id</strong> is required to identify when saving and getting options data in the
+    local storage (see more in options component section).</p>
+
+<code>&lt;ngx-silly-datatable id="datatable"&gt;&lt;/ngx-silly-datatable&gt;</code>
+
+
 <p>For setup styles and data representation of Silly Datatable component use
     following attributes.</p>
 
@@ -42,16 +49,16 @@
 
 <textarea highlight-js
     [options]="{}"
-    [lang]="'typescript'">
-    this.settings = {
-        tableClass: 'table',
-        headerRowClass: 'header-row',
-        rowClass: 'data-row',
-        sortHeaderClass: 'sort',
-        dataNotFoundPhrase: 'Not found.',
-        itemsPerPageList: [10, 30, 100],
-    } as TableSettings;
-    </textarea>
+    lang="typescript">
+this.settings = {
+    tableClass: 'table',
+    headerRowClass: 'header-row',
+    rowClass: 'data-row',
+    sortHeaderClass: 'sort',
+    dataNotFoundPhrase: 'Not found.',
+    itemsPerPageList: [10, 30, 100],
+} as TableSettings;
+</textarea>
 
 <p>Don't forget import TableSettings class:</p>
 

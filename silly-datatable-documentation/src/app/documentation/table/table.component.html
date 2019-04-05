@@ -4,14 +4,45 @@
     (deactivate)="route = !$event"></router-outlet>
 <ng-container *ngIf="!route">
 
-    <h2>Id</h2>
+    <h2>Datatable component</h2>
 
-    <code>&lt;ngx-silly-datatable id="datatable"&gt;&lt;/ngx-silly-datatable&gt;</code>
+    <p>Tag of component for insert datatable field in template:</p>
 
-    <ul>
-        <li><strong>id</strong> - The ID is required to identify when saving and getting
-            options data in the local storage (see more in options component section).
-        </li>
-    </ul>
+    <code>&lt;ngx-silly-datatable&gt;&lt;/ngx-silly-datatable&gt;</code>
+
+    <p>
+        For use datatable component together with search, pagination,
+        filters, options components need to use references. See more information
+        in specify component's sections.
+    </p>
+
+    <p>Example of use Silly Datatable in template:</p>
+    
+    <textarea highlight-js
+        [options]="{}"
+        lang="html">
+<ngx-silly-datatable-search #searchComponent></ngx-silly-datatable-search>
+
+<ngx-silly-datatable-filter #filterComponent></ngx-silly-datatable-filter>
+
+<ngx-silly-datatable-options #optionsComponent></ngx-silly-datatable-options>
+
+<ngx-silly-datatable id="sole"
+    [searchComponent]="searchComponent"
+    [filterComponent]="filterComponent"
+    [pagingComponent]="pagingComponent"
+    [optionsComponent]="optionsComponent"
+    [settings]="settings"
+    [columns]="columns"
+    [(tableParams)]="tableParams"
+    (rowClicked)="selected($event)"
+    (rowDoubleClicked)="dblClickSelected($event)"
+    (componentCellEvent)="eventInCellComponent($event)">
+</ngx-silly-datatable>
+
+<ngx-silly-datatable-paging #pagingComponent></ngx-silly-datatable-paging>
+            </textarea>
+
+
 
 </ng-container>

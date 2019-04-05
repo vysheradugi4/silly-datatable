@@ -9,58 +9,18 @@
 
     <code>&lt;ngx-silly-datatable-search&gt;&lt;/ngx-silly-datatable-search&gt;</code>
 
-    <ul class="properties">
-        <li>
-            <strong>searchInputClass</strong> - Css class name will be added to search
-            &lt;input&gt; tag in search component.
-        </li>
-        <li>
-            <strong>prefix</strong> - Html template code for prefix before input
-            form field (can use for label for example) (TemplateRef).
-        </li>
-        <li>
-            <strong>suffix</strong> - Html template code for suffix after input
-            form field (can use as error notification for example) (TemplateRef).
-        </li>
-        <li>
-            <strong>disabled</strong> - Set input form field as disabled
-            dynamically (boolean).
-        </li>
-        <li>
-            <strong>placeholder</strong> - For Define input form field placeholder.
-        </li>
-        <li>
-            <strong>dataFromExternalControl</strong> - Api for use other form
-            control as search field.
-        </li>
-        <li>
-            <strong>usedExternalControl</strong> - The default search control
-            will not be shown. Use dataFromExternalControl parameter for send
-            search string in table params request (boolean).
-        </li>
-    </ul>
+    <p>
+            For use search component together with datatable component need to 
+            define reference. This reference will be used for specify in 
+            datatable component:
+        </p>
+    
+        <textarea highlight-js
+            [options]="{}"
+            lang="html">
+<ngx-silly-datatable-search #searchComponent></ngx-silly-datatable-search>
+
+<ngx-silly-datatable [searchComponent]="searchComponent"></ngx-silly-datatable>
+        </textarea>
 
 </ng-container>
-
-<textarea highlight-js
-    [options]="{}"
-    [lang]="'typescript'">
-<ng-template #prefix>
-    <label for="search">Search field</label>
-    <br>
-</ng-template>
-
-<ngx-silly-datatable-search
-    placeholder="Search..."
-    inputId="search"
-    inputClass="search-field"
-    [prefix]="prefix"
-    [suffix]="suffix"
-    [disabled]="loading">
-</ngx-silly-datatable-search>
-
-<ng-template #suffix>
-    <br>
-    <span>required</span>
-</ng-template>
-</textarea>

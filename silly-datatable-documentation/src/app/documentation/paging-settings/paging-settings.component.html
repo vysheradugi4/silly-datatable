@@ -1,0 +1,72 @@
+<h2>Pagination settings</h2>
+
+<p>For setup appearance of pagination component use settings:</p>
+
+<code>&lt;ngx-silly-datatable-paging [settings]="paginationSettings"&gt;&lt;/ngx-silly-datatable-paging&gt;</code>
+
+<ul class="properties">
+    <li>
+        <strong>settings</strong> - Setting for customization appearance of
+        pagination component (Instance of PaginationSettings class).
+    </li>
+</ul>
+
+<p>Don't forget import PaginationSettings:</p>
+
+<code>import {{'{'}} PaginationSettings {{'}'}} from 'silly-datatable';</code>
+
+<p>Pagination settings:</p>
+
+<ul class="properties">
+    <li>
+        <strong>infoClass</strong> - Css class anme for customize information
+        string "Page 1 of 10".
+    </li>
+    <li>
+        <strong>containerClass</strong> - Css class name for pagination div
+        container.
+    </li>
+    <li>
+        <strong>arrowButtonClass</strong> - Css class name for buttons with arrows
+        (start, end, next, prev).
+    </li>
+    <li>
+        <strong>numberButtonClass</strong> - Css class name for buttons with
+        number of page.
+    </li>
+    <li>
+        <strong>start</strong> - "To Start" button word or symbol ("&lt;&lt;" by default).
+    </li>
+    <li>
+        <strong>prev</strong> - "Prev" button word or symbol ("&lt;" by default).
+    </li>
+    <li>
+        <strong>next</strong> - "Next" button word or symbol ("&gt;" by default).
+    </li>
+    <li>
+        <strong>last</strong> - "To Last" button word or symbol ("&gt;&gt;" by default).
+    </li>
+</ul>
+
+<p>* - required property.</p>
+
+<p>For example:</p>
+
+<textarea highlight-js
+    [options]="{}"
+    lang="typescript">
+this.paginationSettings = {
+    infoClass: 'info-class',
+    containerClass: 'container-class',
+    arrowButtonClass: 'arrow-button-class',
+    numberButtonClass: 'number-button-class',
+    start: '&laquo;',
+    prev: '&lsaquo;',
+    next: '&rsaquo;',
+    last: '&raquo;',
+} as PaginationSettings;
+</textarea>
+
+<p>Pagination buttons can be disabled automatically. Current page button
+    has css class <strong>active</strong>.
+</p>

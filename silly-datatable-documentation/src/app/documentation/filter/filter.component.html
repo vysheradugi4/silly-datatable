@@ -1,0 +1,25 @@
+<h1>Table Filters</h1>
+
+<router-outlet (activate)="route = !!$event"
+    (deactivate)="route = !$event"></router-outlet>
+<ng-container *ngIf="!route">
+    <h2>Filter component</h2>
+
+    <p>Tag for insert filter component in template:</p>
+
+    <code>&lt;ngx-silly-datatable-filter&gt;&lt;/ngx-silly-datatable-filter&gt;</code>
+
+    <p>
+        For use filters together with datatable component need to define
+        reference. This reference will be used for specify in datatable component:
+    </p>
+
+    <textarea highlight-js
+        [options]="{}"
+        lang="html">
+<ngx-silly-datatable-filter #filterComponent></ngx-silly-datatable-filter>
+
+<ngx-silly-datatable [filterComponent]="filterComponent"></ngx-silly-datatable>
+    </textarea>
+
+</ng-container>

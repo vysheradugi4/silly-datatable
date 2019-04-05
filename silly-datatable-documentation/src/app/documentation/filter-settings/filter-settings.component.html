@@ -1,0 +1,60 @@
+<h2>Filters settings</h2>
+
+<p>For setup appearance of filters component use settings:</p>
+
+<code>&lt;ngx-silly-datatable-filter [settings]="filterSettings"&gt;&lt;/ngx-silly-datatable-filter&gt;</code>
+
+<p>Object settings is a instance of class <strong>FilterSettings</strong>. It has the following
+    properties for setup datatable filters component:</p>
+
+<ul class="properties">
+    <li>
+        <strong>formContainerClass</strong> - Css class name for div container
+        of filter.
+    </li>
+    <li>
+        <strong>cancelButtonTitle</strong> - Cancel button text ("Cancel" by
+        default).
+    </li>
+    <li>
+        <strong>cancelButtonClass</strong> - Cancel button css class name.
+    </li>
+    <li>
+        <strong>submitButtonTitle</strong> - Submit button text ("Apply filters"
+        by default).
+    </li>
+    <li>
+        <strong>submitButtonClass</strong> - Submit button css class name.
+    </li>
+    <li>
+        <strong>buttonsContainerClass</strong> - Css class name of the div
+        container that contains buttons 'Cancel' and 'Apply filters'.
+    </li>
+    <li>
+        <strong>formElementsContainerClass</strong> - Class of the div container
+        that contains the container with buttons and all form fields.
+    </li>
+</ul>
+
+<p>* - required property.</p>
+
+<p>For example:</p>
+
+<textarea highlight-js
+    [options]="{}"
+    lang="typescript">
+this.filterSettings = {
+    formContainerClass: 'filter-container',
+    cancelButtonClass: 'cancel-button-class',
+    cancelButtonTitle: 'Close',
+    submitButtonClass: 'submit-button-class',
+    submitButtonTitle: 'Submit',
+    buttonsContainerClass: 'buttons-container',
+    formElementsContainerClass: 'form-container',
+} as FilterSettings;
+</textarea>
+
+<p>Don't forget import FilterSettings for init new instance:</p>
+
+<code>import {{'{'}} FilterSettings {{'}'}} from 'silly-datatable';</code>
+

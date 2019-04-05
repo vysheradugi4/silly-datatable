@@ -1,0 +1,83 @@
+<h2>Options component settings</h2>
+
+<p>For setup appearance of options component use settings:</p>
+
+<code>&lt;ngx-silly-datatable-options [settings]="optionsSettings"&gt;&lt;/ngx-silly-datatable-options&gt;</code>
+
+<p>
+    Object <strong>optionsSettings</strong> is a instance of <strong>OptionsSettings</strong> class.
+    It has the following properties for setup datatable options component:
+</p>
+
+<ul class="properties">
+    <li>
+        <strong>containerClass</strong> - Css class name for options div container.
+    </li>
+    <li>
+        <strong>columnsSectionClass</strong> - Css class name for columns 
+        checkboxes section div container.
+    </li>
+    <li>
+        <strong>columnsTitleClass</strong> - Css class name for columns title 
+        section.
+    </li>
+    <li>
+        <strong>columnsTitle</strong> - Title text for sction of columns 
+        checkboxes (Columns: by default).
+    </li>
+    <li>
+        <strong>checkboxContainerClass</strong> - Css class name for containter 
+        of each checkbox with label.
+    </li>
+    <li>
+        <strong>checkboxClass</strong> - Css class name for checkbox.
+    </li>
+    <li>
+        <strong>labelCheckboxContainerClass</strong> - Css class name for 
+        containter of each checkbox label.
+    </li>
+    <li>
+        <strong>labelCheckboxClass</strong> - Css class name for checkbox label.
+    </li>
+    <li>
+        <strong>itemsPerPageSectionClass</strong> - Css class name for select 
+        count of pages section div container.
+    </li>
+    <li>
+        <strong>labelSelectClass</strong> - Css class name for select label.
+    </li>
+    <li>
+        <strong>itemsPerPageTitle</strong> - Title (label) text for select of 
+        count items per page (Items per page: by default).
+    </li>
+    <li>
+        <strong>selectClass</strong> - Items per page select's css class name.
+    </li>
+</ul>
+
+<p>* - required property.</p>
+
+<p>Don't forget import OptionsSettings for create new instance:</p>
+
+<code>import {{'{'}} OptionsSettings {{'}'}} from 'silly-datatable';</code>
+
+<p>For example:</p>
+
+<textarea highlight-js
+    [options]="{}"
+    lang="typescript">
+this.optionsSettings = {
+    containerClass: 'containerClass',
+    columnsSectionClass: 'columnsSectionClass',
+    columnsTitleClass: 'columnsTitleClass',
+    columnsTitle: 'columnsTitle',
+    checkboxContainerClass: 'checkboxContainerClass',
+    checkboxClass: 'checkboxClass',
+    labelCheckboxContainerClass: 'labelCheckboxContainerClass',
+    labelCheckboxClass: 'labelCheckboxClass',
+    itemsPerPageSectionClass: 'itemsPerPageSectionClass',
+    labelSelectClass: 'labelSelectClass',
+    itemsPerPageTitle: 'Items Per Page',
+    selectClass: 'selectClass',
+} as OptionsSettings;
+</textarea>

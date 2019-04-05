@@ -8,6 +8,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { RouterModule } from '@angular/router';
 import { ComponentsModule } from './shared/components/components.module';
 import { DocumentationModule } from './documentation/documentation.module';
+import { LicenseComponent } from './license/license.component';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { DocumentationModule } from './documentation/documentation.module';
     AppComponent,
     LandingComponent,
     PageNotFoundComponent,
+    LicenseComponent,
   ],
   imports: [
     BrowserModule,

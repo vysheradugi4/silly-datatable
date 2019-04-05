@@ -1,0 +1,33 @@
+<h1>Table options</h1>
+
+<router-outlet (activate)="route = !!$event"
+    (deactivate)="route = !$event"></router-outlet>
+<ng-container *ngIf="!route">
+
+    <h2>Options component</h2>
+
+    <p>
+        Tag for insert options component in template:
+    </p>
+
+    <code>&lt;ngx-silly-datatable-options&gt;&lt;/ngx-silly-datatable-options&gt;</code>
+
+    <p>
+        For use options together with datatable component need to define
+        reference. This reference will be used for specify in datatable component:
+    </p>
+
+    <textarea highlight-js
+        [options]="{}"
+        lang="html">
+<ngx-silly-datatable-options #optionsComponent></ngx-silly-datatable-options>
+
+<ngx-silly-datatable [optionsComponent]="optionsComponent"></ngx-silly-datatable>
+    </textarea>
+
+    <p>
+        Options component stored user's table options in localStorage. Make sure
+        that datatable id is defined.
+    </p>
+
+</ng-container>
