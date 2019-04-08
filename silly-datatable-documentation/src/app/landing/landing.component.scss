@@ -1,0 +1,26 @@
+@import 'variables';
+
+.header-section {
+    background-image: url(../../assets/img/header-bg.jpg);
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center center;
+    background-size: cover;
+}
+
+.header-title {
+    font-size: 3rem;
+    text-shadow: 0 0 5px black;
+}
+
+.header-text {
+    text-shadow: 0 0 5px black;
+}
+
+.landing-container {
+    overflow-y: auto;
+}
+
+.advantage-icon {
+    font-size: 3rem;
+}
