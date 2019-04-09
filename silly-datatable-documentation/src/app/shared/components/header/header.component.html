@@ -1,6 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top shadow header-navbar border-bottom">
     <a class="navbar-brand text-uppercase text-white header-title"
-        router-link="/landing"><i class="material-icons align-text-bottom logo">directions_run</i><span> Silly Datatable</span></a>
+        router-link="/landing"><i class="material-icons align-text-bottom logo">directions_run</i><span> Silly
+            Datatable</span></a>
     <button class="navbar-toggler"
         type="button"
         data-toggle="collapse"
@@ -27,12 +28,15 @@
             <li class="nav-item"
                 routerLinkActive="active">
                 <a class="nav-link"
-                    routerLink="/license">License</a>
+                    routerLink="/contribute">Contribute</a>
             </li>
             <li class="nav-item"
                 routerLinkActive="active">
-                <a class="nav-link btn btn-success text-white ml-3"
-                    href="https://www.npmjs.com/package/silly-datatable">Get Silly Datatable</a>
+                <a class="nav-link"
+                    routerLink="/license">License</a>
+            </li>
+            <li class="nav-item">
+                <app-get-button></app-get-button>
             </li>
         </ul>
         <span class="navbar-text font-italic mission">
