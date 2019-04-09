@@ -3,7 +3,7 @@
 .header-section {
     background-image: url(../../assets/img/header-bg.jpg);
     background-repeat: no-repeat;
-    background-attachment: scroll;
+    background-attachment: fixed;
     background-position: center center;
     background-size: cover;
 }
@@ -21,6 +21,16 @@
     overflow-y: auto;
 }
 
-.advantage-icon {
+.capabilities-icon {
     font-size: 3rem;
+}
+
+.display-flex-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.display-flex-col {
+  display: flex;
+  flex-direction: column;
 }
