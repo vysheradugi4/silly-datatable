@@ -72,6 +72,7 @@ export class FirstComponent implements OnInit {
       rowClass: 'data-row',
       sortHeaderClass: 'sort',
       itemsPerPageList: [1, 3, 5],
+      batchSelect: true,
     } as TableSettings;
 
     this.columns = [
@@ -195,6 +196,11 @@ export class FirstComponent implements OnInit {
 
   public eventInCellComponent(event) {
     console.log('event and data from cell component = ', event);
+  }
+
+
+  public batchSelected(rows: Array<any>) {
+    console.log('batch selected rows = ', rows);
   }
 
 

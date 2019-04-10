@@ -32,7 +32,8 @@ Routing: <button routerLink="/second">Second</button>
         [(tableParams)]="tableParams"
         (rowClicked)="selected($event)"
         (rowDoubleClicked)="dblClickSelected($event)"
-        (componentCellEvent)="eventInCellComponent($event)">
+        (componentCellEvent)="eventInCellComponent($event)"
+        (batchSelected)="batchSelected($event)">
     </ngx-silly-datatable>
 </div>
 

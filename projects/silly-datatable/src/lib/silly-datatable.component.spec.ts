@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ReactiveFormsModule, FormArray } from '@angular/forms';
 
 import { SillyDatatableComponent } from './silly-datatable.component';
 import { ComponentsModule } from './shared/components/components.module';
@@ -12,6 +13,10 @@ import { SillyDatatablePagingComponent } from './shared/components/silly-datatab
 import { StoreService } from './shared/services/store.service';
 import { Column } from './shared/models/column.model';
 import { SillyDatatableOptionsComponent } from './shared/components/silly-datatable-options/silly-datatable-options.component';
+import { TableSettings } from './shared/models/table-settings.model';
+import { By } from '@angular/platform-browser';
+import { doesNotReject } from 'assert';
+import { skip } from 'rxjs/operators';
 
 
 describe('SillyDatatableComponent', () => {
@@ -23,6 +28,7 @@ describe('SillyDatatableComponent', () => {
       imports: [
         ComponentsModule,
         PipesModule,
+        ReactiveFormsModule,
       ],
       declarations: [SillyDatatableComponent],
       providers: [
@@ -307,5 +313,238 @@ describe('SillyDatatableComponent', () => {
 
     expect((component as any)._optionsComponent.itemsPerPageControl.value).toBe(3);
     localStorage.clear();
+  });
+
+  /**
+   * Batch select
+   */
+  it('should add th element into DOM when batchSelect enabled.', () => {
+    const settings = {
+      batchSelect: true,
+      selectAllThClass: 'selectAllThClass',
+    } as TableSettings;
+
+    component.settings = settings;
+
+    const tableParams = {
+      pagination: {
+        pageNumber: 0,
+        itemsPerPage: 10,
+      } as Pagination,
+      source: [
+        { id: 1 },
+      ],
+    } as TableParams;
+
+    component.tableParams = tableParams;
+
+    fixture.detectChanges();
+
+    const th = fixture.debugElement.query(By.css('.selectAllThClass'));
+    expect(th).toBeTruthy();
+  });
+
+  it('should\'t add th element into DOM when batchSelect enabled.', () => {
+    const settings = {
+      batchSelect: false,
+      selectAllThClass: 'selectAllThClass',
+    } as TableSettings;
+
+    component.settings = settings;
+
+    const tableParams = {
+      pagination: {
+        pageNumber: 0,
+        itemsPerPage: 10,
+      } as Pagination,
+      source: [
+        { id: 1 },
+      ],
+    } as TableParams;
+
+    component.tableParams = tableParams;
+
+    fixture.detectChanges();
+
+    const th = fixture.debugElement.query(By.css('.selectAllThClass'));
+    expect(th).toBeFalsy();
+  });
+
+  it('should emit first row when first checkbox is selected', (done) => {
+    const settings = {
+      batchSelect: true,
+    } as TableSettings;
+
+    component.settings = settings;
+
+    const tableParams = {
+      pagination: {
+        pageNumber: 0,
+        itemsPerPage: 10,
+      } as Pagination,
+      source: [
+        { id: 1 },
+        { id: 2 },
+        { id: 3 },
+      ],
+    } as TableParams;
+
+    component.tableParams = tableParams;
+
+    component.batchSelected.subscribe((rows: Array<any>) => {
+      expect(rows[0]).toEqual(tableParams.source[0]);
+      done();
+    });
+
+    (component.batchSelectFormGroup.controls.checkboxes as FormArray).controls[0].setValue(true);
+  });
+
+  it('should emit second row when second checkbox is selected', (done) => {
+    const settings = {
+      batchSelect: true,
+    } as TableSettings;
+
+    component.settings = settings;
+
+    const tableParams = {
+      pagination: {
+        pageNumber: 0,
+        itemsPerPage: 10,
+      } as Pagination,
+      source: [
+        { id: 1 },
+        { id: 2 },
+        { id: 3 },
+      ],
+    } as TableParams;
+
+    component.tableParams = tableParams;
+
+    component.batchSelected.subscribe((rows: Array<any>) => {
+      expect(rows[0]).toEqual(tableParams.source[1]);
+      done();
+    });
+
+    (component.batchSelectFormGroup.controls.checkboxes as FormArray).controls[1].setValue(true);
+  });
+
+  it('should emit one row when checkbox is selected', (done) => {
+    const settings = {
+      batchSelect: true,
+    } as TableSettings;
+
+    component.settings = settings;
+
+    const tableParams = {
+      pagination: {
+        pageNumber: 0,
+        itemsPerPage: 10,
+      } as Pagination,
+      source: [
+        { id: 1 },
+        { id: 2 },
+        { id: 3 },
+      ],
+    } as TableParams;
+
+    component.tableParams = tableParams;
+
+    component.batchSelected.subscribe((rows: Array<any>) => {
+      expect(rows.length).toEqual(1);
+      done();
+    });
+
+    (component.batchSelectFormGroup.controls.checkboxes as FormArray).controls[1].setValue(true);
+  });
+
+  it('should emit two rows when two checkboxes is selected', (done) => {
+    const settings = {
+      batchSelect: true,
+    } as TableSettings;
+
+    component.settings = settings;
+
+    const tableParams = {
+      pagination: {
+        pageNumber: 0,
+        itemsPerPage: 10,
+      } as Pagination,
+      source: [
+        { id: 1 },
+        { id: 2 },
+        { id: 3 },
+      ],
+    } as TableParams;
+
+    component.tableParams = tableParams;
+
+    component.batchSelected.subscribe((rows: Array<any>) => {
+      expect(rows.length).toEqual(2);
+      done();
+    });
+
+    component.batchSelectFormGroup.controls.checkboxes.setValue([true, true, false]);
+  });
+
+  it('should emit three rows when all checkboxes is selected', (done) => {
+    const settings = {
+      batchSelect: true,
+    } as TableSettings;
+
+    component.settings = settings;
+
+    const tableParams = {
+      pagination: {
+        pageNumber: 0,
+        itemsPerPage: 10,
+      } as Pagination,
+      source: [
+        { id: 1 },
+        { id: 2 },
+        { id: 3 },
+      ],
+    } as TableParams;
+
+    component.tableParams = tableParams;
+
+    component.batchSelected.subscribe((rows: Array<any>) => {
+      expect(rows.length).toEqual(3);
+      done();
+    });
+
+    component.selectAll.setValue(true);
+  });
+
+  it('should emit empty array rows when all checkboxes is selected and when unselected', (done) => {
+    const settings = {
+      batchSelect: true,
+    } as TableSettings;
+
+    component.settings = settings;
+
+    const tableParams = {
+      pagination: {
+        pageNumber: 0,
+        itemsPerPage: 10,
+      } as Pagination,
+      source: [
+        { id: 1 },
+        { id: 2 },
+        { id: 3 },
+      ],
+    } as TableParams;
+
+    component.tableParams = tableParams;
+
+    component.batchSelected.pipe(
+      skip(1)
+    )
+      .subscribe((rows: Array<any>) => {
+        expect(rows.length).toEqual(0);
+        done();
+      });
+
+    component.selectAll.setValue(true);
+    component.selectAll.setValue(false);
   });
 });

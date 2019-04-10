@@ -35,4 +35,35 @@ export class TableSettings {
    * List of possible counts of items per page.
    */
   public itemsPerPageList?: Array<number>;
+
+
+  /**
+   * Activator of batch select functional.
+   */
+  public batchSelect?: boolean;
+
+
+  /**
+   * Css class name for th element as container of selectAll checkbox.
+   */
+  public selectAllThClass?: string;
+
+
+  /**
+   * Css class name for "select all" input checkbox.
+   */
+  public selectAllCheckboxClass?: string;
+
+
+  /**
+   * Css class name for td element as container with row checkbox of batch
+   * select logic.
+   */
+  public batchSelectTdClass?: string;
+
+
+  /**
+   * Css class name for row checkbox of batch select logic.
+   */
+  public batchSelectCheckboxClass?: string;
 }

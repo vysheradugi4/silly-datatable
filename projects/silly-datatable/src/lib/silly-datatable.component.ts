@@ -1,5 +1,4 @@
-import { SillyDatatableOptionsComponent } from './shared/components/silly-datatable-options/silly-datatable-options.component';
-import { SillyDatatablePagingComponent } from './shared/components/silly-datatable-paging/silly-datatable-paging.component';
+import { FormControl, FormGroup, FormArray } from '@angular/forms';
 import {
   Component,
   Input,
@@ -12,7 +11,7 @@ import {
   Injector
 } from '@angular/core';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, debounceTime } from 'rxjs/operators';
 
 import unionBy from 'lodash/unionBy';
 import { TableSettings } from './shared/models/table-settings.model';
@@ -21,6 +20,8 @@ import { Sort } from './shared/models/sort.model';
 import { TableParams } from './shared/models/table-params.model';
 import { SillyDatatableSearchComponent } from './shared/components/silly-datatable-search/silly-datatable-search.component';
 import { SillyDatatableFilterComponent } from './shared/components/silly-datatable-filter/silly-datatable-filter.component';
+import { SillyDatatableOptionsComponent } from './shared/components/silly-datatable-options/silly-datatable-options.component';
+import { SillyDatatablePagingComponent } from './shared/components/silly-datatable-paging/silly-datatable-paging.component';
 import { StoreService } from './shared/services/store.service';
 
 
@@ -71,6 +72,12 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
      * Needs to update itemsPerPage in optionsComponent.
      */
     this.updateOptionsItemsPerPage();
+
+
+    /**
+     * Batch select logic.
+     */
+    this.batchSelectInit();
   }
 
 
@@ -162,10 +169,18 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
   public currentSort: Sort;
 
 
+  /**
+   * For manage of batch select.
+   */
+  public selectAll: FormControl;
+  public batchSelectFormGroup: FormGroup;
+
+
   @Output() public tableParamsChange: EventEmitter<TableParams> = new EventEmitter<TableParams>();
   @Output() public rowClicked: EventEmitter<any> = new EventEmitter<any>();
   @Output() public rowDoubleClicked: EventEmitter<any> = new EventEmitter<any>();
   @Output() public componentCellEvent: EventEmitter<any> = new EventEmitter<any>();
+  @Output() public batchSelected: EventEmitter<Array<any>> = new EventEmitter<Array<any>>();
 
 
   private _unsubscribe: Subject<boolean> = new Subject<boolean>();
@@ -485,5 +500,48 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
         this.columns.find((column: Column) => column.id === colStatus.id).show = colStatus.show;
       });
     }
+  }
+
+
+  /**
+   * Activates batch select functional.
+   */
+  private batchSelectInit(): void {
+    if (!this.settings.batchSelect) {
+      return;
+    }
+
+    this.selectAll = new FormControl(false);
+    this.batchSelectFormGroup = new FormGroup({
+      checkboxes: new FormArray([]),
+    });
+
+    const checkboxes = this.batchSelectFormGroup.controls.checkboxes as FormArray;
+
+    this.tableParams.source.forEach(() => {
+      checkboxes.push(new FormControl(false));
+    });
+
+    this.selectAll.valueChanges.pipe(
+      takeUntil(this._unsubscribe)
+    )
+      .subscribe((value: boolean) => {
+        const valuesArray = new Array<boolean>(checkboxes.controls.length).fill(value);
+        checkboxes.setValue(valuesArray);
+      });
+
+    checkboxes.valueChanges.pipe(
+      takeUntil(this._unsubscribe)
+    )
+      .subscribe((values: Array<boolean>) => {
+        const selected = new Array();
+        values.forEach((value: boolean, index: number) => {
+          if (value) {
+            selected.push(this.tableParams.source[index]);
+          }
+        });
+
+        this.batchSelected.emit(selected);
+      });
   }
 }

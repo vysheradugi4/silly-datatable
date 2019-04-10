@@ -1,5 +1,9 @@
 # Silly Datatable Change Log
 
+## 3.1.0 (2019-04-10)
+
+    Added batch select logic.
+
 ## 3.0.0 (2019-03-21)
 
     Changed few fields in Pagination (page to pageNumber, pages to pageCount),

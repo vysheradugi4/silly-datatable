@@ -1,6 +1,13 @@
 <table [ngClass]="settings?.tableClass">
 
     <tr [ngClass]="settings?.headerRowClass">
+        <th *ngIf="settings?.batchSelect"
+            [ngClass]="settings?.selectAllThClass">
+            <input type="checkbox"
+                [formControl]="selectAll"
+                [ngClass]="settings?.selectAllCheckboxClass">
+        </th>
+
         <th *ngFor="let column of columns | filter:'show'; trackBy:trackByFn"
             [ngClass]="column.headerClass">
             <ng-container *ngIf="column.sortable; else withoutSort">
@@ -19,8 +26,21 @@
     </tr>
 
     <ng-container *ngIf="tableParams?.source?.length; else withoutSource">
-        <tr *ngFor="let row of tableParams?.source"
+        <tr *ngFor="let row of tableParams?.source; let i = index"
             [ngClass]="settings?.rowClass">
+
+            <ng-container *ngIf="settings?.batchSelect">
+                <td [ngClass]="settings?.batchSelectTdClass">
+                    <form [formGroup]="batchSelectFormGroup"
+                        novalidate>
+                        <ng-container formArrayName="checkboxes">
+                            <input type="checkbox"
+                                [formControlName]="i"
+                                [ngClass]="settings?.batchSelectCheckboxClass">
+                        </ng-container>
+                    </form>
+                </td>
+            </ng-container>
 
             <ng-container *ngFor="let column of columns | filter:'show'; trackBy:trackByFn">
                 <td *ngIf="!column.componentCell; else componentCell"
