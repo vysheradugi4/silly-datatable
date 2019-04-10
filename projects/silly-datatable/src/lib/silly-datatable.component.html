@@ -1,7 +1,7 @@
 <table [ngClass]="settings?.tableClass">
 
     <tr [ngClass]="settings?.headerRowClass">
-        <th *ngIf="settings?.batchSelect"
+        <th *ngIf="settings?.batchSelect && tableParams?.source"
             [ngClass]="settings?.selectAllThClass">
             <input type="checkbox"
                 [formControl]="selectAll"
@@ -28,13 +28,13 @@
     <ng-container *ngIf="tableParams?.source?.length; else withoutSource">
         <tr *ngFor="let row of tableParams?.source; let i = index"
             [ngClass]="settings?.rowClass">
-
-            <ng-container *ngIf="settings?.batchSelect">
+            <ng-container *ngIf="settings?.batchSelect && checkboxes?.controls?.length">
                 <td [ngClass]="settings?.batchSelectTdClass">
                     <form [formGroup]="batchSelectFormGroup"
                         novalidate>
                         <ng-container formArrayName="checkboxes">
-                            <input type="checkbox"
+                            <input *ngIf="checkboxes?.controls[i]"
+                                type="checkbox"
                                 [formControlName]="i"
                                 [ngClass]="settings?.batchSelectCheckboxClass">
                         </ng-container>

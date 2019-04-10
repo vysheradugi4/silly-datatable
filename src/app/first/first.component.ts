@@ -43,6 +43,8 @@ export class FirstComponent implements OnInit {
 
 
   public set tableParams(value: TableParams) {
+    this._tableParams = Object.assign({}, this._tableParams, { source: this.source });
+    // this._tableParams.source = this.source;
     console.log('Request with table params = ', value);
   }
 
@@ -116,8 +118,6 @@ export class FirstComponent implements OnInit {
       { id: 4, name: 'test4', description: 'some description' },
       { id: 5, name: 'test5', description: 'some description' },
     ];
-
-    this._tableParams.source = this.source;
 
     this.detailsDropboxFilter = {
       id: 'details',

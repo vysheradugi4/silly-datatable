@@ -11,7 +11,7 @@ import {
   Injector
 } from '@angular/core';
 import { Subject } from 'rxjs';
-import { takeUntil, debounceTime } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 import unionBy from 'lodash/unionBy';
 import { TableSettings } from './shared/models/table-settings.model';
@@ -172,8 +172,9 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
   /**
    * For manage of batch select.
    */
-  public selectAll: FormControl;
-  public batchSelectFormGroup: FormGroup;
+  public selectAll: FormControl = new FormControl(false);
+  public batchSelectFormGroup = new FormGroup({ checkboxes: new FormArray([]) });
+  public checkboxes: FormArray;
 
 
   @Output() public tableParamsChange: EventEmitter<TableParams> = new EventEmitter<TableParams>();
@@ -507,30 +508,25 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
    * Activates batch select functional.
    */
   private batchSelectInit(): void {
-    if (!this.settings.batchSelect) {
+    if (!this.settings.batchSelect || !this._tableParams.source) {
       return;
     }
 
-    this.selectAll = new FormControl(false);
-    this.batchSelectFormGroup = new FormGroup({
-      checkboxes: new FormArray([]),
-    });
+    this.checkboxes = this.batchSelectFormGroup.controls.checkboxes as FormArray;
 
-    const checkboxes = this.batchSelectFormGroup.controls.checkboxes as FormArray;
-
-    this.tableParams.source.forEach(() => {
-      checkboxes.push(new FormControl(false));
+    this._tableParams.source.forEach(() => {
+      this.checkboxes.push(new FormControl(false));
     });
 
     this.selectAll.valueChanges.pipe(
       takeUntil(this._unsubscribe)
     )
       .subscribe((value: boolean) => {
-        const valuesArray = new Array<boolean>(checkboxes.controls.length).fill(value);
-        checkboxes.setValue(valuesArray);
+        const valuesArray = new Array<boolean>(this.checkboxes.controls.length).fill(value);
+        this.checkboxes.setValue(valuesArray);
       });
 
-    checkboxes.valueChanges.pipe(
+    this.checkboxes.valueChanges.pipe(
       takeUntil(this._unsubscribe)
     )
       .subscribe((values: Array<boolean>) => {
