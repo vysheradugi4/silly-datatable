@@ -50,6 +50,12 @@ export class TableSettings {
 
 
   /**
+   * Css class name for div container of selectAll checkbox.
+   */
+  public selectAllContainerClass?: string;
+
+
+  /**
    * Css class name for "select all" input checkbox.
    */
   public selectAllCheckboxClass?: string;
@@ -60,6 +66,12 @@ export class TableSettings {
    * select logic.
    */
   public batchSelectTdClass?: string;
+
+
+  /**
+   * Css class name for div container of batch select checkbox.
+   */
+  public batchSelectCheckboxContainerClass?: string;
 
 
   /**

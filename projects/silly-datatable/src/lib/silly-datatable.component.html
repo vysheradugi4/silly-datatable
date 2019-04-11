@@ -1,11 +1,13 @@
 <table [ngClass]="settings?.tableClass">
 
     <tr [ngClass]="settings?.headerRowClass">
-        <th *ngIf="settings?.batchSelect && tableParams?.source"
+        <th *ngIf="settings?.batchSelect"
             [ngClass]="settings?.selectAllThClass">
-            <input type="checkbox"
-                [formControl]="selectAll"
-                [ngClass]="settings?.selectAllCheckboxClass">
+            <div [ngClass]="settings?.selectAllContainerClass">
+                <input type="checkbox"
+                    [formControl]="selectAll"
+                    [ngClass]="settings?.selectAllCheckboxClass">
+            </div>
         </th>
 
         <th *ngFor="let column of columns | filter:'show'; trackBy:trackByFn"
@@ -33,10 +35,12 @@
                     <form [formGroup]="batchSelectFormGroup"
                         novalidate>
                         <ng-container formArrayName="checkboxes">
-                            <input *ngIf="checkboxes?.controls[i]"
-                                type="checkbox"
-                                [formControlName]="i"
-                                [ngClass]="settings?.batchSelectCheckboxClass">
+                            <div [ngClass]="settings?.batchSelectCheckboxContainerClass">
+                                <input *ngIf="checkboxes?.controls[i]"
+                                    type="checkbox"
+                                    [formControlName]="i"
+                                    [ngClass]="settings?.batchSelectCheckboxClass">
+                            </div>
                         </ng-container>
                     </form>
                 </td>

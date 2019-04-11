@@ -44,7 +44,6 @@ export class FirstComponent implements OnInit {
 
   public set tableParams(value: TableParams) {
     this._tableParams = Object.assign({}, this._tableParams, { source: this.source });
-    // this._tableParams.source = this.source;
     console.log('Request with table params = ', value);
   }
 
