@@ -62,6 +62,18 @@ export class TableSettings {
 
 
   /**
+   * Css class name for "select all" checkbox label div container.
+   */
+  public selectAllCheckboxLabelContainerClass?: string;
+
+
+  /**
+   * Text for "select all" checkbox label.
+   */
+  public selectAllCheckboxLabel?: string;
+
+
+  /**
    * Css class name for td element as container with row checkbox of batch
    * select logic.
    */
@@ -78,4 +90,16 @@ export class TableSettings {
    * Css class name for row checkbox of batch select logic.
    */
   public batchSelectCheckboxClass?: string;
+
+
+  /**
+   * Css class name for label div container for batch select checkbox.
+   */
+  public batchSelectCheckboxLabelContainerClass?: string;
+
+
+  /**
+   * Text for batch select checkbox label.
+   */
+  public batchSelectCheckboxLabel?: string;
 }

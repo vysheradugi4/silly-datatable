@@ -7,6 +7,9 @@
                 <input type="checkbox"
                     [formControl]="selectAll"
                     [ngClass]="settings?.selectAllCheckboxClass">
+                <div [ngClass]="settings?.selectAllCheckboxLabelContainerClass">
+                    <label>{{ settings?.selectAllCheckboxLabel }}</label>
+                </div>
             </div>
         </th>
 
@@ -36,10 +39,14 @@
                         novalidate>
                         <ng-container formArrayName="checkboxes">
                             <div [ngClass]="settings?.batchSelectCheckboxContainerClass">
-                                <input *ngIf="checkboxes?.controls[i]"
-                                    type="checkbox"
-                                    [formControlName]="i"
-                                    [ngClass]="settings?.batchSelectCheckboxClass">
+                                <ng-container *ngIf="checkboxes?.controls[i]">
+                                    <input type="checkbox"
+                                        [formControlName]="i"
+                                        [ngClass]="settings?.batchSelectCheckboxClass">
+                                    <div [ngClass]="settings?.batchSelectCheckboxLabelContainerClass">
+                                        <label>{{ settings?.batchSelectCheckboxLabel }}</label>
+                                    </div>
+                                </ng-container>
                             </div>
                         </ng-container>
                     </form>
