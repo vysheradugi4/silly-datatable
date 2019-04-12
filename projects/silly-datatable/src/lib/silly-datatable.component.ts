@@ -522,7 +522,8 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
     this.batchSelectFormGroup = new FormGroup({ checkboxes: new FormArray([]) });
     this.checkboxes = this.batchSelectFormGroup.controls.checkboxes as FormArray;
 
-    if (!this._tableParams.source) {
+    if (!this._tableParams.source || !this._tableParams.source.length) {
+      this.selectAll.disable();
       return;
     }
 

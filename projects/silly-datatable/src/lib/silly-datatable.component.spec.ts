@@ -547,4 +547,78 @@ describe('SillyDatatableComponent', () => {
     component.selectAll.setValue(true);
     component.selectAll.setValue(false);
   });
+
+  it('should disable select all controller when table.source undefined', () => {
+    const settings = {
+      batchSelect: true,
+      selectAllCheckboxClass: 'select-all',
+    } as TableSettings;
+
+    component.settings = settings;
+
+    const tableParams = {
+      pagination: {
+        pageNumber: 0,
+        itemsPerPage: 10,
+      } as Pagination,
+      source: undefined,
+    } as TableParams;
+
+    component.tableParams = tableParams;
+
+    fixture.detectChanges();
+
+    const checkbox = fixture.debugElement.query(By.css('.select-all'));
+    expect(checkbox.nativeElement.disabled).toBeTruthy();
+  });
+
+  it('should disable select all controller when table.source length equal zero', () => {
+    const settings = {
+      batchSelect: true,
+      selectAllCheckboxClass: 'select-all',
+    } as TableSettings;
+
+    component.settings = settings;
+
+    const tableParams = {
+      pagination: {
+        pageNumber: 0,
+        itemsPerPage: 10,
+      } as Pagination,
+      source: [],
+    } as TableParams;
+
+    component.tableParams = tableParams;
+
+    fixture.detectChanges();
+
+    const checkbox = fixture.debugElement.query(By.css('.select-all'));
+    expect(checkbox.nativeElement.disabled).toBeTruthy();
+  });
+
+  it('should enable select all controller when table.source length equal 1', () => {
+    const settings = {
+      batchSelect: true,
+      selectAllCheckboxClass: 'select-all',
+    } as TableSettings;
+
+    component.settings = settings;
+
+    const tableParams = {
+      pagination: {
+        pageNumber: 0,
+        itemsPerPage: 10,
+      } as Pagination,
+      source: [
+        { id: 1 },
+      ],
+    } as TableParams;
+
+    component.tableParams = tableParams;
+
+    fixture.detectChanges();
+
+    const checkbox = fixture.debugElement.query(By.css('.select-all'));
+    expect(checkbox.nativeElement.disabled).toBeFalsy();
+  });
 });
