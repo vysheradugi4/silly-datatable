@@ -172,8 +172,8 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
   /**
    * For manage of batch select.
    */
-  public selectAll: FormControl = new FormControl(false);
-  public batchSelectFormGroup = new FormGroup({ checkboxes: new FormArray([]) });
+  public selectAll: FormControl;
+  public batchSelectFormGroup: FormGroup;
   public checkboxes: FormArray;
 
 
@@ -185,6 +185,7 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
 
 
   private _unsubscribe: Subject<boolean> = new Subject<boolean>();
+  private _unsubscribeBatchSelectForm: Subject<boolean> = new Subject<boolean>();
   private _singleClick = true;
   private _tableParams: TableParams;
   private _tableUid: string;
@@ -356,6 +357,9 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this._unsubscribe.next(true);
     this._unsubscribe.unsubscribe();
+
+    this._unsubscribeBatchSelectForm.next(true);
+    this._unsubscribeBatchSelectForm.unsubscribe();
   }
 
 
@@ -508,18 +512,26 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
    * Activates batch select functional.
    */
   private batchSelectInit(): void {
-    if (!this.settings.batchSelect || !this._tableParams.source) {
+
+    if (!this.settings.batchSelect) {
       return;
     }
 
+    this._unsubscribeBatchSelectForm.next(true);
+    this.selectAll = new FormControl(false);
+    this.batchSelectFormGroup = new FormGroup({ checkboxes: new FormArray([]) });
     this.checkboxes = this.batchSelectFormGroup.controls.checkboxes as FormArray;
+
+    if (!this._tableParams.source) {
+      return;
+    }
 
     this._tableParams.source.forEach(() => {
       this.checkboxes.push(new FormControl(false));
     });
 
     this.selectAll.valueChanges.pipe(
-      takeUntil(this._unsubscribe)
+      takeUntil(this._unsubscribeBatchSelectForm)
     )
       .subscribe((value: boolean) => {
         const valuesArray = new Array<boolean>(this.checkboxes.controls.length).fill(value);
@@ -527,7 +539,7 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
       });
 
     this.checkboxes.valueChanges.pipe(
-      takeUntil(this._unsubscribe)
+      takeUntil(this._unsubscribeBatchSelectForm)
     )
       .subscribe((values: Array<boolean>) => {
         const selected = new Array();
