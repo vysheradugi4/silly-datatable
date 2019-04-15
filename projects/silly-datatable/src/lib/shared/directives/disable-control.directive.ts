@@ -7,11 +7,11 @@ import { Directive, Input, Optional } from '@angular/core';
 })
 export class DisableControlDirective {
 
-  @Input() set disableControl( condition: boolean ) {
+  @Input() set disableControl(condition: boolean) {
     const action = condition ? 'disable' : 'enable';
-    this._ngControl.control[action]();
+    this._ngControl.control[action]({ emitEvent: false });
   }
 
-  constructor( @Optional() private _ngControl: NgControl ) {
+  constructor(@Optional() private _ngControl: NgControl) {
   }
 }

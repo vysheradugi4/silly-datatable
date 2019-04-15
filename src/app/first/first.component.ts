@@ -111,11 +111,11 @@ export class FirstComponent implements OnInit {
     ];
 
     this.source = [
-      { id: 1, name: 'test1', description: 'some description' },
-      { id: 2, name: 'test2', description: 'some description' },
-      { id: 3, name: 'test3', description: 'some description' },
-      { id: 4, name: 'test4', description: 'some description' },
-      { id: 5, name: 'test5', description: 'some description' },
+      { id: 1, name: 'test1', description: 'some description', contact: { address: 'first' } },
+      { id: 2, name: 'test2', description: 'some description', contact: { address: 'second' } },
+      { id: 3, name: 'test3', description: 'some description', contact: { address: 'third' }  },
+      { id: 4, name: 'test4', description: 'some description', contact: { address: 'fourth'} },
+      { id: 5, name: 'test5', description: 'some description', contact: { address: 'fifth'} },
     ];
 
     this.detailsDropboxFilter = {
