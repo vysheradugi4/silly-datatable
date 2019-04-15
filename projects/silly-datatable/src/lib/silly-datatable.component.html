@@ -6,7 +6,8 @@
             <div [ngClass]="settings?.selectAllContainerClass">
                 <input type="checkbox"
                     [formControl]="selectAll"
-                    [ngClass]="settings?.selectAllCheckboxClass">
+                    [ngClass]="settings?.selectAllCheckboxClass"
+                    [disableControl]="!tableParams?.source?.length">
                 <div [ngClass]="settings?.selectAllCheckboxLabelContainerClass">
                     <label>{{ settings?.selectAllCheckboxLabel }}</label>
                 </div>

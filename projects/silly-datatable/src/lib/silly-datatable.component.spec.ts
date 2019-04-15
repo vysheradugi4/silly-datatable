@@ -1,5 +1,7 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { ReactiveFormsModule, FormArray } from '@angular/forms';
+import { By } from '@angular/platform-browser';
+import { skip } from 'rxjs/operators';
 
 import { SillyDatatableComponent } from './silly-datatable.component';
 import { ComponentsModule } from './shared/components/components.module';
@@ -14,9 +16,7 @@ import { StoreService } from './shared/services/store.service';
 import { Column } from './shared/models/column.model';
 import { SillyDatatableOptionsComponent } from './shared/components/silly-datatable-options/silly-datatable-options.component';
 import { TableSettings } from './shared/models/table-settings.model';
-import { By } from '@angular/platform-browser';
-import { doesNotReject } from 'assert';
-import { skip } from 'rxjs/operators';
+import { DirectivesModule } from './shared/directives/directives.module';
 
 
 describe('SillyDatatableComponent', () => {
@@ -29,6 +29,7 @@ describe('SillyDatatableComponent', () => {
         ComponentsModule,
         PipesModule,
         ReactiveFormsModule,
+        DirectivesModule,
       ],
       declarations: [SillyDatatableComponent],
       providers: [

@@ -10,6 +10,7 @@ import { SillyDatatableFilterComponent } from './shared/components/silly-datatab
 import { SillyDatatableOptionsComponent } from './shared/components/silly-datatable-options/silly-datatable-options.component';
 import { PipesModule } from './shared/pipes/pipes.module';
 import { StoreService } from './shared/services/store.service';
+import { DirectivesModule } from './shared/directives/directives.module';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { StoreService } from './shared/services/store.service';
     FormsModule,
     ReactiveFormsModule,
     PipesModule,
+    DirectivesModule,
   ],
   exports: [
     SillyDatatableComponent,
