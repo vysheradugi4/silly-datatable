@@ -622,4 +622,72 @@ describe('SillyDatatableComponent', () => {
     const checkbox = fixture.debugElement.query(By.css('.select-all'));
     expect(checkbox.nativeElement.disabled).toBeFalsy();
   });
+
+
+  /**
+   * Path in id string.
+   */
+  it('should ', () => {
+    const settings = {
+      batchSelect: true,
+      selectAllCheckboxClass: 'select-all',
+    } as TableSettings;
+
+    const columns = [
+      { id: 'contact.address', cellClass: 'cell' } as Column,
+    ];
+
+    component.columns = columns;
+
+    component.settings = settings;
+
+    const tableParams = {
+      pagination: {
+        pageNumber: 0,
+        itemsPerPage: 10,
+      } as Pagination,
+      source: [
+        { id: 1, contact: { address: 'test' } },
+      ],
+    } as TableParams;
+
+    component.tableParams = tableParams;
+
+    fixture.detectChanges();
+
+    const cell = fixture.debugElement.query(By.css('.cell'));
+    expect(cell.nativeElement.innerText).toEqual('test');
+  });
+
+  it('should ', () => {
+    const settings = {
+      batchSelect: true,
+      selectAllCheckboxClass: 'select-all',
+    } as TableSettings;
+
+    const columns = [
+      { id: 'contact["address"]', cellClass: 'cell' } as Column,
+    ];
+
+    component.columns = columns;
+
+    component.settings = settings;
+
+    const tableParams = {
+      pagination: {
+        pageNumber: 0,
+        itemsPerPage: 10,
+      } as Pagination,
+      source: [
+        { id: 1, contact: { address: 'test' } },
+      ],
+    } as TableParams;
+
+    component.tableParams = tableParams;
+
+    fixture.detectChanges();
+
+    const cell = fixture.debugElement.query(By.css('.cell'));
+    expect(cell.nativeElement.innerText).toEqual('test');
+  });
 });

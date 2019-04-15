@@ -14,6 +14,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import unionBy from 'lodash/unionBy';
+import get from 'lodash/get';
 import { TableSettings } from './shared/models/table-settings.model';
 import { Column } from './shared/models/column.model';
 import { Sort } from './shared/models/sort.model';
@@ -351,6 +352,17 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
 
   public trackByFn(_, item) {
     return item.show;
+  }
+
+
+  /**
+   * Returns value of object proprety by path. Base on lodash get method.
+   * @param object Object with nested properties.
+   * @param path Path string representation.
+   * @returns Value.
+   */
+  public getSourceValue(object: any, path: string): any {
+    return get(object, path);
   }
 
 

@@ -5,7 +5,9 @@
 
 <ul class="properties">
     <li>
-        <strong>id</strong> - * Column id for link with source.
+        <strong>id</strong> - * Column id for link with source. Id string can be 
+        used as path for find value in object. For example: 
+        <code>id: 'contact.address.city'</code>
     </li>
     <li>
         <strong>title</strong> - Name of column. Title used as text for header
@@ -54,7 +56,7 @@ this.columns = [
         sortable: true,
     } as Column,
     {
-        id: 'name',
+        id: 'name.firstName',
         title: 'Name',
         headerClass: 'name',
         cellClass: 'cell',

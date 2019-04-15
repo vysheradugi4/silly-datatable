@@ -101,6 +101,13 @@ export class FirstComponent implements OnInit {
 
       } as Column,
       {
+        id: 'contact.address',
+        title: 'Contact',
+        headerClass: 'contact',
+        cellClass: 'cell',
+        sortable: true,
+      } as Column,
+      {
         id: 'action',
         title: 'Action',
         headerClass: 'action',
