@@ -118,7 +118,7 @@ export class SillyDatatableOptionsComponent implements OnDestroy {
           const column = (this._columns as Array<Column>)
             .find(c => c.id === columnId);
 
-          column.show = status;
+          column.show = !!status;
         });
 
         this._columnsChanged$.next(this._columns);

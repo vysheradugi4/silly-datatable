@@ -23,7 +23,7 @@ export class TableOptionsComponent implements OnInit {
       containerClass: 'containerClass',
       columnsSectionClass: 'columnsSectionClass',
       columnsTitleClass: 'columnsTitleClass',
-      columnsTitle: 'columnsTitle',
+      columnsTitle: 'Columns:',
       checkboxContainerClass: 'checkboxContainerClass',
       checkboxClass: 'checkboxClass',
       labelCheckboxContainerClass: 'labelCheckboxContainerClass',
