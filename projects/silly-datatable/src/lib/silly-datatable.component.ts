@@ -178,9 +178,7 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
   public checkboxes: FormArray;
 
 
-  @Output() public tableParamsChange: EventEmitter<TableParams> = new EventEmitter<TableParams>(
-    this.settings.isAsyncTableParams || false
-  );
+  @Output() public tableParamsChange: EventEmitter<TableParams> = new EventEmitter<TableParams>(true);
   @Output() public rowClicked: EventEmitter<any> = new EventEmitter<any>();
   @Output() public rowDoubleClicked: EventEmitter<any> = new EventEmitter<any>();
   @Output() public componentCellEvent: EventEmitter<any> = new EventEmitter<any>();
