@@ -38,6 +38,12 @@ export class TableSettings {
 
 
   /**
+   * Async events of table params delivery. Off by default.
+   */
+  public isAsyncTableParams?: boolean;
+
+
+  /**
    * Activator of batch select functional.
    */
   public batchSelect?: boolean;

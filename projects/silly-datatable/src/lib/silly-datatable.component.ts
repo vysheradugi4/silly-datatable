@@ -178,7 +178,9 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
   public checkboxes: FormArray;
 
 
-  @Output() public tableParamsChange: EventEmitter<TableParams> = new EventEmitter<TableParams>();
+  @Output() public tableParamsChange: EventEmitter<TableParams> = new EventEmitter<TableParams>(
+    this.settings.isAsyncTableParams || false
+  );
   @Output() public rowClicked: EventEmitter<any> = new EventEmitter<any>();
   @Output() public rowDoubleClicked: EventEmitter<any> = new EventEmitter<any>();
   @Output() public componentCellEvent: EventEmitter<any> = new EventEmitter<any>();
@@ -200,12 +202,6 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
     private _storeService: StoreService,
     private _inj: Injector
   ) { }
-
-
-  public get optionsComponent() {
-    return this._optionsComponent;
-  }
-
 
   ngOnInit() {
 
@@ -269,6 +265,11 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
      * One time init request.
      */
     this.tableParamsChange.emit(this._tableParams);
+  }
+
+
+  public get optionsComponent() {
+    return this._optionsComponent;
   }
 
 
