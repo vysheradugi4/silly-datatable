@@ -77,7 +77,7 @@ describe('SillyDatatableComponent', () => {
    * Sort.
    */
 
-  it('sortEnable should add sort param with columnName `name` in tableParams object', () => {
+  it('sortEnable should add sort param with columnName `name` in tableParams object', fakeAsync(() => {
     let tableParams: TableParams;
 
     component.tableParamsChange.subscribe((request) => {
@@ -85,10 +85,11 @@ describe('SillyDatatableComponent', () => {
     });
 
     component.sortEnable('name');
+    tick();
     expect(tableParams.sort.columnName).toBe('name');
-  });
+  }));
 
-  it('sortEnable should add sort param with isDesc param equal false in tableParams object', () => {
+  it('sortEnable should add sort param with isDesc param equal false in tableParams object', fakeAsync(() => {
     let tableParams: TableParams;
 
     component.tableParamsChange.subscribe((request) => {
@@ -96,10 +97,11 @@ describe('SillyDatatableComponent', () => {
     });
 
     component.sortEnable('name');
+    tick();
     expect(tableParams.sort.isDesc).toBeFalsy();
-  });
+  }));
 
-  it('sortEnable should add sort param with isDesc param equal true in tableParams object after second click', () => {
+  it('sortEnable should add sort param with isDesc param equal true in tableParams object after second click', fakeAsync(() => {
     let tableParams: TableParams;
 
     component.tableParamsChange.subscribe((request) => {
@@ -108,10 +110,11 @@ describe('SillyDatatableComponent', () => {
 
     component.sortEnable('name');
     component.sortEnable('name');
+    tick();
     expect(tableParams.sort.isDesc).toBeTruthy();
-  });
+  }));
 
-  it('sortEnable should add sort param with isDesc param equal false in tableParams object after third click', () => {
+  it('sortEnable should add sort param with isDesc param equal false in tableParams object after third click', fakeAsync(() => {
     let tableParams: TableParams;
 
     component.tableParamsChange.subscribe((request) => {
@@ -121,10 +124,11 @@ describe('SillyDatatableComponent', () => {
     component.sortEnable('name');
     component.sortEnable('name');
     component.sortEnable('name');
+    tick();
     expect(tableParams.sort.isDesc).toBeFalsy();
-  });
+  }));
 
-  it('sortEnable should change column name to `age`', () => {
+  it('sortEnable should change column name to `age`', fakeAsync(() => {
     let tableParams: TableParams;
 
     component.tableParamsChange.subscribe((request) => {
@@ -133,10 +137,11 @@ describe('SillyDatatableComponent', () => {
 
     component.sortEnable('name');
     component.sortEnable('age');
+    tick();
     expect(tableParams.sort.columnName).toBe('age');
-  });
+  }));
 
-  it('sortEnable should change isDesc to false when change name to `age`', () => {
+  it('sortEnable should change isDesc to false when change name to `age`', fakeAsync(() => {
     let tableParams: TableParams;
 
     component.tableParamsChange.subscribe((request) => {
@@ -146,8 +151,9 @@ describe('SillyDatatableComponent', () => {
     component.sortEnable('name');
     component.sortEnable('name');
     component.sortEnable('age');
+    tick();
     expect(tableParams.sort.isDesc).toBeFalsy();
-  });
+  }));
 
 
   /**
@@ -659,7 +665,7 @@ describe('SillyDatatableComponent', () => {
     expect(cell.nativeElement.innerText).toEqual('test');
   });
 
-  it('should ', () => {
+  it('should return value by path', () => {
     const settings = {
       batchSelect: true,
       selectAllCheckboxClass: 'select-all',
@@ -689,5 +695,107 @@ describe('SillyDatatableComponent', () => {
 
     const cell = fixture.debugElement.query(By.css('.cell'));
     expect(cell.nativeElement.innerText).toEqual('test');
+  });
+
+
+  /**
+   * Perpare cell function.
+   */
+  it('should pass value in prepare cell function', () => {
+    let recivedValue: number;
+
+    const columns = [
+      {
+        id: 'id',
+        prepareCellFunction: (value, row) => {
+          recivedValue = value;
+        },
+      } as Column,
+    ];
+
+    component.columns = columns;
+
+
+    const tableParams = {
+      pagination: {
+        pageNumber: 0,
+        itemsPerPage: 10,
+      } as Pagination,
+      source: [
+        { id: 111 },
+      ],
+    } as TableParams;
+
+    component.tableParams = tableParams;
+
+    fixture.detectChanges();
+
+    expect(recivedValue).toEqual(111);
+  });
+
+  it('should pass raw in prepare cell function', () => {
+    let recivedRow: any;
+
+    const columns = [
+      {
+        id: 'id',
+        prepareCellFunction: (_, row) => {
+          recivedRow = row;
+        },
+      } as Column,
+    ];
+
+    component.columns = columns;
+
+
+    const tableParams = {
+      pagination: {
+        pageNumber: 0,
+        itemsPerPage: 10,
+      } as Pagination,
+      source: [
+        { id: 111 },
+      ],
+    } as TableParams;
+
+    component.tableParams = tableParams;
+
+    fixture.detectChanges();
+
+    expect(recivedRow).toEqual({ id: 111 });
+  });
+
+
+  it('should pass second raw in prepare cell function', () => {
+    let recivedRow: any;
+
+    const columns = [
+      {
+        id: 'id',
+        prepareCellFunction: (_, row) => {
+          recivedRow = row;
+        },
+      } as Column,
+    ];
+
+    component.columns = columns;
+
+
+    const tableParams = {
+      pagination: {
+        pageNumber: 0,
+        itemsPerPage: 10,
+      } as Pagination,
+      source: [
+        { id: 111 },
+        { id: 222 },
+      ],
+    } as TableParams;
+
+    component.tableParams = tableParams;
+
+    fixture.detectChanges();
+
+    expect(recivedRow).toEqual({ id: 222 });
   });
 });

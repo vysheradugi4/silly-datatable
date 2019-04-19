@@ -62,7 +62,7 @@
 
                     <ng-container [ngSwitch]="true">
                         <ng-container *ngSwitchCase="!!column.prepareCellFunction">
-                            {{ column.prepareCellFunction(getSourceValue(row, column.id)) }}
+                            {{ column.prepareCellFunction(getSourceValue(row, column.id), row) }}
                         </ng-container>
 
                         <ng-container *ngSwitchDefault>

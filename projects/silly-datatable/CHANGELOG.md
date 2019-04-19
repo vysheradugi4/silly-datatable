@@ -1,5 +1,9 @@
 # Silly Datatable Change Log
 
+## 3.2.7
+
+    Added second parameter in prepareCellFunction with current row.
+
 ## 3.1.0 (2019-04-10)
 
     Added batch select logic.
