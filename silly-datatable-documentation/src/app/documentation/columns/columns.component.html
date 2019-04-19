@@ -62,7 +62,7 @@ this.columns = [
         headerClass: 'name',
         cellClass: 'cell',
         sortable: true,
-        prepareCellFunction: value => value.toUpperCase(),
+        prepareCellFunction: (value, row) => value.toUpperCase(),
     } as Column,
     {
         id: 'description',

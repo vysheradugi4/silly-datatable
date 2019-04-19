@@ -262,7 +262,7 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
     /**
      * One time init request.
      */
-    this.tableParamsChange.emit(this._tableParams);
+    this.sendRequest();
   }
 
 
@@ -277,7 +277,8 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
 
 
   public sendRequest(): void {
-    this.tableParamsChange.emit(this._tableParams);
+    const copyTableParams = Object.assign({}, this._tableParams, { source: [] });
+    this.tableParamsChange.emit(copyTableParams);
   }
 
 
@@ -482,7 +483,7 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
 
         this._tableParams.pagination.itemsPerPage = items;
         this._storeService.storeState('itemsPerPage', this._tableUid, items);
-        this.tableParamsChange.emit(this._tableParams);
+        this.sendRequest();
       });
   }
 

@@ -1,5 +1,9 @@
 # Silly Datatable Change Log
 
+## 3.2.9
+
+    Table params requests as copy without sourse array now.
+
 ## 3.2.7
 
     Added second parameter in prepareCellFunction with current row.
