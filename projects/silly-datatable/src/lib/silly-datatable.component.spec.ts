@@ -263,7 +263,11 @@ describe('SillyDatatableComponent', () => {
       },
     } as any;
 
-    component.pagingComponent = new SillyDatatablePagingComponent();
+    let fixture2: ComponentFixture<SillyDatatablePagingComponent>;
+    fixture2 = TestBed.createComponent(SillyDatatablePagingComponent);
+    const pagingComponent = fixture2.componentInstance;
+
+    component.pagingComponent = pagingComponent;
 
     component.ngOnInit();
 

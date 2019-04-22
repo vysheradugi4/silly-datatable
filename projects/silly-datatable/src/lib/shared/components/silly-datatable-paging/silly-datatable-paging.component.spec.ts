@@ -177,16 +177,25 @@ describe('SillyDatatablePagingComponent', () => {
   });
 
   it('should show "to start" arrow button for page = 1', () => {
-    component.pagination.pageNumber = 1;
-    component.pagination.pageCount = 10;
+    const pagination: Pagination = {
+      pageNumber: 1,
+      pageCount: 10,
+      itemsPerPage: 10,
+    };
+    component.pagination = pagination;
     fixture.detectChanges();
     const button = fixture.debugElement.nativeElement.querySelector('#start');
     expect(button).toBeTruthy();
   });
 
   it('should show "to prev" arrow button for page = 1', () => {
-    component.pagination.pageNumber = 1;
-    component.pagination.pageCount = 10;
+    const pagination: Pagination = {
+      pageNumber: 1,
+      pageCount: 10,
+      itemsPerPage: 10,
+    };
+    component.pagination = pagination;
+
     fixture.detectChanges();
     const button = fixture.debugElement.nativeElement.querySelector('#prev');
     expect(button).toBeTruthy();

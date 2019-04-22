@@ -1,4 +1,4 @@
-import { Component, Input, TemplateRef } from '@angular/core';
+import { Component, Input, TemplateRef, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 
 import { PaginationSettings } from './../../models/pagination-settings.model';
@@ -9,6 +9,7 @@ import { Pagination } from './../../models/pagination.model';
   selector: 'ngx-silly-datatable-paging',
   templateUrl: './silly-datatable-paging.component.html',
   styles: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SillyDatatablePagingComponent {
 
@@ -47,7 +48,9 @@ export class SillyDatatablePagingComponent {
   private _pagination: Pagination;
   private _pageOf: TemplateRef<any>;
 
-  constructor() { }
+  constructor(
+    private _changeDetectorRef: ChangeDetectorRef
+  ) { }
 
   public get pageOf(): TemplateRef<any> {
     return this._pageOf;
@@ -136,5 +139,7 @@ export class SillyDatatablePagingComponent {
         numberOfPages: this.numberOfPages,
       };
     }
+
+    this._changeDetectorRef.detectChanges();
   }
 }
