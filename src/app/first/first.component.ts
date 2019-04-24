@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, ElementRef } from '@angular/core';
 
 import {
   TableSettings,
@@ -90,7 +90,10 @@ export class FirstComponent implements OnInit {
         headerClass: 'name',
         cellClass: 'cell',
         sortable: true,
-        prepareCellFunction: value => value.toUpperCase(),
+        prepareCellFunction: (value: string, row: any, td: HTMLElement, tr: HTMLElement) => {
+          td.classList.add('tester');
+          return value.toUpperCase();
+        },
       } as Column,
       {
         id: 'description',
@@ -120,9 +123,9 @@ export class FirstComponent implements OnInit {
     this.source = [
       { id: 1, name: 'test1', description: 'some description', contact: { address: 'first' } },
       { id: 2, name: 'test2', description: 'some description', contact: { address: 'second' } },
-      { id: 3, name: 'test3', description: 'some description', contact: { address: 'third' }  },
-      { id: 4, name: 'test4', description: 'some description', contact: { address: 'fourth'} },
-      { id: 5, name: 'test5', description: 'some description', contact: { address: 'fifth'} },
+      { id: 3, name: 'test3', description: 'some description', contact: { address: 'third' } },
+      { id: 4, name: 'test4', description: 'some description', contact: { address: 'fourth' } },
+      { id: 5, name: 'test5', description: 'some description', contact: { address: 'fifth' } },
     ];
 
     this.detailsDropboxFilter = {

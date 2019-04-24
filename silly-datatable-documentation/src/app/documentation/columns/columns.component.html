@@ -5,8 +5,8 @@
 
 <ul class="properties">
     <li>
-        <strong>id</strong> - * Column id for link with source. Id string can be 
-        used as path for find value in object. For example: 
+        <strong>id</strong> - * Column id for link with source. Id string can be
+        used as path for find value in object. For example:
         <code>id: 'contact.address.city'</code>
     </li>
     <li>
@@ -28,8 +28,9 @@
     </li>
     <li>
         <strong>prepareCellFunction</strong> - Customization function for
-        prepare data before showed. This function has two parameters, current value
-        and current row. 
+        prepare data before showed. This function has four parameters, current
+        value, current row, current &gt;td&lt; element and current &gt;tr&lt;
+        element. The function must return a value for display in the cell.
     </li>
     <li>
         <strong>componentCell</strong> - Custom component to display in the cell.
@@ -62,7 +63,14 @@ this.columns = [
         headerClass: 'name',
         cellClass: 'cell',
         sortable: true,
-        prepareCellFunction: (value, row) => value.toUpperCase(),
+        prepareCellFunction: (value: string, row: any, td: HTMLElement, tr: HTMLElement) => {
+            
+            if (value === 'tester') {
+                td.classList.add('tester');
+            };
+            
+            return value.toUpperCase()
+        },
     } as Column,
     {
         id: 'description',

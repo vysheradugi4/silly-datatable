@@ -33,6 +33,7 @@
 
     <ng-container *ngIf="tableParams?.source?.length; else withoutSource">
         <tr *ngFor="let row of tableParams?.source; let i = index"
+            #tr
             [ngClass]="settings?.rowClass">
             <ng-container *ngIf="settings?.batchSelect && checkboxes?.controls?.length">
                 <td [ngClass]="settings?.batchSelectTdClass">
@@ -56,13 +57,14 @@
 
             <ng-container *ngFor="let column of columns | filter:'show'; trackBy:trackByFn">
                 <td *ngIf="!column.componentCell; else componentCell"
+                    #td
                     [ngClass]="column.cellClass"
                     (click)="clicked(row)"
                     (dblclick)="doubleClicked(row)">
 
                     <ng-container [ngSwitch]="true">
                         <ng-container *ngSwitchCase="!!column.prepareCellFunction">
-                            {{ column.prepareCellFunction(getSourceValue(row, column.id), row) }}
+                            {{ column.prepareCellFunction(getSourceValue(row, column.id), row, td, tr) }}
                         </ng-container>
 
                         <ng-container *ngSwitchDefault>

@@ -1,6 +1,6 @@
 {
   "name": "silly-datatable",
-  "version": "3.2.10",
+  "version": "3.3.0",
   "description": "Angular 6+ light datatable with easy styling functional, server side sorting, pagination, filtering, etc.",
   "keywords": [
       "angular",
@@ -20,7 +20,7 @@
       "search",
       "filter"
   ],
-  "homepage": "https://github.com/vysheradugi4/silly-datatable#readme",
+  "homepage": "https://vysheradugi4.github.io/silly-datatable",
   "license": "The MIT License (MIT)",
   "repository": {
     "type" : "git",
