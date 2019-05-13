@@ -88,7 +88,14 @@ export class SillyDatatableFilterComponent implements OnDestroy {
 
   private initFormFieldsLogic(): void {
 
+    /**
+     * Unsubscribed from last filterForm value changes subscription.
+     */
+    this._unsubscribe.next(true);
+
+
     this.filterForm = FormsHelper.toFormGroup(this._formFields, 'name', 'value', 'disabled');
+
 
     /**
      * Check filter has form controls.
@@ -96,6 +103,7 @@ export class SillyDatatableFilterComponent implements OnDestroy {
     if (!this.filterForm) {
       return;
     }
+
 
     /**
      * Handle input value changes.
