@@ -26,6 +26,8 @@ import { FiltersOutputComponent } from './filters-output/filters-output.componen
 import { OptionsComponent } from './options/options.component';
 import { OptionsSettingsComponent } from './options-settings/options-settings.component';
 import { CssTricksComponent } from './css-tricks/css-tricks.component';
+import { SillyDatatableModule } from 'silly-datatable';
+import { EditButtonComponent } from 'src/app/examples/edit-button/edit-button.component';
 
 
 @NgModule({
@@ -34,6 +36,7 @@ import { CssTricksComponent } from './css-tricks/css-tricks.component';
     DocumentationRoutingModule,
     ComponentsModule,
     HighlightJsModule,
+    SillyDatatableModule,
   ],
   declarations: [
     DocumentationComponent,
@@ -58,7 +61,11 @@ import { CssTricksComponent } from './css-tricks/css-tricks.component';
     OptionsComponent,
     OptionsSettingsComponent,
     CssTricksComponent,
+    EditButtonComponent,
   ],
+  entryComponents: [
+    EditButtonComponent,
+  ]
 })
 export class DocumentationModule {
 

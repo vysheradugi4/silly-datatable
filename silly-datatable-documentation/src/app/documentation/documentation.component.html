@@ -3,13 +3,302 @@
         <div class="col custom-col px-0">
             <app-menu></app-menu>
         </div>
-        <div class="col pt-3 h-100 content">
+        <div class="col p-3 h-100 content">
             <router-outlet (activate)="route = !!$event"
                 (deactivate)="route = !$event"></router-outlet>
             <ng-container *ngIf="!route">
                 <h1>Silly Datatable – Angular 6+ light datatable</h1>
                 <h2>For angular 6+ versions apps. Easy styling datatable, all functionality is
                     designed for use server side actions.</h2>
+
+                <ul class="nav nav-tabs mt-5 custom-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            [ngClass]="{ 'active': !selectedTab }"
+                            (click)="selectedTab=''">Example</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            [ngClass]="{ 'active': selectedTab === 'component' }"
+                            (click)="selectedTab='component'">Component</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            [ngClass]="{ 'active': selectedTab === 'template' }"
+                            (click)="selectedTab='template'">Template</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            [ngClass]="{ 'active': selectedTab === 'styles' }"
+                            (click)="selectedTab='styles'">Styles</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div *ngIf="!selectedTab"
+                        class="my-3">
+                        <ngx-silly-datatable id="sole"
+                            [settings]="settings"
+                            [columns]="columns"
+                            [(tableParams)]="tableParams"
+                            (rowClicked)="selected($event)"
+                            (rowDoubleClicked)="dblClickSelected($event)"
+                            (componentCellEvent)="eventInCellComponent($event)"
+                            (batchSelected)="batchSelected($event)">
+                        </ngx-silly-datatable>
+                    </div>
+
+                    <div *ngIf="selectedTab === 'component'"
+                        class="my-3">
+                        <textarea highlight-js
+                            [options]="{}"
+                            lang="typescript">
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+
+import {
+    TableSettings,
+    Column,
+    PaginationSettings,
+    TableParams,
+    Pagination,
+    FilterFormField,
+    FilterSettings
+} from 'silly-datatable';
+import { EditButtonComponent } from 'src/app/shared/components/edit-button/edit-button.component';
+
+
+@Component({
+    selector: 'app-first',
+    templateUrl: './first.component.html',
+    styleUrls: ['./first.component.scss'],
+})
+export class FirstComponent implements OnInit {
+
+    public settings: TableSettings;
+    public paginationSettings: PaginationSettings;
+    public columns: Array<Column>;
+    public source: Array<any>;
+    public filterFormFields: Array<FilterFormField>;
+    public filterSettings: FilterSettings;
+    public detailsDropboxFilter: FilterFormField;
+    public optionsComponent: any;
+    public pagingComponent: any;
+
+    @ViewChild('customInput') public customInput: TemplateRef<any>;
+
+    public loading: boolean;
+
+    private _tableParams: TableParams = new TableParams();
+
+    constructor() { }
+
+    public get tableParams(): TableParams {
+        return this._tableParams;
+    }
+
+
+    public set tableParams(value: TableParams) {
+        this._tableParams = Object.assign({}, this._tableParams, { source: this.source });
+        console.log('Request with table params = ', value);
+    }
+
+
+    ngOnInit(): void {
+
+        this._tableParams.pagination = {
+            pageNumber: 0,
+            pageCount: 50,
+            itemsPerPage: 10,
+        } as Pagination;
+
+        this.paginationSettings = {
+            infoClass: 'info-class',
+            containerClass: 'container-class',
+            arrowButtonClass: 'arrow-button-class',
+            numberButtonClass: 'number-button-class',
+            start: '&laquo;',
+            prev: '&lsaquo;',
+            next: '&rsaquo;',
+            last: '&raquo;',
+        } as PaginationSettings;
+
+        this.settings = {
+            tableClass: 'table',
+            headerRowClass: 'header-row',
+            rowClass: 'data-row',
+            sortHeaderClass: 'sort',
+            itemsPerPageList: [10, 20, 30],
+            batchSelect: true,
+        } as TableSettings;
+
+        this.columns = [
+            {
+                id: 'id',
+                title: 'No.',
+                headerClass: 'id',
+                cellClass: 'cell',
+                sortable: true,
+            } as Column,
+            {
+                id: 'name',
+                title: 'Name',
+                headerClass: 'name',
+                cellClass: 'cell',
+                sortable: true,
+                prepareCellFunction: (value: string, row: any, td: HTMLElement, tr: HTMLElement) => {
+                    td.classList.add('tester');
+                    return value.toUpperCase();
+                },
+            } as Column,
+            {
+                id: 'description',
+                title: 'Description',
+                headerClass: 'description',
+                cellClass: 'cell',
+                sortable: false,
+            } as Column,
+            {
+                id: 'contact.address',
+                title: 'Contact',
+                headerClass: 'contact',
+                cellClass: 'cell',
+                sortable: true,
+            } as Column,
+            {
+                id: 'action',
+                title: 'Action',
+                headerClass: 'action',
+                cellClass: 'cell',
+                sortable: false,
+                componentCell: EditButtonComponent,
+            } as Column,
+        ];
+
+        this.source = [
+            { id: 1, name: 'test1', description: 'some description', contact: { address: 'first' } },
+            { id: 2, name: 'test2', description: 'some description', contact: { address: 'second' } },
+            { id: 3, name: 'test3', description: 'some description', contact: { address: 'third' } },
+            { id: 4, name: 'test4', description: 'some description', contact: { address: 'fourth' } },
+            { id: 5, name: 'test5', description: 'some description', contact: { address: 'fifth' } },
+        ];
+
+        this.detailsDropboxFilter = {
+            id: 'details',
+            type: 'dropbox',
+            name: 'details',
+            placeholder: 'Select details ...',
+            value: null,
+            valueKeyName: 'value',
+            controlContainerClass: 'control-container',
+            labelContainerClass: 'label-container',
+            formControlLabel: 'Dropbox',
+        } as FilterFormField;
+
+
+        this.filterFormFields = [
+            {
+                id: 'dateRange',
+                type: 'custom',
+                name: 'dateRange',
+                placeholder: 'custom control',
+                controlContainerClass: 'control-container',
+                labelContainerClass: 'label-container',
+                formControlLabel: 'Textbox',
+                customInput: this.customInput,
+            } as FilterFormField,
+            {
+                id: 'name',
+                type: 'textbox',
+                name: 'name',
+                placeholder: 'Enter name...',
+                value: 'faster',
+                controlContainerClass: 'control-container',
+                labelContainerClass: 'label-container',
+                formControlLabel: 'Textbox',
+            } as FilterFormField,
+            {
+                id: 'type',
+                type: 'dropbox',
+                name: 'type',
+                value: null,
+                placeholder: 'Select type ...',
+                valueKeyName: 'value',
+                source: [
+                    { key: 1, value: 'Test value 1' },
+                    { key: 2, value: 'Test value 2' },
+                    { key: 3, value: 'Test value 3' },
+                ],
+                controlContainerClass: 'control-container',
+                labelContainerClass: 'label-container',
+                formControlLabel: 'Dropbox',
+            } as FilterFormField,
+
+            this.detailsDropboxFilter,
+        ];
+
+
+        this.filterSettings = {
+            formContainerClass: 'filter-container',
+            cancelButtonClass: 'cancel-button-class',
+            cancelButtonTitle: 'Close',
+            submitButtonClass: 'submit-button-class',
+            submitButtonTitle: 'Submit',
+        } as FilterSettings;
+    }
+
+
+    public selected(row: any) {
+        console.log('Clicked row = ', row);
+    }
+
+
+    public dblClickSelected(row: any) {
+        console.log('Double clicked row = ', row);
+    }
+
+
+    public eventInCellComponent(event) {
+        console.log('event and data from cell component = ', event);
+    }
+
+
+    public batchSelected(rows: Array<any>) {
+        console.log('batch selected rows = ', rows);
+    }
+
+
+    public filterValueChanges(filterData) {
+
+        if (filterData.type && !filterData.details) {
+            this.detailsDropboxFilter.source = [
+            { key: 1, value: 'Test value 1' },
+            { key: 2, value: 'Test value 2' },
+            { key: 3, value: 'Test value 3' },
+            ];
+        }
+    }
+
+    public getOptions(component) {
+        setTimeout(() => {
+            this.optionsComponent = component;
+        });
+    }
+
+
+    public getPaging(component) {
+        setTimeout(() => {
+            this.pagingComponent = component;
+        });
+    }
+}
+                        </textarea>
+                    </div>
+
+                    <div *ngIf="selectedTab === 'template'">Template</div>
+
+                    <div *ngIf="selectedTab === 'styles'">Styles</div>
+                </div>
+
             </ng-container>
         </div>
     </div>

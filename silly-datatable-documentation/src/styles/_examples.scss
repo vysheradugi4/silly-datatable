@@ -1,0 +1,14 @@
+.example-table {
+  width: 100%;
+  border: 1px solid $border;
+
+  .data-row {
+    &:nth-child(even) {
+      background-color: $table-even-row;
+    }
+
+    &:hover {
+      background-color: $table-hover-row;
+    }
+  }
+}
