@@ -221,8 +221,6 @@ export class FirstComponent implements OnInit {
         { key: 2, value: 'Test value 2' },
         { key: 3, value: 'Test value 3' },
       ];
-
-      this.filterFormFields = this.filterFormFields.slice();
     }
   }
 

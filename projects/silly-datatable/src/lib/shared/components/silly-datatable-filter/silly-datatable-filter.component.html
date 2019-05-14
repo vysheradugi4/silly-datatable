@@ -8,7 +8,7 @@
             <ng-container *ngFor="let formField of formFields; trackBy: trackByFn">
                 <ngx-filter-field [filterField]="formField"
                     [ngClass]="formField.formGroupClass"
-                    [formControlName]="formField.name">
+                    [formControl]="filterForm.controls[formField.name]">
                 </ngx-filter-field>
             </ng-container>
 
