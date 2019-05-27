@@ -1,5 +1,9 @@
 # Silly Datatable Change Log
 
+## 3.3.4
+
+    Added label class for batch select checkboxes.
+
 ## 3.3.0
 
     Prepare cell function added new parameters.
