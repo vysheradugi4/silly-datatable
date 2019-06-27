@@ -482,6 +482,7 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
       .subscribe((items: number) => {
 
         this._tableParams.pagination.itemsPerPage = items;
+        this._tableParams.pagination.pageNumber = 0;
         this._storeService.storeState('itemsPerPage', this._tableUid, items);
         this.sendRequest();
       });

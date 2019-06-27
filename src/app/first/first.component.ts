@@ -29,7 +29,7 @@ export class FirstComponent implements OnInit {
   public optionsComponent: any;
   public pagingComponent: any;
 
-  @ViewChild('customInput') public customInput: TemplateRef<any>;
+  @ViewChild('customInput', { static: true }) public customInput: TemplateRef<any>;
 
   public loading: boolean;
 

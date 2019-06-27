@@ -10,7 +10,7 @@ import { PaginationSettings } from './../../../../../projects/silly-datatable/sr
 })
 export class TablePagingComponent implements OnInit {
 
-  @ViewChild('tablePaging') public tablePaging: any;
+  @ViewChild('tablePaging', { static: true }) public tablePaging: any;
 
   public paginationSettings: PaginationSettings;
 

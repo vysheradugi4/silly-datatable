@@ -10,7 +10,7 @@ import { OptionsSettings } from './../../../../../projects/silly-datatable/src/l
 })
 export class TableOptionsComponent implements OnInit {
 
-  @ViewChild('tableOptions') public tableOptions: any;
+  @ViewChild('tableOptions', { static: true }) public tableOptions: any;
 
   public optionsSettings: OptionsSettings;
 
