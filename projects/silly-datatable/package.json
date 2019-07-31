@@ -1,36 +1,39 @@
 {
-  "name": "silly-datatable",
-  "version": "3.3.6",
-  "description": "Angular 6+ light datatable with easy styling functional, server side sorting, pagination, filtering, etc.",
-  "keywords": [
-      "angular",
-      "angular2",
-      "angular2+",
-      "angular4",
-      "angular7",
-      "angular8",
-      "table",
-      "datatable",
-      "datatables",
-      "datagrid",
-      "grid",
-      "sorting",
-      "filtering",
-      "server side",
-      "dataset",
-      "paging",
-      "pagination",
-      "search",
-      "filter"
-  ],
-  "homepage": "https://vysheradugi4.github.io/silly-datatable",
-  "license": "The MIT License (MIT)",
-  "repository": {
-    "type" : "git",
-    "url" : "https://github.com/vysheradugi4/silly-datatable"
-  },
-  "peerDependencies": {
-    "@angular/common": "^8.0.3",
-    "@angular/core": "^8.0.3"
-  }
+    "name": "silly-datatable",
+    "version": "3.3.7",
+    "description": "Angular 6+ light datatable with easy styling functional, server side sorting, pagination, filtering, etc.",
+    "keywords": [
+        "angular",
+        "angular2",
+        "angular2+",
+        "angular4",
+        "angular7",
+        "angular8",
+        "table",
+        "datatable",
+        "datatables",
+        "datagrid",
+        "grid",
+        "sorting",
+        "filtering",
+        "server side",
+        "dataset",
+        "paging",
+        "pagination",
+        "search",
+        "filter"
+    ],
+    "homepage": "https://vysheradugi4.github.io/silly-datatable",
+    "license": "The MIT License (MIT)",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/vysheradugi4/silly-datatable"
+    },
+    "peerDependencies": {
+        "@angular/common": "^8.1.3",
+        "@angular/core": "^8.1.3",
+        "@angular/forms": "8.1.3",
+        "lodash": "^4.17.15",
+        "rxjs": "^6.5.2"
+    }
 }
