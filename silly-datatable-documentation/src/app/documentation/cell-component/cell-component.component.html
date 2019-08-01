@@ -30,3 +30,20 @@
 </p>
 
 <code>public row: any;</code>
+
+<p>
+    For cell component available <strong>prepareCellFunction</strong> with
+    4 parameters as well. First parameter is a loaded instance of cell component,
+    second is a current row, third is a current td and four is a current tr element.
+    Usage example:
+</p>
+
+<textarea highlight-js
+    [options]="{}"
+    lang="typescript">
+prepareCellFunction: (component, row, td, tr) => {
+    if (!row.action) {
+        component.disabled = true;
+    }
+},
+</textarea>

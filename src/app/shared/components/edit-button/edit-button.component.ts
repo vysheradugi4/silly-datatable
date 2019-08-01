@@ -8,6 +8,7 @@ import { Component, OnInit, EventEmitter } from '@angular/core';
 export class EditButtonComponent implements OnInit {
 
   public row: any;
+  public disabled = false;
 
   public componentCellEvent: EventEmitter<any> = new EventEmitter<any>();
 

@@ -20,6 +20,7 @@ export class ComponentCellComponent implements OnInit {
   @Input() public row: any;
   @Input() public component: any;
 
+  @Output() public loaded: EventEmitter<any> = new EventEmitter<any>();
   @Output() public componentCellEvent: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
@@ -35,6 +36,13 @@ export class ComponentCellComponent implements OnInit {
     const factory = this._componentFactoryResolver.resolveComponentFactory(this.component);
     const componentRef: any = this._viewContainerRef.createComponent(factory);
     componentRef.instance.row = this.row;
+
+
+    /**
+     * Pass created instance for prepare cell function.
+     */
+    this.loaded.emit(componentRef.instance);
+
 
     /**
      * For event in cell component.

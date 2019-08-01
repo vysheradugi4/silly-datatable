@@ -117,15 +117,20 @@ export class FirstComponent implements OnInit {
         cellClass: 'cell',
         sortable: false,
         componentCell: EditButtonComponent,
+        prepareCellFunction: (component, row, td, tr) => {
+          if (!row.action) {
+            component.disabled = true;
+          }
+        },
       } as Column,
     ];
 
     this.source = [
-      { id: 1, name: 'test1', description: 'some description', contact: { address: 'first' } },
-      { id: 2, name: 'test2', description: 'some description', contact: { address: 'second' } },
-      { id: 3, name: 'test3', description: 'some description', contact: { address: 'third' } },
-      { id: 4, name: 'test4', description: 'some description', contact: { address: 'fourth' } },
-      { id: 5, name: 'test5', description: 'some description', contact: { address: 'fifth' } },
+      { id: 1, name: 'test1', description: 'some description', contact: { address: 'first' }, action: true },
+      { id: 2, name: 'test2', description: 'some description', contact: { address: 'second' }, action: true },
+      { id: 3, name: 'test3', description: 'some description', contact: { address: 'third' }, action: false },
+      { id: 4, name: 'test4', description: 'some description', contact: { address: 'fourth' }, action: true },
+      { id: 5, name: 'test5', description: 'some description', contact: { address: 'fifth' }, action: true },
     ];
 
     this.detailsDropboxFilter = {

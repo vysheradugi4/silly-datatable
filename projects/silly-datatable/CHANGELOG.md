@@ -1,5 +1,13 @@
 # Silly Datatable Change Log
 
+## 3.3.8
+
+    Added prepareCellFunction functional for cell component.
+
+## 3.3.4
+
+    Added label class for batch select checkboxes.
+
 ## 3.3.4
 
     Added label class for batch select checkboxes.

@@ -1,6 +1,6 @@
 {
     "name": "silly-datatable",
-    "version": "3.3.7",
+    "version": "3.3.8",
     "description": "Angular 6+ light datatable with easy styling functional, server side sorting, pagination, filtering, etc.",
     "keywords": [
         "angular",
@@ -30,9 +30,9 @@
         "url": "https://github.com/vysheradugi4/silly-datatable"
     },
     "peerDependencies": {
-        "@angular/common": "^8.1.3",
-        "@angular/core": "^8.1.3",
-        "@angular/forms": "8.1.3",
+        "@angular/common": "~8.1.3",
+        "@angular/core": "~8.1.3",
+        "@angular/forms": "~8.1.3",
         "lodash": "^4.17.15",
         "rxjs": "^6.5.2"
     }
