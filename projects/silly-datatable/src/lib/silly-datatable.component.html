@@ -79,7 +79,7 @@
                         <ngx-component-cell [row]="row"
                             [component]="column.componentCell"
                             (componentCellEvent)="onComponentCellEvent($event)"
-                            (loaded)="column.prepareCellFunction($event, row, td, tr)">
+                            (loaded)="column.prepareCellFunction && column.prepareCellFunction($event, row, td, tr)">
                         </ngx-component-cell>
                     </td>
                 </ng-template>

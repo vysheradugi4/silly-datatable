@@ -117,11 +117,11 @@ export class FirstComponent implements OnInit {
         cellClass: 'cell',
         sortable: false,
         componentCell: EditButtonComponent,
-        prepareCellFunction: (component, row, td, tr) => {
-          if (!row.action) {
-            component.disabled = true;
-          }
-        },
+        // prepareCellFunction: (component, row, td, tr) => {
+        //   if (!row.action) {
+        //     component.disabled = true;
+        //   }
+        // },
       } as Column,
     ];
 

@@ -5,7 +5,8 @@
     "entryFile": "src/public_api.ts",
     "umdModuleIds": {
         "lodash/unionBy": "unionBy",
-        "lodash/forIn": "forIn"
+        "lodash/forIn": "forIn",
+        "lodash/get": "get"
       }
   }
 }
