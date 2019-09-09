@@ -515,7 +515,12 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
 
     if (states) {
       states.forEach(colStatus => {
-        this.columns.find((column: Column) => column.id === colStatus.id).show = colStatus.show;
+        const column = this.columns.find((col: Column) => col.id === colStatus.id);
+        if (!column) {
+          return;
+        }
+
+        column.show = colStatus.show;
       });
     }
   }
