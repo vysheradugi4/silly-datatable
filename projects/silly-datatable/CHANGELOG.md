@@ -1,5 +1,9 @@
 # Silly Datatable Change Log
 
+## 3.3.11
+
+    Fixed showing columns after editing options. 
+
 ## 3.3.8
 
     Added prepareCellFunction functional for cell component.
