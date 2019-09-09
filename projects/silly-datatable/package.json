@@ -1,7 +1,7 @@
 {
     "name": "silly-datatable",
-    "version": "3.3.9",
-    "description": "Angular 6+ light datatable with easy styling functional, server side sorting, pagination, filtering, etc.",
+    "version": "3.3.10",
+    "description": "Angular datatable, angular grid, light with easy styling functional, server side sorting, pagination, filtering, etc.",
     "keywords": [
         "angular",
         "angular2",

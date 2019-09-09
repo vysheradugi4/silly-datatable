@@ -97,6 +97,10 @@ export class SillyDatatablePagingComponent {
 
     if ((this.numberOfPages - this.currentPage) < 3) {
 
+      if (this.numberOfPages === 4) {
+        return 0;
+      }
+
       if (this.numberOfPages > 4) {
         return this.numberOfPages - 5;
       }

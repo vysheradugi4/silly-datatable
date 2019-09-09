@@ -52,7 +52,7 @@ export class FirstComponent implements OnInit {
 
     this._tableParams.pagination = {
       pageNumber: 0,
-      pageCount: 10,
+      pageCount: 5,
       itemsPerPage: 1,
     } as Pagination;
 
