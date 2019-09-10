@@ -402,7 +402,7 @@ describe('SillyDatatableComponent', () => {
 
     component.tableParams = tableParams;
 
-    component.batchSelected.subscribe((rows: Array<any>) => {
+    component.batchSelectedChange.subscribe((rows: Array<any>) => {
       expect(rows[0]).toEqual(tableParams.source[0]);
       done();
     });
@@ -431,7 +431,7 @@ describe('SillyDatatableComponent', () => {
 
     component.tableParams = tableParams;
 
-    component.batchSelected.subscribe((rows: Array<any>) => {
+    component.batchSelectedChange.subscribe((rows: Array<any>) => {
       expect(rows[0]).toEqual(tableParams.source[1]);
       done();
     });
@@ -460,7 +460,7 @@ describe('SillyDatatableComponent', () => {
 
     component.tableParams = tableParams;
 
-    component.batchSelected.subscribe((rows: Array<any>) => {
+    component.batchSelectedChange.subscribe((rows: Array<any>) => {
       expect(rows.length).toEqual(1);
       done();
     });
@@ -489,7 +489,7 @@ describe('SillyDatatableComponent', () => {
 
     component.tableParams = tableParams;
 
-    component.batchSelected.subscribe((rows: Array<any>) => {
+    component.batchSelectedChange.subscribe((rows: Array<any>) => {
       expect(rows.length).toEqual(2);
       done();
     });
@@ -518,7 +518,7 @@ describe('SillyDatatableComponent', () => {
 
     component.tableParams = tableParams;
 
-    component.batchSelected.subscribe((rows: Array<any>) => {
+    component.batchSelectedChange.subscribe((rows: Array<any>) => {
       expect(rows.length).toEqual(3);
       done();
     });
@@ -547,7 +547,7 @@ describe('SillyDatatableComponent', () => {
 
     component.tableParams = tableParams;
 
-    component.batchSelected.pipe(
+    component.batchSelectedChange.pipe(
       skip(1)
     )
       .subscribe((rows: Array<any>) => {

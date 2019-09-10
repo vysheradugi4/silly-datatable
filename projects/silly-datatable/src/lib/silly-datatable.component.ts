@@ -15,6 +15,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import unionBy from 'lodash/unionBy';
 import get from 'lodash/get';
+import isEqual from 'lodash/isEqual';
 import { TableSettings } from './shared/models/table-settings.model';
 import { Column } from './shared/models/column.model';
 import { Sort } from './shared/models/sort.model';
@@ -176,13 +177,14 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
   public selectAll: FormControl;
   public batchSelectFormGroup: FormGroup;
   public checkboxes: FormArray;
+  @Input() public batchSelected: Array<any> = [];
 
 
   @Output() public tableParamsChange: EventEmitter<TableParams> = new EventEmitter<TableParams>(true);
   @Output() public rowClicked: EventEmitter<any> = new EventEmitter<any>();
   @Output() public rowDoubleClicked: EventEmitter<any> = new EventEmitter<any>();
   @Output() public componentCellEvent: EventEmitter<any> = new EventEmitter<any>();
-  @Output() public batchSelected: EventEmitter<Array<any>> = new EventEmitter<Array<any>>();
+  @Output() public batchSelectedChange: EventEmitter<Array<any>> = new EventEmitter<Array<any>>();
 
 
   private _unsubscribe: Subject<boolean> = new Subject<boolean>();
@@ -544,8 +546,17 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this._tableParams.source.forEach(() => {
-      this.checkboxes.push(new FormControl(false));
+
+    /**
+     * Create array with 'batch select' checkboxes. Mark selected. Comparison by
+     * content of rows.
+     */
+    this._tableParams.source.forEach((row) => {
+      const checked = this.batchSelected.some(batchSelectedRow => {
+        return isEqual(row, batchSelectedRow);
+      });
+
+      this.checkboxes.push(new FormControl(checked));
     });
 
     this.selectAll.valueChanges.pipe(
@@ -567,7 +578,7 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
           }
         });
 
-        this.batchSelected.emit(selected);
+        this.batchSelectedChange.emit(selected);
       });
   }
 }
