@@ -177,7 +177,15 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
   public selectAll: FormControl;
   public batchSelectFormGroup: FormGroup;
   public checkboxes: FormArray;
-  @Input() public batchSelected: Array<any> = [];
+
+
+  /**
+   * Batch selected rows.
+   */
+  @Input() public set batchSelected(rows: Array<any>) {
+    this._batchSelected = rows;
+    this.batchSelectInit();
+  }
 
 
   @Output() public tableParamsChange: EventEmitter<TableParams> = new EventEmitter<TableParams>(true);
@@ -196,6 +204,7 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
   private _pagingComponent: SillyDatatablePagingComponent;
   private _filterComponent: SillyDatatableFilterComponent;
   private _searchComponent: SillyDatatableSearchComponent;
+  private _batchSelected: Array<any> = [];
 
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
@@ -552,7 +561,7 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
      * content of rows.
      */
     this._tableParams.source.forEach((row) => {
-      const checked = this.batchSelected.some(batchSelectedRow => {
+      const checked = this._batchSelected.some(batchSelectedRow => {
         return isEqual(row, batchSelectedRow);
       });
 
