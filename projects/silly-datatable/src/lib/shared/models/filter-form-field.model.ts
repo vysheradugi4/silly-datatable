@@ -28,6 +28,12 @@ export class FilterFormField {
 
 
   /**
+   * Filter condition type.
+   */
+  public filterType?: any;
+
+
+  /**
    * Accessory array of values for form control. (Can be used in selects etc.)
    */
   public source?: Array<any>;

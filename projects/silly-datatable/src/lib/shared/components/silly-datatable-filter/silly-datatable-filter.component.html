@@ -5,10 +5,11 @@
 
         <div [ngClass]="settings?.formElementsContainerClass">
 
-            <ng-container *ngFor="let formField of formFields; trackBy: trackByFn">
+            <ng-container *ngFor="let formField of formFields; let i = index; trackBy: trackByFn"
+                formArrayName="filters">
                 <ngx-filter-field [filterField]="formField"
                     [ngClass]="formField.formGroupClass"
-                    [formControl]="filterForm.controls[formField.name]">
+                    [formControl]="filterForm?.controls?.filters['controls'][i]">
                 </ngx-filter-field>
             </ng-container>
 

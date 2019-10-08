@@ -244,10 +244,10 @@ describe('SillyDatatableComponent', () => {
     ((component as any)._filterComponent as any).initFormFieldsLogic();
 
     component.tableParamsChange.subscribe((tableParams: TableParams) => {
-      expect(tableParams.filters.name).toBe('test');
+      expect(tableParams.filters[0].value).toBe('test');
       done();
     });
-    (component as any)._filterComponent.filterForm.setValue({ name: 'test' });
+    (component as any)._filterComponent.filterForm.controls.filters.controls[0].setValue('test');
     (component as any)._filterComponent.applyFilters();
   });
 

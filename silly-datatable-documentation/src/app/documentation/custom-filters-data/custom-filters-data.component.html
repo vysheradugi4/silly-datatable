@@ -1,0 +1,13 @@
+<h2>Custom filters</h2>
+
+<p>For handle custom filters without form controls filters:</p>
+
+<code>&lt;ngx-silly-datatable-filter [customFilters]="customFilters"&gt;&lt;/ngx-silly-datatable-filter&gt;</code>
+
+<p>The input <strong>customFilters</strong> must be contains array of Filter class instances.
+    It will be added to form control filter values.</p>
+
+
+<p>Don't forget import Filter for init new instance:</p>
+
+<code>import {{'{'}} Filter {{'}'}} from 'silly-datatable';</code>

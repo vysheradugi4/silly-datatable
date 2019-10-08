@@ -1,4 +1,4 @@
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, FormArray } from '@angular/forms';
 
 
 export class FormsHelper {
@@ -20,5 +20,25 @@ export class FormsHelper {
     });
 
     return new FormGroup(group);
+  }
+
+
+  public static toFormArray(list: Array<any>, valueKey: string, disabledKey = ''): FormArray {
+    const formArray = new FormArray([]);
+
+    if (!list || !list.length) {
+      return formArray;
+    }
+
+
+    list.forEach(item => {
+      formArray.push(
+        new FormControl(
+          { value: item[valueKey] || '', disabled: item[disabledKey] || false }
+        )
+      );
+    });
+
+    return formArray;
   }
 }

@@ -1,5 +1,9 @@
 # Silly Datatable Change Log
 
+## 3.4.0
+
+    Changed output of filter values, added api for custom filters data.
+
 ## 3.3.11
 
     Fixed showing columns after editing options. 

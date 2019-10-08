@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormArray } from '@angular/forms';
 
 import { SillyDatatableFilterComponent } from './silly-datatable-filter.component';
 import { FilterFieldComponent } from './../filter-field/filter-field.component';
@@ -43,11 +43,11 @@ describe('SillyDatatableFilterComponent', () => {
     (component as any).initFormFieldsLogic();
 
     component.filtersUpdated$.subscribe((filterValues) => {
-      expect(filterValues.name).toBe('test');
+      expect(filterValues[0].value).toBe('test');
       done();
     });
 
-    component.filterForm.setValue({ name: 'test' });
+    (component.filterForm.controls.filters as FormArray).controls[0].setValue('test');
     component.applyFilters();
   });
 
@@ -60,11 +60,11 @@ describe('SillyDatatableFilterComponent', () => {
     (component as any).initFormFieldsLogic();
 
     component.valueChanges.subscribe((filterValues) => {
-      expect(filterValues.name).toBe('test');
+      expect(filterValues[0].value).toBe('test');
       done();
     });
 
-    component.filterForm.setValue({ name: 'test' });
+    (component.filterForm.controls.filters as FormArray).controls[0].setValue('test');
   });
 
   it('should be emit when call cancel', (done) => {

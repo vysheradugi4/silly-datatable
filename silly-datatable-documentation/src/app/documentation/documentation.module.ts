@@ -26,6 +26,7 @@ import { FiltersOutputComponent } from './filters-output/filters-output.componen
 import { OptionsComponent } from './options/options.component';
 import { OptionsSettingsComponent } from './options-settings/options-settings.component';
 import { CssTricksComponent } from './css-tricks/css-tricks.component';
+import { CustomFiltersDataComponent } from './custom-filters-data/custom-filters-data.component';
 
 
 @NgModule({
@@ -58,6 +59,7 @@ import { CssTricksComponent } from './css-tricks/css-tricks.component';
     OptionsComponent,
     OptionsSettingsComponent,
     CssTricksComponent,
+    CustomFiltersDataComponent,
   ],
 })
 export class DocumentationModule {

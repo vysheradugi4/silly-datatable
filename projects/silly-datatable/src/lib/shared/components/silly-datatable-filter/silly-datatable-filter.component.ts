@@ -1,11 +1,12 @@
 import { Component, Input, OnDestroy, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormArray } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
 import { Subject, Observable } from 'rxjs';
 
 import { FilterFormField } from './../../models/filter-form-field.model';
 import { FormsHelper } from './../../helpers/forms.helper';
 import { FilterSettings } from './../../models/filter-settings.model';
+import { Filter } from './../../models/filter.model';
 
 
 @Component({
@@ -30,6 +31,16 @@ export class SillyDatatableFilterComponent implements OnDestroy {
     this.initFormFieldsLogic();
   }
 
+  @Input() public set customFilters(value: Array<Filter>) {
+    if (!value || !value.length) {
+      return;
+    }
+
+    this._filters = value;
+    this.collectValues();
+    this.applyFilters();
+  }
+
   @Output() public cancel: EventEmitter<null> = new EventEmitter();
 
   /**
@@ -40,6 +51,7 @@ export class SillyDatatableFilterComponent implements OnDestroy {
   private _formFields: Array<FilterFormField>;
   private _unsubscribe: Subject<boolean> = new Subject<boolean>();
   private _filtersUpdated$: Subject<any> = new Subject<any>();
+  private _filters: Array<Filter> = [];
 
   constructor() { }
 
@@ -94,7 +106,9 @@ export class SillyDatatableFilterComponent implements OnDestroy {
     this._unsubscribe.next(true);
 
 
-    this.filterForm = FormsHelper.toFormGroup(this._formFields, 'name', 'value', 'disabled');
+    this.filterForm = new FormGroup({
+      filters: FormsHelper.toFormArray(this._formFields, 'value', 'disabled'),
+    });
 
 
     /**
@@ -108,12 +122,29 @@ export class SillyDatatableFilterComponent implements OnDestroy {
     /**
      * Handle input value changes.
      */
-    this.filterForm.valueChanges.pipe(
+    this.filterForm.controls.filters.valueChanges.pipe(
       takeUntil(this._unsubscribe)
     )
       .subscribe(() => {
-        this.values = this.filterForm.getRawValue();
+        this.collectValues();
         this.valueChanges.emit(this.values);
       });
+  }
+
+
+  /**
+   * Collects values from form values and external filters.
+   */
+  private collectValues(): void {
+    const values = ((this.filterForm.controls.filters as FormArray).getRawValue())
+      .map((value: string, index: number) => {
+        return new Filter(
+          this._formFields[index].id,
+          this._formFields[index].filterType,
+          value
+        );
+      });
+
+    this.values = [...values, ...this._filters];
   }
 }

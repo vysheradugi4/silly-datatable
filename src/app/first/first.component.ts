@@ -1,3 +1,4 @@
+import { Filter } from './../../../projects/silly-datatable/src/lib/shared/models/filter.model';
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 
 import {
@@ -29,6 +30,8 @@ export class FirstComponent implements OnInit {
   public optionsComponent: any;
   public pagingComponent: any;
 
+  public customFilters: Array<Filter>;
+
   @ViewChild('customInput', { static: true }) public customInput: TemplateRef<any>;
 
   public loading: boolean;
@@ -49,6 +52,12 @@ export class FirstComponent implements OnInit {
 
 
   ngOnInit(): void {
+
+    setTimeout(() => {
+      this.customFilters = [
+        new Filter('faster', 'contains', 'two'),
+      ];
+    }, 5000);
 
     this._tableParams.pagination = {
       pageNumber: 0,
