@@ -25,6 +25,7 @@ import { SillyDatatableFilterComponent } from './shared/components/silly-datatab
 import { SillyDatatableOptionsComponent } from './shared/components/silly-datatable-options/silly-datatable-options.component';
 import { SillyDatatablePagingComponent } from './shared/components/silly-datatable-paging/silly-datatable-paging.component';
 import { StoreService } from './shared/services/store.service';
+import { Filter } from './shared/models/filter.model';
 
 
 @Component({
@@ -410,7 +411,7 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
     this._filterComponent.filtersUpdated$.pipe(
       takeUntil(this._unsubscribe)
     )
-      .subscribe((filterValues: string) => {
+      .subscribe((filterValues: Array<Filter>) => {
         this._tableParams.filters = filterValues;
         this._tableParams.pagination.pageNumber = 0;
         this.sendRequest();

@@ -17,7 +17,7 @@ import { Filter } from './../../models/filter.model';
 })
 export class SillyDatatableFilterComponent implements OnDestroy {
 
-  public values: any;
+  public values: Array<Filter>;
   public filterForm: FormGroup;
 
   @Input() public settings: FilterSettings;
@@ -31,16 +31,6 @@ export class SillyDatatableFilterComponent implements OnDestroy {
     this.initFormFieldsLogic();
   }
 
-  @Input() public set customFilters(value: Array<Filter>) {
-    if (!value || !value.length) {
-      return;
-    }
-
-    this._filters = value;
-    this.collectValues();
-    this.applyFilters();
-  }
-
   @Output() public cancel: EventEmitter<null> = new EventEmitter();
 
   /**
@@ -51,7 +41,6 @@ export class SillyDatatableFilterComponent implements OnDestroy {
   private _formFields: Array<FilterFormField>;
   private _unsubscribe: Subject<boolean> = new Subject<boolean>();
   private _filtersUpdated$: Subject<any> = new Subject<any>();
-  private _filters: Array<Filter> = [];
 
   constructor() { }
 
@@ -126,25 +115,16 @@ export class SillyDatatableFilterComponent implements OnDestroy {
       takeUntil(this._unsubscribe)
     )
       .subscribe(() => {
-        this.collectValues();
+        this.values = (this.filterForm.controls.filters as FormArray).getRawValue()
+          .map((value: any, index: number) => {
+            return new Filter(
+              this._formFields[index].id,
+              this._formFields[index].filterType,
+              value
+            );
+          });
+
         this.valueChanges.emit(this.values);
       });
-  }
-
-
-  /**
-   * Collects values from form values and external filters.
-   */
-  private collectValues(): void {
-    const values = ((this.filterForm.controls.filters as FormArray).getRawValue())
-      .map((value: string, index: number) => {
-        return new Filter(
-          this._formFields[index].id,
-          this._formFields[index].filterType,
-          value
-        );
-      });
-
-    this.values = [...values, ...this._filters];
   }
 }

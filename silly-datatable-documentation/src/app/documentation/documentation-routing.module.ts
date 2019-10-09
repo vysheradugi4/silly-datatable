@@ -23,7 +23,6 @@ import { FiltersOutputComponent } from './filters-output/filters-output.componen
 import { OptionsComponent } from './options/options.component';
 import { OptionsSettingsComponent } from './options-settings/options-settings.component';
 import { CssTricksComponent } from './css-tricks/css-tricks.component';
-import { CustomFiltersDataComponent } from './custom-filters-data/custom-filters-data.component';
 
 
 const routes = [
@@ -77,7 +76,6 @@ const routes = [
           { path: 'settings', component: FilterSettingsComponent, data: { title: 'Settings' } },
           { path: 'form-fields', component: FormFieldsComponent, data: { title: 'Form fields' } },
           { path: 'output', component: FiltersOutputComponent, data: { title: 'Output' } },
-          { path: 'custom-filters', component: CustomFiltersDataComponent, data: { title: 'Custom filters' } },
         ],
       },
       {
