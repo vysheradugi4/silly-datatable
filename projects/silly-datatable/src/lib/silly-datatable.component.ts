@@ -45,7 +45,21 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
   /**
    * For store columns settings.
    */
-  @Input() public columns: Array<Column>;
+  @Input() public set columns(value: Array<Column>) {
+    this._columns = value;
+
+
+    /**
+     * Update table options for new column schema.
+     */
+    this.updateOptionsColumns();
+
+
+    /**
+     * Setup columns states by saved options.
+     */
+    this.setColumnsDisplay();
+  }
 
 
   /**
@@ -206,6 +220,7 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
   private _filterComponent: SillyDatatableFilterComponent;
   private _searchComponent: SillyDatatableSearchComponent;
   private _batchSelected: Array<any> = [];
+  private _columns: Array<Column> = [];
 
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
@@ -275,6 +290,11 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
      * One time init request.
      */
     this.sendRequest();
+  }
+
+
+  public get columns() {
+    return this._columns;
   }
 
 
@@ -448,7 +468,7 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this._optionsComponent.columns = this.columns;
+    this._optionsComponent.columns = this._columns;
   }
 
 
@@ -470,7 +490,7 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
       takeUntil(this._unsubscribe)
     )
       .subscribe((changedColumns: Array<Column>) => {
-        this.columns = changedColumns;
+        this._columns = changedColumns;
         this._changeDetectorRef.detectChanges();
 
         let dataForStore = changedColumns.map((column: Column) => {
@@ -527,7 +547,7 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
 
     if (states) {
       states.forEach(colStatus => {
-        const column = this.columns.find((col: Column) => col.id === colStatus.id);
+        const column = this._columns.find((col: Column) => col.id === colStatus.id);
         if (!column) {
           return;
         }
