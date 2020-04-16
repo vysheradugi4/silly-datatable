@@ -521,7 +521,22 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
 
 
   private createTableUid() {
-    const parentComponentTypeName = (this._inj as any).view.component.constructor.name;
+    let parentComponentTypeName: string;
+
+    /**
+     * For Angular before 9 version
+     */
+    if ((this._inj as any).view && (this._inj as any).view.component) {
+      parentComponentTypeName = (this._inj as any).view.component.constructor.name;
+    }
+
+    /**
+     * New Angular above 9 version
+     */
+    if ((this._inj as any)._lView) {
+      parentComponentTypeName = (this._inj as any)._lView.constructor.name;
+    }
+
     this._tableUid = `${parentComponentTypeName}_${this.id}`;
   }
 
