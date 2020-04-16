@@ -1,6 +1,6 @@
 {
     "name": "silly-datatable",
-    "version": "3.4.3",
+    "version": "3.4.4",
     "description": "Angular datatable, angular grid, light with easy styling functional, server side sorting, pagination, filtering, etc.",
     "keywords": [
         "angular",
@@ -30,10 +30,10 @@
         "url": "https://github.com/vysheradugi4/silly-datatable"
     },
     "peerDependencies": {
-        "@angular/common": "~8.2.14",
-        "@angular/core": "~8.2.14",
-        "@angular/forms": "~8.2.14",
+        "@angular/common": "~9.1.2",
+        "@angular/core": "~9.1.2",
+        "@angular/forms": "~9.1.2",
         "lodash": "^4.17.15",
-        "rxjs": "^6.5.4"
+        "rxjs": "^6.5.5"
     }
 }

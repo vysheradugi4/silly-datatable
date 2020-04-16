@@ -13,9 +13,7 @@ import {
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import unionBy from 'lodash/unionBy';
-import get from 'lodash/get';
-import isEqual from 'lodash/isEqual';
+import { unionBy, get, isEqual } from 'lodash';
 import { TableSettings } from './shared/models/table-settings.model';
 import { Column } from './shared/models/column.model';
 import { Sort } from './shared/models/sort.model';
@@ -92,8 +90,9 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
 
 
     /**
-     * Batch select logic.
+     * Batch select and select all logic.
      */
+    this.selectAllInit();
     this.batchSelectInit();
   }
 
@@ -558,6 +557,23 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
   }
 
 
+  private selectAllInit(): void {
+    if (!this.settings.batchSelect) {
+      return;
+    }
+
+    this.selectAll = new FormControl(false);
+
+    this.selectAll.valueChanges.pipe(
+      takeUntil(this._unsubscribe)
+    )
+      .subscribe((value: boolean) => {
+        const valuesArray = new Array<boolean>(this.checkboxes.controls.length).fill(value);
+        this.checkboxes.setValue(valuesArray);
+      });
+  }
+
+
   /**
    * Activates batch select functional.
    */
@@ -568,7 +584,6 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
     }
 
     this._unsubscribeBatchSelectForm.next(true);
-    this.selectAll = new FormControl(false);
     this.batchSelectFormGroup = new FormGroup({ checkboxes: new FormArray([]) });
     this.checkboxes = this.batchSelectFormGroup.controls.checkboxes as FormArray;
 
@@ -589,13 +604,6 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
       this.checkboxes.push(new FormControl(checked));
     });
 
-    this.selectAll.valueChanges.pipe(
-      takeUntil(this._unsubscribeBatchSelectForm)
-    )
-      .subscribe((value: boolean) => {
-        const valuesArray = new Array<boolean>(this.checkboxes.controls.length).fill(value);
-        this.checkboxes.setValue(valuesArray);
-      });
 
     this.checkboxes.valueChanges.pipe(
       takeUntil(this._unsubscribeBatchSelectForm)
@@ -607,6 +615,14 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
             selected.push(this.tableParams.source[index]);
           }
         });
+
+
+        /**
+         * When all selected mark as check selectAll checkbox and vice versa.
+         */
+        const allSelected = selected.length === values.length;
+        this.selectAll.setValue(allSelected, { emitEvent: false });
+
 
         this.batchSelectedChange.emit(selected);
       });
