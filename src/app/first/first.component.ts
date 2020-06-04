@@ -11,6 +11,7 @@ import {
   FilterSettings
 } from 'projects/silly-datatable/src/public_api';
 import { EditButtonComponent } from 'src/app/shared/components/edit-button/edit-button.component';
+import { Parent } from 'src/app/parent';
 
 
 @Component({
@@ -18,7 +19,7 @@ import { EditButtonComponent } from 'src/app/shared/components/edit-button/edit-
   templateUrl: './first.component.html',
   styleUrls: ['./first.component.scss'],
 })
-export class FirstComponent implements OnInit {
+export class FirstComponent extends Parent implements OnInit {
 
   public settings: TableSettings;
   public paginationSettings: PaginationSettings;
@@ -36,7 +37,9 @@ export class FirstComponent implements OnInit {
 
   private _tableParams: TableParams = new TableParams();
 
-  constructor() { }
+  constructor() {
+    super();
+  }
 
   public get tableParams(): TableParams {
     return this._tableParams;

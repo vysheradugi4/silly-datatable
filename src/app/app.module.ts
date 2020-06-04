@@ -12,6 +12,7 @@ import { FirstComponent } from './first/first.component';
 import { SillyDatatableModule } from 'projects/silly-datatable/src/public_api';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
