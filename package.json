@@ -2,7 +2,7 @@
   "name": "silly-datatable-app",
   "version": "0.0.2",
   "description": "Angular 6+ light datatable with server side sorting, paging, filtering etc.",
-  "license": "SEE LICENSE IN LICENSE",
+  "license": "MIT LICENSE",
   "repository": {
     "type": "git",
     "url": "https://gitlab.com/vysheradugi4/silly-datatable"
@@ -54,6 +54,6 @@
     "tsickle": "^0.38.0",
     "tslib": "^1.11.0",
     "tslint": "~6.0.0",
-    "typescript": "3.5.3"
+    "typescript": "3.8.3"
   }
 }

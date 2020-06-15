@@ -18,6 +18,7 @@ import {
 export class ComponentCellComponent implements OnInit {
 
   @Input() public row: any;
+  @Input() public columnId: string;
   @Input() public component: any;
 
   @Output() public loaded: EventEmitter<any> = new EventEmitter<any>();
@@ -36,6 +37,7 @@ export class ComponentCellComponent implements OnInit {
     const factory = this._componentFactoryResolver.resolveComponentFactory(this.component);
     const componentRef: any = this._viewContainerRef.createComponent(factory);
     componentRef.instance.row = this.row;
+    componentRef.instance.columnId = this.columnId;
 
 
     /**

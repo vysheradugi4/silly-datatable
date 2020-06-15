@@ -47,7 +47,8 @@
                                         [formControlName]="i"
                                         [ngClass]="settings?.batchSelectCheckboxClass">
                                     <div [ngClass]="settings?.batchSelectCheckboxLabelContainerClass">
-                                        <label class="{{ settings?.batchSelectCheckboxLabelClass }}">{{ settings?.batchSelectCheckboxLabel }}</label>
+                                        <label class="{{ settings?.batchSelectCheckboxLabelClass }}">{{
+                                            settings?.batchSelectCheckboxLabel }}</label>
                                     </div>
                                 </ng-container>
                             </div>
@@ -75,8 +76,10 @@
                 </td>
 
                 <ng-template #componentCell>
-                    <td #td [ngClass]="column.cellClass">
+                    <td #td
+                        [ngClass]="column.cellClass">
                         <ngx-component-cell [row]="row"
+                            [columnId]="column.id"
                             [component]="column.componentCell"
                             (componentCellEvent)="onComponentCellEvent($event)"
                             (loaded)="column.prepareCellFunction && column.prepareCellFunction($event, row, td, tr)">
