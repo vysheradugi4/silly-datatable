@@ -61,8 +61,8 @@
                 <td *ngIf="!column.componentCell; else componentCell"
                     #td
                     [ngClass]="column.cellClass"
-                    (click)="clicked(row)"
-                    (dblclick)="doubleClicked(row)">
+                    (click)="clicked($event, row)"
+                    (dblclick)="doubleClicked($event, row)">
 
                     <ng-container [ngSwitch]="true">
                         <ng-container *ngSwitchCase="!!column.prepareCellFunction">

@@ -344,8 +344,15 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
    * Handler for click on the row.
    * @param row Clicked row.
    */
-  public clicked(row: any): void {
+  public clicked(event: MouseEvent, row: any): void {
+    event.stopPropagation();
+
     if (!row) {
+      return;
+    }
+
+    if (this.settings.disableRowDoubleClicked) {
+      this.rowClicked.next(row);
       return;
     }
 
@@ -362,8 +369,10 @@ export class SillyDatatableComponent implements OnInit, OnDestroy {
    * Handler for double click on the row.
    * @param row Clicked row.
    */
-  public doubleClicked(row: any): void {
-    if (!row) {
+  public doubleClicked(event: MouseEvent, row: any): void {
+    event.stopPropagation();
+
+    if (!row || this.settings.disableRowDoubleClicked) {
       return;
     }
 

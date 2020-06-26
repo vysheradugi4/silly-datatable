@@ -78,6 +78,7 @@ export class FirstComponent extends Parent implements OnInit {
       sortHeaderClass: 'sort',
       itemsPerPageList: [1, 3, 5],
       batchSelect: true,
+      disableRowDoubleClicked: true,
     } as TableSettings;
 
     this.columns = [

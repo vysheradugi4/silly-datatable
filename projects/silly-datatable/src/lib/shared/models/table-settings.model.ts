@@ -38,6 +38,13 @@ export class TableSettings {
 
 
   /**
+   * When double-clicking on a row is enabled, the delay of single click is 300 ms.
+   * Set true for deactivate double-clicking and delay.
+   */
+  public disableRowDoubleClicked?: boolean;
+
+
+  /**
    * Activator of batch select functional.
    */
   public batchSelect?: boolean;
