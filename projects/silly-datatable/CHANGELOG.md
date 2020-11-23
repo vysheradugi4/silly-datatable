@@ -1,5 +1,9 @@
 # Silly Datatable Change Log
 
+## 3.4.9
+
+    Removed id and name attributes from table option checkboxes.
+
 ## 3.4.0
 
     Changed output of filter values, added api for custom filters data.
