@@ -8,6 +8,7 @@ import {
   Output,
   EventEmitter
 } from '@angular/core';
+import { ComponentCell } from './../../models/component-cell.model';
 
 
 @Component({
@@ -35,20 +36,21 @@ export class ComponentCellComponent implements OnInit {
     }
 
     const factory = this._componentFactoryResolver.resolveComponentFactory(this.component);
-    const componentRef: any = this._viewContainerRef.createComponent(factory);
-    componentRef.instance.row = this.row;
-    componentRef.instance.columnId = this.columnId;
+    const componentRef = this._viewContainerRef.createComponent(factory);
+    const component = componentRef.instance as ComponentCell;
+    component.row = this.row;
+    component.columnId = this.columnId;
 
 
     /**
      * Pass created instance for prepare cell function.
      */
-    this.loaded.emit(componentRef.instance);
+    this.loaded.emit(component);
 
 
     /**
      * For event in cell component.
      */
-    componentRef.instance.componentCellEvent = this.componentCellEvent;
+    component.componentCellEvent = this.componentCellEvent;
   }
 }

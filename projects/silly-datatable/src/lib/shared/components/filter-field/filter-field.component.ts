@@ -4,7 +4,6 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { FilterFormField } from './../../models/filter-form-field.model';
-import { Filter } from 'projects/silly-datatable/src/lib/shared/models/filter.model';
 
 
 @Component({

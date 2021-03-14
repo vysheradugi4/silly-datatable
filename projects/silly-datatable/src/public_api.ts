@@ -13,6 +13,7 @@ export * from './lib/shared/models/options-settings.model';
 export * from './lib/shared/models/table-params.model';
 export * from './lib/shared/models/filter-form-field.model';
 export * from './lib/shared/models/filter-settings.model';
+export * from './lib/shared/models/component-cell.model';
 export * from './lib/shared/components/silly-datatable-search/silly-datatable-search.component';
 export * from './lib/shared/components/silly-datatable-paging/silly-datatable-paging.component';
 export * from './lib/shared/components/silly-datatable-filter/silly-datatable-filter.component';
