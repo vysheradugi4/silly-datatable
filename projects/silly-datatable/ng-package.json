@@ -4,7 +4,10 @@
     "lib": {
         "entryFile": "src/public_api.ts",
         "umdModuleIds": {
-            "lodash": "lodash"
+            "lodash-es/forIn": "lodash-es",
+            "lodash-es/unionBy": "lodash-es",
+            "lodash-es/get": "lodash-es",
+            "lodash-es/isEqual": "lodash-es"
         }
     }
 }

@@ -1,6 +1,6 @@
 {
     "name": "silly-datatable",
-    "version": "3.5.1",
+    "version": "3.5.2",
     "description": "Angular datatable, angular grid, light with easy styling functional, server side sorting, pagination, filtering, etc.",
     "keywords": [
         "angular",
@@ -33,7 +33,7 @@
         "@angular/common": "~9.1.2",
         "@angular/core": "~9.1.2",
         "@angular/forms": "~9.1.2",
-        "lodash": "^4.17.15",
+        "lodash-es": "^4.17.21",
         "rxjs": "^6.5.5"
     }
 }

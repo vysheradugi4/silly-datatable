@@ -13,7 +13,9 @@ import {
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { unionBy, get, isEqual } from 'lodash';
+import unionBy from 'lodash-es';
+import get from 'lodash-es';
+import isEqual from 'lodash-es';
 import { TableSettings } from './shared/models/table-settings.model';
 import { Column } from './shared/models/column.model';
 import { Sort } from './shared/models/sort.model';

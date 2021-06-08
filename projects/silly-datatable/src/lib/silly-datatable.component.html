@@ -93,7 +93,7 @@
 </table>
 
 <ng-template #withoutSource>
-    <tr>
+    <tr [ngClass]="settings?.rowClass">
         <td [attr.colspan]="columns?.length">
             {{ settings?.dataNotFoundPhrase || 'Data not found' }}
         </td>

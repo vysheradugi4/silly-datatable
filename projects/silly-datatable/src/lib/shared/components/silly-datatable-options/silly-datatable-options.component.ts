@@ -3,7 +3,7 @@ import { Component, Input, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef
 import { takeUntil } from 'rxjs/operators';
 import { Subject, Observable } from 'rxjs';
 
-import { forIn } from 'lodash';
+import forIn from 'lodash-es';
 import { OptionsSettings } from './../../models/options-settings.model';
 import { FormsHelper } from './../../helpers/forms.helper';
 import { Column } from './../../models/column.model';
